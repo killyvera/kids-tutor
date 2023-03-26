@@ -1,0 +1,15 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mystorect-staging-195834-authRole",
+      "UnauthRoleArn": "arn:aws:iam::500490101011:role/amplify-mystorect-staging-195834-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::500490101011:role/amplify-mystorect-staging-195834-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-mystorect-staging-195834-deployment",
+      "UnauthRoleName": "amplify-mystorect-staging-195834-unauthRole",
+      "StackName": "amplify-mystorect-staging-195834",
+      "StackId": "arn:aws:cloudformation:us-east-1:500490101011:stack/amplify-mystorect-staging-195834/c7a8b420-b9fd-11ed-b423-0ad00af538c7",
+      "AmplifyAppId": "d1c8o6kxtv8w6n"
+    }
+  }
+}
