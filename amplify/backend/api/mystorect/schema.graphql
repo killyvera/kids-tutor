@@ -1,0 +1,86 @@
+type Testimonials @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  content: String
+  name: String
+  image: String
+  location: String
+}
+
+type Colleges @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  image: String
+  link: String
+}
+
+type Comments @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  content: String
+  published_date: AWSDate
+  author: Users @hasOne
+  post_id: BlogPost @hasOne
+  parent_coment: String
+  replies: String
+}
+
+type Tags @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  tag_name: String
+  blogposts: [BlogPost] @manyToMany(relationName: "BlogPostTags")
+}
+
+type BlogPost @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  content: String
+  author: String
+  published_date: AWSDate
+  Tags: [Tags] @manyToMany(relationName: "BlogPostTags")
+}
+
+type Users @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  sub_cognito: String
+  name: String
+  firstname: String
+  registration_date: String
+  direction: String
+  city: String
+  state: String
+  country: String
+  postal_code: String
+  purchase_history: String
+  ratings: String
+  comments: String
+}
+
+type Order @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  user: String
+  userId: String
+  address: String
+  date: AWSDate
+  total: String
+  status: String
+}
+
+type Category @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  products: [Product] @manyToMany(relationName: "ProductCategory")
+}
+
+type Product @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  sku: String
+  price: Int
+  stock: Int
+  dimensions: String
+  weight: Float
+  rating: Float
+  cover: String
+  categories: [Category] @manyToMany(relationName: "ProductCategory")
+}
+ 
