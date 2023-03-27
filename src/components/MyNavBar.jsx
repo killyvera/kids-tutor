@@ -8,40 +8,53 @@ const MyNavBar = () => {
     const handleMenuClick = () => setShowMenu(!showMenu);
 
     return (
-        <nav className="bg-blue-500 p-3 flex items-center justify-between flex-wrap">
+        <nav className="
+                        bg-blue-500
+                        w-screen
+                        z-50
+                        p-3
+                        flex
+                        items-center
+                        justify-between
+                        flex-wrap
+                        fixed
+                        top-0
+                        bg-opacity-70
+                        backdrop-blur-[2px]
+                        ">
             <div className="flex items-center flex-shrink-0 text-white mr-6">
-                <Image  width={'120'} height={'120'}  src="/logo.png" alt="Logo" className="w-32" />
+                <Image width={'120'} height={'120'} src="/logo.png" alt="Logo" className="w-32" />
             </div>
             <div className="block lg:hidden">
                 <button
                     onClick={handleMenuClick}
                     className="flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white"
                 >
-                    <Image  width={'24'} height={'24'} src="/hamburger.png" alt="Menu" className="w-6" />
+                    <Image width={'24'} height={'24'} src="/hamburger.png" alt="Menu" className="w-6" />
                 </button>
             </div>
             <div
                 className={`${showMenu ? "block" : "hidden"
                     } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
             >
-                <div className="text-sm lg:flex-grow text-center ">
+                <div className="text-sm lg:flex-grow text-center">
                     <Link href="/" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
                         Home
                     </Link>
-                    <Link href="/recursos-gratuitos" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
+                    <Link href="/recursos-gratuitos" className="rounded m-1 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
                         Recursos Gratuitos
                     </Link>
                     <Link href="/comprar" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
-                            Comprar
+                        Comprar
                     </Link>
                     <Link href="/youtube" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
-                            Youtube
+                        Youtube
                     </Link>
                     <Link href="/blog" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
-                            Blog
+                        Blog
                     </Link>
-                    <Link href="/contacto" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
-                            Contactanos
+                    <Link href="/contacto" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:scale-105 mr-4" >
+                        Contactanos
                     </Link>
                 </div>
                 <div className="flex">

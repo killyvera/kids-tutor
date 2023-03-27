@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
 import MyNavBar from '@/components/MyNavBar'
+import HeroResponsive from '@/components/HeroResponsive'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,9 +17,7 @@ export default function Home() {
       </Head>
       <main>
         <MyNavBar />
-        <div>
-          HELLO FROM NEXT, TAILWIND & AMPLIFY UI
-        </div>
+        <HeroResponsive />
       </main>
     </>
   )
