@@ -3,6 +3,15 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import MyNavBar from '@/components/MyNavBar'
 import HeroResponsive from '@/components/HeroResponsive'
+import MyColleges from '@/components/MyColleges'
+
+import { Amplify } from 'aws-amplify'
+import awsexports from 'src/aws-exports.js'
+
+import H1 from '@/components/H1'
+import MyCallToAction from '@/components/MyCallToAction'
+
+Amplify.configure(awsexports)
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,9 +24,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main style={{textAlign:'-webkit-center'}} className='bg-blue-500' >
         <MyNavBar />
         <HeroResponsive />
+        <H1>Colegios que usan nuestros métodos y productos de aprendizaje.</H1>
+        <MyColleges />
+        <MyCallToAction
+        mainText={'Alto Nivel Academico, gracias a la labor conjunta basada en resultados con nuestro equipo de expertos.'}
+        buttonLabel={'Integra tu Colegio Ahora'}
+         />
       </main>
     </>
   )
