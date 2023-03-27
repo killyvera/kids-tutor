@@ -63,7 +63,7 @@ export default function HeroResponsive(props) {
     small: "small",
     large: "large",
   });
-  const rest = { style: { transition: "all 0.25s" }, ...restProp };
+  const rest = { style: { transition: "" }, ...restProp };
   const overrides = mergeVariantsAndOverrides(
     getOverridesFromVariants(variants, {
       breakpoint: breakpointHook,
@@ -73,7 +73,7 @@ export default function HeroResponsive(props) {
   );
   return (
     <Flex
-    className='pt-4 bg-blue-700'
+    className='pt-4 bg-blue-500'
       gap="0"
       direction="column"
       width="100%"
@@ -88,6 +88,13 @@ export default function HeroResponsive(props) {
       {...rest}
     >
       <Flex
+      className=""
+      style={{
+        backgroundImage: "url('/back.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat"
+      }}
         gap="45px"
         direction="column"
         width="unset"
@@ -97,7 +104,7 @@ export default function HeroResponsive(props) {
         shrink="0"
         alignSelf="stretch"
         position="relative"
-        padding="0px 0px 0px 0px"
+        padding="70px 0px 0px 0px"
         display="flex"
         {...getOverrideProps(overrides, "Frame 420")}
       >
@@ -116,7 +123,7 @@ export default function HeroResponsive(props) {
           {...getOverrideProps(overrides, "logo")}
         ></Image>
         <Text
-          fontFamily="Inter"
+          fontFamily=""
           fontSize="40px"
           fontWeight="600"
           color="rgba(255,255,255,1)"
@@ -137,7 +144,7 @@ export default function HeroResponsive(props) {
           {...getOverrideProps(overrides, "p1")}
         ></Text>
         <Text
-          fontFamily="Inter"
+          fontFamily=""
           fontSize="20px"
           fontWeight="500"
           color="rgba(245,245,245,1)"
@@ -162,7 +169,7 @@ export default function HeroResponsive(props) {
           gap="29px"
           direction="row"
           width="892px"
-          height="91px"
+          height="120px"
           justifyContent="center"
           alignItems="center"
           overflow="hidden"
