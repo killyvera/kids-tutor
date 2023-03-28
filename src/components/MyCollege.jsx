@@ -49,6 +49,7 @@ export default function MyCollege(props) {
   });
   return (
     <Flex
+    className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
       gap="22px"
       direction="column"
       width="182px"

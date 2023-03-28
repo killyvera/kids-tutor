@@ -18,6 +18,7 @@ import {
   Text,
   useBreakpointValue,
 } from "@aws-amplify/ui-react";
+
 export default function HeroResponsive(props) {
   const { overrides: overridesProp, ...restProp } = props;
   const variants = [
@@ -73,7 +74,7 @@ export default function HeroResponsive(props) {
   );
   return (
     <Flex
-    className='pt-4 bg-blue-500'
+      className='pt-4 bg-red-400'
       gap="0"
       direction="column"
       width="100%"
@@ -88,13 +89,13 @@ export default function HeroResponsive(props) {
       {...rest}
     >
       <Flex
-      className=""
-      style={{
-        backgroundImage: "url('/back.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat"
-      }}
+        className=""
+        style={{
+          backgroundImage: "url('/back.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
         gap="45px"
         direction="column"
         width="unset"
@@ -109,7 +110,8 @@ export default function HeroResponsive(props) {
         {...getOverrideProps(overrides, "Frame 420")}
       >
         <Image
-        src="/logoFull.png"
+          className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
+          src="/logoFull.png"
           width="195px"
           height="182px"
           display="block"
@@ -165,7 +167,9 @@ export default function HeroResponsive(props) {
           children="¡Haz que el aprendizaje de tus hijos sea divertido y efectivo hoy mismo! Compra nuestros juegos didácticos y juegos de mesa."
           {...getOverrideProps(overrides, "p2")}
         ></Text>
+        <>
         <Flex
+          className="hover:scale-x-110 hover:scale-y-110 transition duration-300"
           gap="29px"
           direction="row"
           width="892px"
@@ -180,7 +184,8 @@ export default function HeroResponsive(props) {
           {...getOverrideProps(overrides, "grid")}
         >
           <Image
-          src="/acreditationImage1.png"
+            className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
+            src="/acreditationImage1.png"
             width="90px"
             height="90px"
             display="block"
@@ -196,7 +201,8 @@ export default function HeroResponsive(props) {
             {...getOverrideProps(overrides, "acreditationImage1")}
           ></Image>
           <Image
-          src="/acreditationImage2.png"
+            className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
+            src="/acreditationImage2.png"
             width="90px"
             height="90px"
             display="block"
@@ -212,7 +218,8 @@ export default function HeroResponsive(props) {
             {...getOverrideProps(overrides, "acreditationImage2")}
           ></Image>
           <Image
-          src="/acreditationImage3.png"
+            className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
+            src="/acreditationImage3.png"
             width="139px"
             height="90px"
             display="block"
@@ -228,7 +235,7 @@ export default function HeroResponsive(props) {
             {...getOverrideProps(overrides, "acreditationImage3")}
           ></Image>
           <Button
-          className="rounded p-1 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300"
+            className="rounded p-1 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300"
             width="unset"
             height="unset"
             shrink="0"
@@ -240,6 +247,7 @@ export default function HeroResponsive(props) {
             {...getOverrideProps(overrides, "Button")}
           ></Button>
         </Flex>
+        </>
       </Flex>
     </Flex>
   );

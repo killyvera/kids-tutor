@@ -17,12 +17,14 @@ export declare type TestimonialsCreateFormInputValues = {
     name?: string;
     image?: string;
     location?: string;
+    rating?: number;
 };
 export declare type TestimonialsCreateFormValidationValues = {
     content?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
     image?: ValidationFunction<string>;
     location?: ValidationFunction<string>;
+    rating?: ValidationFunction<number>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TestimonialsCreateFormOverridesProps = {
@@ -31,6 +33,7 @@ export declare type TestimonialsCreateFormOverridesProps = {
     name?: PrimitiveOverrideProps<TextFieldProps>;
     image?: PrimitiveOverrideProps<TextFieldProps>;
     location?: PrimitiveOverrideProps<TextFieldProps>;
+    rating?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TestimonialsCreateFormProps = React.PropsWithChildren<{
     overrides?: TestimonialsCreateFormOverridesProps | undefined | null;
