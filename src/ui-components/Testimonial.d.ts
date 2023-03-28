@@ -5,18 +5,25 @@
  **************************************************************************/
 
 import * as React from "react";
+import { Testimonials } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { IconProps, RatingProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
+import { FlexProps, ImageProps, RatingProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TestimonialOverridesProps = {
     Testimonial?: PrimitiveOverrideProps<ViewProps>;
-    Photo?: PrimitiveOverrideProps<IconProps>;
-    testimonial?: PrimitiveOverrideProps<TextProps>;
+    group?: PrimitiveOverrideProps<FlexProps>;
+    image?: PrimitiveOverrideProps<ImageProps>;
     Rating?: PrimitiveOverrideProps<RatingProps>;
-    name37553000?: PrimitiveOverrideProps<TextProps>;
-    name37563144?: PrimitiveOverrideProps<TextProps>;
+    testimonial?: PrimitiveOverrideProps<TextProps>;
+    data?: PrimitiveOverrideProps<FlexProps>;
+    name?: PrimitiveOverrideProps<TextProps>;
+    location?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type TestimonialProps = React.PropsWithChildren<Partial<ViewProps> & {
+    testimonials?: Testimonials;
+} & {
+    breakpoint?: "large" | "small";
+} & {
     overrides?: TestimonialOverridesProps | undefined | null;
 }>;
 export default function Testimonial(props: TestimonialProps): React.ReactElement;

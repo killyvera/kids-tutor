@@ -16,6 +16,7 @@ type EagerTestimonials = {
   readonly name?: string | null;
   readonly image?: string | null;
   readonly location?: string | null;
+  readonly rating?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -30,6 +31,7 @@ type LazyTestimonials = {
   readonly name?: string | null;
   readonly image?: string | null;
   readonly location?: string | null;
+  readonly rating?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

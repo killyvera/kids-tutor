@@ -9,7 +9,7 @@ const MyNavBar = () => {
 
     return (
         <nav className="
-                        bg-blue-500
+                     bg-red-400
                         w-screen
                         z-50
                         p-3

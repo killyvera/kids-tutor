@@ -1,28 +1,30 @@
 import { useState, useEffect } from 'react';
 import { DataStore } from '@aws-amplify/datastore';
-import { Colleges } from '@/models';
+import { Testimonials } from '@/models';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import MyCollege from './MyCollege';
+import Testimonial from '@/ui-components/Testimonial';
 
-const MyColleges = () => {
-    const [colleges, setColleges] = useState([]);
+const MyTestimonials = () => {
+    const [testimonials, setTestimonials] = useState([]);
 
     useEffect(() => {
-        const fetchColleges = async () => {
-            const models = await DataStore.query(Colleges);
-            setColleges(models);
+        const fetchTestimonials = async () => {
+            const models = await DataStore.query(Testimonials);
+            setTestimonials(models);
         };
-        fetchColleges();
+        fetchTestimonials();
     }, []);
 
     const settings = {
+        rtl: true,
         autoplay: true,
-        dots: false,
+        dots: true,
         arrows: false,
         infinite: true,
-        speed: 500,
+        speed: 700,
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: true,
@@ -31,31 +33,32 @@ const MyColleges = () => {
             {
                 breakpoint: 1024,
                 settings: {
-                    arrows: true,
-                    slidesToShow: 3,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                     infinite: true,
                     dots: false,
+                    centerPadding: '1'
                 },
             },
             {
                 breakpoint: 600,
                 settings: {
-                    arrows: true,
-                    slidesToShow: 2,
+                    slidesToShow: 1,
                     slidesToScroll: 1,
                     initialSlide: 0,
+                    infinite: true,
+                    centerPadding: '1',
                 },
             },
         ],
     };
 
     return (
-        <div style={{maxWidth: '80%'}} >
-            <Slider {...settings}>
-                {colleges.map((college) => (
-                    <div key={college.id}>
-                        <MyCollege colleges={college} />
+        <div className='m-8 py-10 ' style={{maxWidth: '90%'}} >
+            <Slider{...settings}>
+                {testimonials.map((testimonial) => (
+                    <div key={testimonial.id}>
+                        <Testimonial testimonial={testimonial} />
                     </div>
                 ))}
             </Slider>
@@ -63,4 +66,4 @@ const MyColleges = () => {
     );
 };
 
-export default MyColleges;
+export default MyTestimonials;
