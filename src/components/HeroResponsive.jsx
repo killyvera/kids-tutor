@@ -74,7 +74,7 @@ export default function HeroResponsive(props) {
   );
   return (
     <Flex
-      className='pt-4 bg-red-400'
+      className='pt-4'
       gap="0"
       direction="column"
       width="100%"
