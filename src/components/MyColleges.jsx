@@ -31,7 +31,7 @@ const MyColleges = () => {
             {
                 breakpoint: 1024,
                 settings: {
-                    arrows: true,
+                    arrows: false,
                     slidesToShow: 3,
                     slidesToScroll: 1,
                     infinite: true,
@@ -41,7 +41,7 @@ const MyColleges = () => {
             {
                 breakpoint: 600,
                 settings: {
-                    arrows: true,
+                    arrows: false,
                     slidesToShow: 2,
                     slidesToScroll: 1,
                     initialSlide: 0,
