@@ -149,7 +149,7 @@ export default function HeroResponsive(props) {
           fontFamily=""
           fontSize="20px"
           fontWeight="500"
-          color="rgba(245,245,245,1)"
+          color="rgba(255,255,255,1)"
           lineHeight="33.25407028198242px"
           textAlign="center"
           display="block"
