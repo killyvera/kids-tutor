@@ -13,6 +13,7 @@ import MyCallToAction from '@/components/MyCallToAction'
 import MyProductFeatures from '@/components/MyProductFeatures'
 import MyFooter from '@/components/MyFooter'
 import MyTestimonials from '@/components/MyTestimonials'
+import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
 Amplify.configure(awsexports)
 
 const inter = Inter({ subsets: ['latin'] })
