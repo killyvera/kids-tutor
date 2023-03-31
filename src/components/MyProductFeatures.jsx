@@ -101,7 +101,7 @@ export default function MyProductFeatures() {
               <dt className="font-medium text-gray-900">
                 Los métodos en los que nos basamos son múltiples.
               </dt>
-              <div class=" flex flex-col justify-center space-x-6">
+              <div className=" flex flex-col justify-center space-x-6">
                 <a
                   href="https://es.wikipedia.org/wiki/M%C3%A9todo_Montessori"
                   target="_blank"
