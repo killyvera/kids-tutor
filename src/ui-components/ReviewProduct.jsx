@@ -21,7 +21,7 @@ export default function ReviewProduct(props) {
     <Flex
       gap="0"
       direction="row"
-      width="960px"
+      width="100%"
       height="unset"
       justifyContent="flex-start"
       alignItems="center"

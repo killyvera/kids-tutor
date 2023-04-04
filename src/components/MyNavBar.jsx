@@ -38,22 +38,22 @@ const MyNavBar = () => {
                     } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
             >
                 <div className="text-sm lg:flex-grow text-center">
-                    <Link href="/" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
+                    <Link href="/" className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl" >
                         Home
                     </Link>
-                    <Link href="/recursos-gratuitos" className="rounded m-1 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
+                    <Link href="/recursos-gratuitos" className="text-lg rounded m-1 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
                         Recursos Gratuitos
                     </Link>
-                    <Link href="/comprar" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
-                        Comprar
+                    <Link href="/productos" className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
+                        Productos
                     </Link>
-                    <Link href="/youtube" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
+                    <Link href="/youtube" className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
                         Youtube
                     </Link>
-                    <Link href="/blog" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
+                    <Link href="/blog" className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" >
                         Blog
                     </Link>
-                    <Link href="/contacto" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:scale-105 mr-4" >
+                    <Link href="/contacto" className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white hover:scale-110 mr-4" >
                         Contactanos
                     </Link>
                 </div>
