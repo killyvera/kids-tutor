@@ -14,6 +14,7 @@ import MyProductFeatures from '@/components/MyProductFeatures'
 import MyFooter from '@/components/MyFooter'
 import MyTestimonials from '@/components/MyTestimonials'
 import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
+import { ProductCollection } from '@/ui-components'
 Amplify.configure(awsexports)
 
 const inter = Inter({ subsets: ['latin'] })
@@ -29,16 +30,7 @@ export default function Home() {
       </Head>
       <main style={{ textAlign: '-webkit-center' }} className='' >
         <MyNavBar />
-        <HeroResponsive />
-        <H1>Colegios que usan nuestros métodos y productos de aprendizaje.</H1>
-        <MyColleges />
-        <MyCallToAction
-          mainText={'Alto Nivel Academico, gracias a la labor conjunta basada en resultados con nuestro equipo de expertos.'}
-          buttonLabel={'Integra tu Colegio Ahora'}
-        />
-        <MyProductFeatures />
-        <H1>¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros clientes satisfechos tienen historias que compartir.</H1>
-        <MyTestimonials />
+        <ProductCollection />
         <MyFooter />
       </main>
     </>

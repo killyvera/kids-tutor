@@ -16,7 +16,7 @@ import {
   Flex,
   Image,
   Text,
-  useBreakpointValue,
+  useBreakpointValue, View
 } from "@aws-amplify/ui-react";
 
 export default function HeroResponsive(props) {
