@@ -171,7 +171,7 @@ export default function MyProduct(props) {
           </View>
         </View>
         <Flex
-          gap="24px"
+          gap="25px"
           direction="column"
           width="497px"
           height="555px"
