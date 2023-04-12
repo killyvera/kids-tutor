@@ -173,7 +173,7 @@ export default function MyProduct(props) {
         <Flex
           gap="24px"
           direction="column"
-          width="496.5px"
+          width="497px"
           height="555px"
           justifyContent="center"
           alignItems="center"
