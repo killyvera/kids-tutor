@@ -21,7 +21,7 @@ function MyResources() {
                   <svg
                     className="w-3.5 h-3.5 mr-1"
                     fill="currentColor"
-                    viewbox="0 0 20 20"
+                    viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -32,9 +32,7 @@ function MyResources() {
                     />
                   </svg>
                 </p>
-                <p className="inline text-xs font-medium">
-                  ¡Nuevo Contenido Gratis!
-                </p>
+                <p className="inline text-xs font-medium">¡Nuevo Contenido Gratis!</p>
               </div>
               <a className="text-4xl font-bold leading-none lg:text-5xl xl:text-6xl">
                 Más Plantillas. Más Juegos.
