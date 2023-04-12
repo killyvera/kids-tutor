@@ -14,11 +14,7 @@ import MyProductFeatures from '@/components/MyProductFeatures'
 import MyFooter from '@/components/MyFooter'
 import MyTestimonials from '@/components/MyTestimonials'
 import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
-import { ProductCollection } from '@/ui-components'
-import YoutubeBackground from '@/components/YoutubeBackground'
-import Spacer from '@/components/Spacer'
-import MyResources from '@/components/MyResources'
-
+import { MyProductList } from '@/ui-components'
 Amplify.configure(awsexports)
 
 const inter = Inter({ subsets: ['latin'] })
@@ -34,9 +30,8 @@ export default function Home() {
       </Head>
       <main style={{ textAlign: '-webkit-center' }} className='' >
         <MyNavBar />
-        <Spacer  altura='40px'/>
-        <H1>Descarga contenido exclusivo gratis.</H1>
-        <MyResources />
+        <H1>Productos Certificados por expertos a tu alcance.</H1>
+        <MyProductList />
         <MyFooter />
       </main>
     </>

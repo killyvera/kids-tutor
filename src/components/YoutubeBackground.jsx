@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ReactPlayer from "react-player";
-import { Blurhash } from "react-blurhash";
+
 
 const YoutubeBackground = () => {
   const [loading, setLoading] = useState(true);

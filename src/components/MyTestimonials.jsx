@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import MyCollege from './MyCollege';
-import Testimonial from '@/ui-components/Testimonial';
+import Testimonial from '@/components/Testimonial';
 
 const MyTestimonials = () => {
     const [testimonials, setTestimonials] = useState([]);

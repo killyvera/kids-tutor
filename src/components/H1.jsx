@@ -18,7 +18,7 @@ const H1 = ({ children }) => {
   }, []);
 
   return (
-    <h1 className={`mx-9 text-center text-4xl md:text-${fontSize} font-bold mb-14 mt-14 text-gray-100 bg-red-400`}>
+    <h1 className={`mx-9 text-center text-4xl md:text-${fontSize} font-bold my-14 text-gray-100`}>
       {children}
     </h1>
   );

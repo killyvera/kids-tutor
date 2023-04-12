@@ -20,7 +20,7 @@ import {
   useBreakpointValue,
 } from "@aws-amplify/ui-react";
 export default function Testimonial(props) {
-  const { testimonials, overrides: overridesProp, ...restProp } = props;
+  const { testimonial, overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
       overrides: {
@@ -113,7 +113,7 @@ export default function Testimonial(props) {
           borderRadius="30px"
           padding="0px 0px 0px 0px"
           objectFit="cover"
-          src={testimonials?.image}
+          src={testimonial?.image}
           {...getOverrideProps(overrides, "image")}
         ></Image>
         <Rating
@@ -121,11 +121,11 @@ export default function Testimonial(props) {
           height="unset"
           shrink="0"
           size="small"
-          value={testimonials?.rating}
+          value={testimonial?.rating}
           {...getOverrideProps(overrides, "Rating")}
         ></Rating>
         <Text
-          fontFamily="Inter"
+          fontFamily="Lato"
           fontSize="16px"
           fontWeight="300"
           color="rgba(35,47,62,1)"
@@ -144,7 +144,7 @@ export default function Testimonial(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children={testimonials?.content}
+          children={testimonial?.content}
           {...getOverrideProps(overrides, "testimonial")}
         ></Text>
         <Flex
@@ -162,7 +162,7 @@ export default function Testimonial(props) {
           {...getOverrideProps(overrides, "data")}
         >
           <Text
-            fontFamily="Inter"
+            fontFamily="Lato"
             fontSize="16px"
             fontWeight="400"
             color="rgba(0,0,0,1)"
@@ -180,11 +180,11 @@ export default function Testimonial(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={testimonials?.name}
+            children={testimonial?.name}
             {...getOverrideProps(overrides, "name")}
           ></Text>
           <Text
-            fontFamily="Inter"
+            fontFamily="Lato"
             fontSize="14px"
             fontWeight="200"
             color="rgba(0,0,0,1)"
@@ -204,7 +204,7 @@ export default function Testimonial(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={testimonials?.location}
+            children={testimonial?.location}
             {...getOverrideProps(overrides, "location")}
           ></Text>
         </Flex>

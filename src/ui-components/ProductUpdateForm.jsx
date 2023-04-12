@@ -33,6 +33,10 @@ export default function ProductUpdateForm(props) {
     weight: "",
     rating: "",
     cover: "",
+    top: "",
+    bottom: "",
+    front: "",
+    back: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -45,6 +49,10 @@ export default function ProductUpdateForm(props) {
   const [weight, setWeight] = React.useState(initialValues.weight);
   const [rating, setRating] = React.useState(initialValues.rating);
   const [cover, setCover] = React.useState(initialValues.cover);
+  const [top, setTop] = React.useState(initialValues.top);
+  const [bottom, setBottom] = React.useState(initialValues.bottom);
+  const [front, setFront] = React.useState(initialValues.front);
+  const [back, setBack] = React.useState(initialValues.back);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = productRecord
@@ -59,6 +67,10 @@ export default function ProductUpdateForm(props) {
     setWeight(cleanValues.weight);
     setRating(cleanValues.rating);
     setCover(cleanValues.cover);
+    setTop(cleanValues.top);
+    setBottom(cleanValues.bottom);
+    setFront(cleanValues.front);
+    setBack(cleanValues.back);
     setErrors({});
   };
   const [productRecord, setProductRecord] = React.useState(product);
@@ -80,6 +92,10 @@ export default function ProductUpdateForm(props) {
     weight: [],
     rating: [],
     cover: [],
+    top: [],
+    bottom: [],
+    front: [],
+    back: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -116,6 +132,10 @@ export default function ProductUpdateForm(props) {
           weight,
           rating,
           cover,
+          top,
+          bottom,
+          front,
+          back,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -180,6 +200,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -212,6 +236,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -244,6 +272,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.sku ?? value;
@@ -280,6 +312,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -316,6 +352,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.stock ?? value;
@@ -348,6 +388,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.dimensions ?? value;
@@ -384,6 +428,10 @@ export default function ProductUpdateForm(props) {
               weight: value,
               rating,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.weight ?? value;
@@ -420,6 +468,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating: value,
               cover,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -452,6 +504,10 @@ export default function ProductUpdateForm(props) {
               weight,
               rating,
               cover: value,
+              top,
+              bottom,
+              front,
+              back,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -465,6 +521,150 @@ export default function ProductUpdateForm(props) {
         errorMessage={errors.cover?.errorMessage}
         hasError={errors.cover?.hasError}
         {...getOverrideProps(overrides, "cover")}
+      ></TextField>
+      <TextField
+        label="Top"
+        isRequired={false}
+        isReadOnly={false}
+        value={top}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              top: value,
+              bottom,
+              front,
+              back,
+            };
+            const result = onChange(modelFields);
+            value = result?.top ?? value;
+          }
+          if (errors.top?.hasError) {
+            runValidationTasks("top", value);
+          }
+          setTop(value);
+        }}
+        onBlur={() => runValidationTasks("top", top)}
+        errorMessage={errors.top?.errorMessage}
+        hasError={errors.top?.hasError}
+        {...getOverrideProps(overrides, "top")}
+      ></TextField>
+      <TextField
+        label="Bottom"
+        isRequired={false}
+        isReadOnly={false}
+        value={bottom}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              top,
+              bottom: value,
+              front,
+              back,
+            };
+            const result = onChange(modelFields);
+            value = result?.bottom ?? value;
+          }
+          if (errors.bottom?.hasError) {
+            runValidationTasks("bottom", value);
+          }
+          setBottom(value);
+        }}
+        onBlur={() => runValidationTasks("bottom", bottom)}
+        errorMessage={errors.bottom?.errorMessage}
+        hasError={errors.bottom?.hasError}
+        {...getOverrideProps(overrides, "bottom")}
+      ></TextField>
+      <TextField
+        label="Front"
+        isRequired={false}
+        isReadOnly={false}
+        value={front}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              top,
+              bottom,
+              front: value,
+              back,
+            };
+            const result = onChange(modelFields);
+            value = result?.front ?? value;
+          }
+          if (errors.front?.hasError) {
+            runValidationTasks("front", value);
+          }
+          setFront(value);
+        }}
+        onBlur={() => runValidationTasks("front", front)}
+        errorMessage={errors.front?.errorMessage}
+        hasError={errors.front?.hasError}
+        {...getOverrideProps(overrides, "front")}
+      ></TextField>
+      <TextField
+        label="Back"
+        isRequired={false}
+        isReadOnly={false}
+        value={back}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              top,
+              bottom,
+              front,
+              back: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.back ?? value;
+          }
+          if (errors.back?.hasError) {
+            runValidationTasks("back", value);
+          }
+          setBack(value);
+        }}
+        onBlur={() => runValidationTasks("back", back)}
+        errorMessage={errors.back?.errorMessage}
+        hasError={errors.back?.hasError}
+        {...getOverrideProps(overrides, "back")}
       ></TextField>
       <Flex
         justifyContent="space-between"

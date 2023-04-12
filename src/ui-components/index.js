@@ -6,6 +6,7 @@
 
 export { default as ReviewProduct } from "./ReviewProduct";
 export { default as BlogCollection } from "./BlogCollection";
+export { default as MyProduct } from "./MyProduct";
 export { default as ItemCard } from "./ItemCard";
 export { default as Colleges } from "./Colleges";
 export { default as HeroLayout3 } from "./HeroLayout3";
@@ -32,12 +33,15 @@ export { default as CommentCard } from "./CommentCard";
 export { default as MyIcon } from "./MyIcon";
 export { default as MyFooter } from "./MyFooter";
 export { default as MyHeroOne } from "./MyHeroOne";
+export { default as MyProductList } from "./MyProductList";
 export { default as OrderListHeader } from "./OrderListHeader";
 export { default as HeroLayout2 } from "./HeroLayout2";
+export { default as MyFreeSources } from "./MyFreeSources";
 export { default as FormCheckout } from "./FormCheckout";
 export { default as TallCard } from "./TallCard";
 export { default as HeroLayout1 } from "./HeroLayout1";
 export { default as ProductCollection } from "./ProductCollection";
+export { default as MySource } from "./MySource";
 export { default as ProductDetail } from "./ProductDetail";
 export { default as ActionCard } from "./ActionCard";
 export { default as MyNav } from "./MyNav";

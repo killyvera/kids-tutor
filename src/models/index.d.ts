@@ -316,6 +316,10 @@ type EagerProduct = {
   readonly rating?: number | null;
   readonly cover?: string | null;
   readonly categories?: (ProductCategory | null)[] | null;
+  readonly top?: string | null;
+  readonly bottom?: string | null;
+  readonly front?: string | null;
+  readonly back?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -336,6 +340,10 @@ type LazyProduct = {
   readonly rating?: number | null;
   readonly cover?: string | null;
   readonly categories: AsyncCollection<ProductCategory>;
+  readonly top?: string | null;
+  readonly bottom?: string | null;
+  readonly front?: string | null;
+  readonly back?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

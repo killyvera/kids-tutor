@@ -83,5 +83,9 @@ type Product @model @auth(rules: [{allow: public}]) {
   rating: Float
   cover: String
   categories: [Category] @manyToMany(relationName: "ProductCategory")
+  top: String
+  bottom: String
+  front: String
+  back: String
 }
  
