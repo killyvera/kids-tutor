@@ -213,7 +213,7 @@ export default function MyProduct(props) {
               {...getOverrideProps(overrides, "Frame")}
             >
               <Text
-                fontFamily="Inter"
+                fontFamily="Lato"
                 fontSize="14px"
                 fontWeight="400"
                 color="rgba(92,102,112,1)"
@@ -236,7 +236,7 @@ export default function MyProduct(props) {
                 {...getOverrideProps(overrides, "sku")}
               ></Text>
               <Text
-                fontFamily="Inter"
+                fontFamily="Lato"
                 fontSize="14px"
                 fontWeight="400"
                 color="rgba(92,102,112,1)"
@@ -260,7 +260,7 @@ export default function MyProduct(props) {
               ></Text>
             </Flex>
             <Text
-              fontFamily="Inter"
+              fontFamily="Lato"
               fontSize="24px"
               fontWeight="700"
               color="rgba(13,26,38,1)"
@@ -307,7 +307,7 @@ export default function MyProduct(props) {
             {...getOverrideProps(overrides, "Features")}
           >
             <Text
-              fontFamily="Inter"
+              fontFamily="Lato"
               fontSize="16px"
               fontWeight="400"
               color="rgba(92,102,112,1)"
@@ -331,7 +331,7 @@ export default function MyProduct(props) {
             ></Text>
           </Flex>
           <Text
-            fontFamily="Inter"
+            fontFamily="Lato"
             fontSize="16px"
             fontWeight="400"
             color="rgba(92,102,112,1)"
@@ -421,7 +421,7 @@ export default function MyProduct(props) {
                 {...getOverrideProps(overrides, "Rating39222921")}
               ></Rating>
               <Text
-                fontFamily="Inter"
+                fontFamily="Lato"
                 fontSize="16px"
                 fontWeight="400"
                 color="rgba(13,26,38,1)"
@@ -444,7 +444,7 @@ export default function MyProduct(props) {
               ></Text>
             </Flex>
             <Text
-              fontFamily="Inter"
+              fontFamily="Lato"
               fontSize="27px"
               fontWeight="600"
               color="rgba(13,26,38,1)"
