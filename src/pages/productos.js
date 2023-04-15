@@ -31,6 +31,7 @@ export default function Home() {
       <main style={{ textAlign: '-webkit-center' }} className='' >
         <MyNavBar />
         <H1>Productos Certificados por expertos a tu alcance.</H1>
+        <MyProductList />
         <MyFooter />
       </main>
     </>

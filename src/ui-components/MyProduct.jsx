@@ -21,8 +21,15 @@ import {
 } from "@aws-amplify/ui-react";
 
 import Slider from "react-slick";
+import BadgeList from "@/components/BadgeList";
+import Marketplaces from "@/components/Marketplaces";
 
 export default function MyProduct(props) {
+  const settings = {
+    dots: true, // Habilitar miniaturas
+    // Resto de configuraciones del carousel
+  };
+
   const {
     carousel,
     categories,
@@ -156,22 +163,34 @@ export default function MyProduct(props) {
             position="absolute"
             top="0px"
             left="0px"
-            backgroundColor="red"
+            backgroundColor="gray"
             children={carousel}
             {...getOverrideProps(overrides, "carousel39222906")}
           >
-            <Slider>
+            <Slider {...settings}>
               <div height="100%">
-                <img src={product?.cover} />
+                <img
+                  className="w-full h-full object-cover"
+                  src={product?.cover}
+                />
               </div>
               <div>
-                <p>HOLA 2</p>
+                <img
+                  className="w-full h-full object-cover"
+                  src={product?.top}
+                />
+              </div>
+              <div>
+                <img
+                  className="w-full h-full object-cover"
+                  src={product?.bottom}
+                />
               </div>
             </Slider>
           </View>
         </View>
         <Flex
-          gap="25px"
+          gap="0px"
           direction="column"
           width="497px"
           height="555px"
@@ -194,7 +213,7 @@ export default function MyProduct(props) {
             shrink="0"
             alignSelf="stretch"
             position="relative"
-            padding="0px 0px 0px 0px"
+            padding="10px 0px 0px 0px"
             display="flex"
             {...getOverrideProps(overrides, "Title")}
           >
@@ -350,7 +369,7 @@ export default function MyProduct(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={`${product?.dimensions}${"cms"}`}
+            children={`${product?.dimensions}${"cms"} / ${product?.weight}${"kg"}`}
             {...getOverrideProps(overrides, "extras")}
           ></Text>
           <View
@@ -366,9 +385,11 @@ export default function MyProduct(props) {
             alignSelf="stretch"
             position="relative"
             padding="0px 0px 0px 0px"
-            backgroundColor="rgba(188,236,245,1)"
+            backgroundColor=""
             {...getOverrideProps(overrides, "Categories")}
-          ></View>
+          >
+            <BadgeList categories={product?.categories} />
+          </View>
           <View
             width="unset"
             height="unset"
@@ -382,9 +403,11 @@ export default function MyProduct(props) {
             alignSelf="stretch"
             position="relative"
             padding="0px 0px 0px 0px"
-            backgroundColor="rgba(188,236,245,1)"
+            backgroundColor=""
             {...getOverrideProps(overrides, "marketplaces")}
-          ></View>
+          >
+            <Marketplaces />
+          </View>
           <Flex
             gap="16px"
             direction="column"
@@ -413,6 +436,7 @@ export default function MyProduct(props) {
               {...getOverrideProps(overrides, "Rating39222920")}
             >
               <Rating
+              fillColor={'pink'}
                 width="unset"
                 height="unset"
                 shrink="0"

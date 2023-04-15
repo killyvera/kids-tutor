@@ -51,7 +51,7 @@ export default function HeroResponsive(props) {
           width: "100%",
           height: "412px",
           justifyContent: "center",
-          padding: "0px 0px 7px 0px",
+          padding: "0px 0px 0px 0px",
         },
         "Frame 420": { gap: "29px", width: "100%", height: "974px" },
         HeroResponsive: { width: "100%", height: "1075px" },
