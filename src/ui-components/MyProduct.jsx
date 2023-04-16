@@ -163,7 +163,7 @@ export default function MyProduct(props) {
             position="absolute"
             top="0px"
             left="0px"
-            backgroundColor="gray"
+            backgroundColor="#ffdbdb"
             children={carousel}
             {...getOverrideProps(overrides, "carousel39222906")}
           >
