@@ -41,9 +41,9 @@ type Tags @model @auth(rules: [{allow: public}]) {
 type BlogPost @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String
+  cover: String
   content: String
   author: String
-  published_date: AWSDate
   Tags: [Tags] @manyToMany(relationName: "BlogPostTags")
 }
 

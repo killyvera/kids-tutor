@@ -187,9 +187,9 @@ type EagerBlogPost = {
   };
   readonly id: string;
   readonly title?: string | null;
+  readonly cover?: string | null;
   readonly content?: string | null;
   readonly author?: string | null;
-  readonly published_date?: string | null;
   readonly Tags?: (BlogPostTags | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -202,9 +202,9 @@ type LazyBlogPost = {
   };
   readonly id: string;
   readonly title?: string | null;
+  readonly cover?: string | null;
   readonly content?: string | null;
   readonly author?: string | null;
-  readonly published_date?: string | null;
   readonly Tags: AsyncCollection<BlogPostTags>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

@@ -15,6 +15,7 @@ import MyFooter from '@/components/MyFooter'
 import MyTestimonials from '@/components/MyTestimonials'
 import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
 import MyProductList from '@/components/MyProductList'
+import Spacer from '@/components/Spacer'
 Amplify.configure(awsexports)
 
 const inter = Inter({ subsets: ['latin'] })

@@ -24,29 +24,27 @@ export default function BlogPostCreateForm(props) {
   } = props;
   const initialValues = {
     title: "",
+    cover: "",
     content: "",
     author: "",
-    published_date: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
+  const [cover, setCover] = React.useState(initialValues.cover);
   const [content, setContent] = React.useState(initialValues.content);
   const [author, setAuthor] = React.useState(initialValues.author);
-  const [published_date, setPublished_date] = React.useState(
-    initialValues.published_date
-  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
+    setCover(initialValues.cover);
     setContent(initialValues.content);
     setAuthor(initialValues.author);
-    setPublished_date(initialValues.published_date);
     setErrors({});
   };
   const validations = {
     title: [],
+    cover: [],
     content: [],
     author: [],
-    published_date: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -75,9 +73,9 @@ export default function BlogPostCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           title,
+          cover,
           content,
           author,
-          published_date,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -133,9 +131,9 @@ export default function BlogPostCreateForm(props) {
           if (onChange) {
             const modelFields = {
               title: value,
+              cover,
               content,
               author,
-              published_date,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -151,6 +149,33 @@ export default function BlogPostCreateForm(props) {
         {...getOverrideProps(overrides, "title")}
       ></TextField>
       <TextField
+        label="Cover"
+        isRequired={false}
+        isReadOnly={false}
+        value={cover}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              cover: value,
+              content,
+              author,
+            };
+            const result = onChange(modelFields);
+            value = result?.cover ?? value;
+          }
+          if (errors.cover?.hasError) {
+            runValidationTasks("cover", value);
+          }
+          setCover(value);
+        }}
+        onBlur={() => runValidationTasks("cover", cover)}
+        errorMessage={errors.cover?.errorMessage}
+        hasError={errors.cover?.hasError}
+        {...getOverrideProps(overrides, "cover")}
+      ></TextField>
+      <TextField
         label="Content"
         isRequired={false}
         isReadOnly={false}
@@ -160,9 +185,9 @@ export default function BlogPostCreateForm(props) {
           if (onChange) {
             const modelFields = {
               title,
+              cover,
               content: value,
               author,
-              published_date,
             };
             const result = onChange(modelFields);
             value = result?.content ?? value;
@@ -187,9 +212,9 @@ export default function BlogPostCreateForm(props) {
           if (onChange) {
             const modelFields = {
               title,
+              cover,
               content,
               author: value,
-              published_date,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -203,34 +228,6 @@ export default function BlogPostCreateForm(props) {
         errorMessage={errors.author?.errorMessage}
         hasError={errors.author?.hasError}
         {...getOverrideProps(overrides, "author")}
-      ></TextField>
-      <TextField
-        label="Published date"
-        isRequired={false}
-        isReadOnly={false}
-        type="date"
-        value={published_date}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              content,
-              author,
-              published_date: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.published_date ?? value;
-          }
-          if (errors.published_date?.hasError) {
-            runValidationTasks("published_date", value);
-          }
-          setPublished_date(value);
-        }}
-        onBlur={() => runValidationTasks("published_date", published_date)}
-        errorMessage={errors.published_date?.errorMessage}
-        hasError={errors.published_date?.hasError}
-        {...getOverrideProps(overrides, "published_date")}
       ></TextField>
       <Flex
         justifyContent="space-between"

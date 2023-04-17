@@ -16,9 +16,10 @@ const H1 = ({ children }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   return (
-    <h1 className={`mx-9 text-center text-4xl md:text-${fontSize} font-bold my-14 text-gray-100`}>
+    <h1
+      className={`mx-9 text-center text-4xl md:text-${fontSize} font-bold text-gray-100 my-20`}
+    >
       {children}
     </h1>
   );

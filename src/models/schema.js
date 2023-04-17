@@ -471,6 +471,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "cover": {
+                    "name": "cover",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "content": {
                     "name": "content",
                     "isArray": false,
@@ -482,13 +489,6 @@ export const schema = {
                     "name": "author",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "published_date": {
-                    "name": "published_date",
-                    "isArray": false,
-                    "type": "AWSDate",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1328,5 +1328,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "f9976814782e2e842b5ccd2b8ac44a53"
+    "version": "145503cb2a4cbd9a7b0950045fc43e21"
 };

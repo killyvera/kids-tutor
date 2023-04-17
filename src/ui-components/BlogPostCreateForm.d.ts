@@ -14,23 +14,23 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type BlogPostCreateFormInputValues = {
     title?: string;
+    cover?: string;
     content?: string;
     author?: string;
-    published_date?: string;
 };
 export declare type BlogPostCreateFormValidationValues = {
     title?: ValidationFunction<string>;
+    cover?: ValidationFunction<string>;
     content?: ValidationFunction<string>;
     author?: ValidationFunction<string>;
-    published_date?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BlogPostCreateFormOverridesProps = {
     BlogPostCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     title?: PrimitiveOverrideProps<TextFieldProps>;
+    cover?: PrimitiveOverrideProps<TextFieldProps>;
     content?: PrimitiveOverrideProps<TextFieldProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
-    published_date?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type BlogPostCreateFormProps = React.PropsWithChildren<{
     overrides?: BlogPostCreateFormOverridesProps | undefined | null;
