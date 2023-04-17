@@ -41,7 +41,7 @@ export default function Testimonial(props) {
         Rating: {},
         testimonial: {},
         name: { fontSize: "14px", letterSpacing: "0px" },
-        location: { fontSize: "10px", height: "11px" },
+        location: { fontSize: "10px", height: "28px" },
         data: { width: "206px", height: "35px", justifyContent: "center" },
         group: {
           gap: "4px",
@@ -117,6 +117,7 @@ export default function Testimonial(props) {
           {...getOverrideProps(overrides, "image")}
         ></Image>
         <Rating
+        fillColor={"pink"}
           width="unset"
           height="unset"
           shrink="0"
