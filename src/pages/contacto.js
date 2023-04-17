@@ -19,6 +19,7 @@ import YoutubeBackground from '@/components/YoutubeBackground'
 import Spacer from '@/components/Spacer'
 import MyResources from '@/components/MyResources'
 import MyPostList from '@/ui-components/MyPostList'
+import ContactCreateForm from '@/ui-components/ContactCreateForm'
 
 Amplify.configure(awsexports)
 
@@ -36,7 +37,7 @@ export default function Home() {
       <main style={{ textAlign: '-webkit-center' }} className='' >
         <MyNavBar />
         <H1>Quieres conocernos? Envianos un mensaje.</H1>
-        <MyPostList />
+        <ContactCreateForm />
         <MyFooter />
       </main>
     </>

@@ -50,8 +50,8 @@ export default function MyPost(props) {
         },
         link: { textAlign: "center", shrink: "0", alignSelf: "stretch" },
         stamp: { direction: "column", height: "68px" },
-        Body: { width: "250px", justifyContent: "center" },
-        MyPost: { height: "", padding: "9px 24px 9px 24px" },
+        Body: { width: "251px", justifyContent: "center" },
+        MyPost: { height: "880px", padding: "9px 24px 9px 24px" },
       },
       variantValues: { breakpoint: "small" },
     },
@@ -73,8 +73,8 @@ export default function MyPost(props) {
     <Flex
       gap="16px"
       direction="column"
-      width="80%"
-      height=""
+      width="unset"
+      height="719px"
       justifyContent="flex-start"
       alignItems="center"
       overflow="hidden"

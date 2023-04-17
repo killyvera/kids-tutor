@@ -36,7 +36,6 @@ export default function MyPostList(props) {
       itemsPerPage={2}
       direction="column"
       justifyContent="stretch"
-      alignItems="center"
       items={items || []}
       {...getOverrideProps(overrides, "MyPostList")}
       {...rest}

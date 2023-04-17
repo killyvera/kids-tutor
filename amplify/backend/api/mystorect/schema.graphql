@@ -1,3 +1,10 @@
+type Contact @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  email: String
+  message: String
+}
+
 type Resources @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String

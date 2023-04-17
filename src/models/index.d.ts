@@ -6,6 +6,38 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
+type EagerContact = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Contact, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly email?: string | null;
+  readonly message?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyContact = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Contact, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly name?: string | null;
+  readonly email?: string | null;
+  readonly message?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Contact = LazyLoading extends LazyLoadingDisabled ? EagerContact : LazyContact
+
+export declare const Contact: (new (init: ModelInit<Contact>) => Contact) & {
+  copyOf(source: Contact, mutator: (draft: MutableModel<Contact>) => MutableModel<Contact> | void): Contact;
+}
+
 type EagerResources = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Resources, 'id'>;
