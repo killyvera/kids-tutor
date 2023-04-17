@@ -16,9 +16,9 @@ const features = [
 ];
 
 const product = {
-  name: "Kids Tutor Set de experimentos para aprender sobre la física",
+  name: "Kids Tutor, la manera más divertida de aprender.",
   descriptionn:
-    "Set de experimentos está diseñado para ayudar a los niños mayores a aprender sobre la física y los principios básicos de la mecánica. El set incluye una variedad de materiales para realizar experimentos, como pelotas, rampas, poleas y cuerdas, así como instrucciones detalladas para realizar diferentes experimentos. Este set es una herramienta educativa valiosa para fomentar el aprendizaje de las ciencias naturales en los niños mayores.",
+    "Nuestros kits educativos ofrecen una forma interactiva y entretenida de mejorar las habilidades de inglés y matemáticas de tus hijos. Con actividades lúdicas, desafíos divertidos y materiales de alta calidad, Kids Tutor es la opción ideal para fortalecer el aprendizaje de tus hijos. ¡Descubre nuestros juegos didácticos hoy y bríndales a tus hijos una forma divertida de aprender mientras juegan!",
   sku: "CT-PHYSICS-001",
   price: 500,
   stock: 20,
@@ -112,7 +112,8 @@ export default function MyProductFeatures() {
                     src="/college.png"
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
-                  />Método Montessori
+                  />
+                  Método Montessori
                 </a>
                 <a
                   href="https://es.wikipedia.org/wiki/Matem%C3%A1ticas_m%C3%A9todo_Singapur"
@@ -124,7 +125,8 @@ export default function MyProductFeatures() {
                     src="/college.png"
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
-                  />Sistema educativo de Singapur
+                  />
+                  Sistema educativo de Singapur
                 </a>
                 <a
                   href="https://es.wikipedia.org/wiki/Common_Core"
@@ -136,7 +138,8 @@ export default function MyProductFeatures() {
                     src="/college.png"
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
-                  />Núcleo común
+                  />
+                  Núcleo común
                 </a>
               </div>
             </div>
@@ -152,9 +155,7 @@ export default function MyProductFeatures() {
               </dt>
               <dd className="mt-2 text-sm text-gray-500">
                 Encontrar la forma más sencilla y entretenida para aprender es
-                fundamental. En nuestra metodología, hemos creado o adaptado
-                juegos para enseñar cada concepto, utilizando el material que
-                los niños ya conocen. ¡Aprender nunca fue tan divertido!
+                fundamental, Nosotros y tus pequeños sabemos que es jugando.
               </dd>
             </div>
 
@@ -177,22 +178,22 @@ export default function MyProductFeatures() {
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
           <img
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-01.jpg"
+            src="https://i.ibb.co/sVFLLb3/featureimage003.png"
             alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
             className="rounded-lg bg-gray-100"
           />
           <img
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-02.jpg"
+            src="https://i.ibb.co/ydL2gdS/feature-Image01.png"
             alt="Top down view of walnut card tray with embedded magnets and card groove."
             className="rounded-lg bg-gray-100"
           />
           <img
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-03.jpg"
+            src="https://i.ibb.co/G2n77Rv/feature-Image02.png"
             alt="Side of walnut card tray with card groove and recessed card area."
             className="rounded-lg bg-gray-100"
           />
           <img
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-04.jpg"
+            src="https://i.ibb.co/B4CvPVW/feature-Image00.png"
             alt="Walnut card tray filled with cards and card angled in dedicated groove."
             className="rounded-lg bg-gray-100"
           />

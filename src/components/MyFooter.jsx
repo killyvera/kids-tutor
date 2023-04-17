@@ -8,7 +8,7 @@ export default function MyFooter() {
         <div className="sm:flex sm:items-center sm:justify-between">
             <a href="https://flowbite.com/" className="flex items-center mb-4 sm:mb-0">
                 <img src="/logoFull.png" className="h-12 mr-3" alt="Flowbite Logo" />
-                <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Kids Tutor</span>
+                <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Kids Tutor</span>
             </a>
             <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-100 sm:mb-0">
                 <li>
