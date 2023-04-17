@@ -60,6 +60,8 @@ export { default as Features2x2 } from "./Features2x2";
 export { default as MyNavResponsive } from "./MyNavResponsive";
 export { default as SocialPost } from "./SocialPost";
 export { default as studioTheme } from "./studioTheme";
+export { default as ResourcesCreateForm } from "./ResourcesCreateForm";
+export { default as ResourcesUpdateForm } from "./ResourcesUpdateForm";
 export { default as TestimonialsCreateForm } from "./TestimonialsCreateForm";
 export { default as TestimonialsUpdateForm } from "./TestimonialsUpdateForm";
 export { default as CollegesCreateForm } from "./CollegesCreateForm";

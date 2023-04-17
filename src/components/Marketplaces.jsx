@@ -2,6 +2,8 @@ import React from "react";
 
 const Marketplaces = () => {
   return (
+    <>
+    <h1 className="justify-center" >Obtenlo Ahora en los siguientes <br/>Marketplaces:</h1>
     <div className="flex justify-center items-center space-x-4">
       {/* Enlace de Mercado Libre */}
       <a
@@ -36,6 +38,7 @@ const Marketplaces = () => {
         />
       </a>
     </div>
+    </>
   );
 };
 

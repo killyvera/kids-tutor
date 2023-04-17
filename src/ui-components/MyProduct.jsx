@@ -19,17 +19,7 @@ import {
   View,
   useBreakpointValue,
 } from "@aws-amplify/ui-react";
-
-import Slider from "react-slick";
-import BadgeList from "@/components/BadgeList";
-import Marketplaces from "@/components/Marketplaces";
-
 export default function MyProduct(props) {
-  const settings = {
-    dots: true, // Habilitar miniaturas
-    // Resto de configuraciones del carousel
-  };
-
   const {
     carousel,
     categories,
@@ -41,7 +31,7 @@ export default function MyProduct(props) {
   const variants = [
     {
       overrides: {
-        4: {},
+        "4": {},
         carousel39222906: {},
         carousel39562908: {},
         sku: {},
@@ -67,7 +57,7 @@ export default function MyProduct(props) {
     },
     {
       overrides: {
-        4: {},
+        "4": {},
         carousel39222906: { width: "300px" },
         carousel39562908: { width: "300px", height: "300px" },
         sku: { fontSize: "11px" },
@@ -153,7 +143,6 @@ export default function MyProduct(props) {
           {...getOverrideProps(overrides, "carousel39562908")}
         >
           <View
-            padding="40px"
             width="496.5px"
             height="555px"
             display="block"
@@ -163,36 +152,16 @@ export default function MyProduct(props) {
             position="absolute"
             top="0px"
             left="0px"
-            backgroundColor="#ffdbdb"
+            padding="0px 0px 0px 0px"
+            backgroundColor="rgba(188,236,245,1)"
             children={carousel}
             {...getOverrideProps(overrides, "carousel39222906")}
-          >
-            <Slider {...settings}>
-              <div height="100%">
-                <img
-                  className="w-full h-full object-cover"
-                  src={product?.cover}
-                />
-              </div>
-              <div>
-                <img
-                  className="w-full h-full object-cover"
-                  src={product?.top}
-                />
-              </div>
-              <div>
-                <img
-                  className="w-full h-full object-cover"
-                  src={product?.bottom}
-                />
-              </div>
-            </Slider>
-          </View>
+          ></View>
         </View>
         <Flex
-          gap="0px"
+          gap="24px"
           direction="column"
-          width="497px"
+          width="496.5px"
           height="555px"
           justifyContent="center"
           alignItems="center"
@@ -213,7 +182,7 @@ export default function MyProduct(props) {
             shrink="0"
             alignSelf="stretch"
             position="relative"
-            padding="10px 0px 0px 0px"
+            padding="0px 0px 0px 0px"
             display="flex"
             {...getOverrideProps(overrides, "Title")}
           >
@@ -232,7 +201,7 @@ export default function MyProduct(props) {
               {...getOverrideProps(overrides, "Frame")}
             >
               <Text
-                fontFamily="Lato"
+                fontFamily="Inter"
                 fontSize="14px"
                 fontWeight="400"
                 color="rgba(92,102,112,1)"
@@ -255,7 +224,7 @@ export default function MyProduct(props) {
                 {...getOverrideProps(overrides, "sku")}
               ></Text>
               <Text
-                fontFamily="Lato"
+                fontFamily="Inter"
                 fontSize="14px"
                 fontWeight="400"
                 color="rgba(92,102,112,1)"
@@ -279,7 +248,7 @@ export default function MyProduct(props) {
               ></Text>
             </Flex>
             <Text
-              fontFamily="Lato"
+              fontFamily="Inter"
               fontSize="24px"
               fontWeight="700"
               color="rgba(13,26,38,1)"
@@ -326,7 +295,7 @@ export default function MyProduct(props) {
             {...getOverrideProps(overrides, "Features")}
           >
             <Text
-              fontFamily="Lato"
+              fontFamily="Inter"
               fontSize="16px"
               fontWeight="400"
               color="rgba(92,102,112,1)"
@@ -350,7 +319,7 @@ export default function MyProduct(props) {
             ></Text>
           </Flex>
           <Text
-            fontFamily="Lato"
+            fontFamily="Inter"
             fontSize="16px"
             fontWeight="400"
             color="rgba(92,102,112,1)"
@@ -369,7 +338,7 @@ export default function MyProduct(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={`${product?.dimensions}${"cms"} / ${product?.weight}${"kg"}`}
+            children={`${product?.dimensions}${"cms"}`}
             {...getOverrideProps(overrides, "extras")}
           ></Text>
           <View
@@ -385,11 +354,9 @@ export default function MyProduct(props) {
             alignSelf="stretch"
             position="relative"
             padding="0px 0px 0px 0px"
-            backgroundColor=""
+            backgroundColor="rgba(188,236,245,1)"
             {...getOverrideProps(overrides, "Categories")}
-          >
-            <BadgeList categories={product?.categories} />
-          </View>
+          ></View>
           <View
             width="unset"
             height="unset"
@@ -403,11 +370,9 @@ export default function MyProduct(props) {
             alignSelf="stretch"
             position="relative"
             padding="0px 0px 0px 0px"
-            backgroundColor=""
+            backgroundColor="rgba(188,236,245,1)"
             {...getOverrideProps(overrides, "marketplaces")}
-          >
-            <Marketplaces />
-          </View>
+          ></View>
           <Flex
             gap="16px"
             direction="column"
@@ -436,7 +401,6 @@ export default function MyProduct(props) {
               {...getOverrideProps(overrides, "Rating39222920")}
             >
               <Rating
-              fillColor={'pink'}
                 width="unset"
                 height="unset"
                 shrink="0"
@@ -445,7 +409,7 @@ export default function MyProduct(props) {
                 {...getOverrideProps(overrides, "Rating39222921")}
               ></Rating>
               <Text
-                fontFamily="Lato"
+                fontFamily="Inter"
                 fontSize="16px"
                 fontWeight="400"
                 color="rgba(13,26,38,1)"
@@ -468,7 +432,7 @@ export default function MyProduct(props) {
               ></Text>
             </Flex>
             <Text
-              fontFamily="Lato"
+              fontFamily="Inter"
               fontSize="27px"
               fontWeight="600"
               color="rgba(13,26,38,1)"

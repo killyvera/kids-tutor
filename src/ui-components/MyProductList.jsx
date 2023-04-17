@@ -35,7 +35,7 @@ export default function MyProductList(props) {
       searchPlaceholder="Buscar..."
       itemsPerPage={2}
       direction="column"
-      alignItems="center"
+      alignItems="stretch"
       justifyContent="center"
       items={items || []}
       {...getOverrideProps(overrides, "MyProductList")}

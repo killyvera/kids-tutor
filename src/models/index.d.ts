@@ -1,10 +1,44 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
 
 
 
+
+type EagerResources = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Resources, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly title?: string | null;
+  readonly description?: string | null;
+  readonly file?: string | null;
+  readonly Categories?: (ResourcesCategory | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyResources = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Resources, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly title?: string | null;
+  readonly description?: string | null;
+  readonly file?: string | null;
+  readonly Categories: AsyncCollection<ResourcesCategory>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Resources = LazyLoading extends LazyLoadingDisabled ? EagerResources : LazyResources
+
+export declare const Resources: (new (init: ModelInit<Resources>) => Resources) & {
+  copyOf(source: Resources, mutator: (draft: MutableModel<Resources>) => MutableModel<Resources> | void): Resources;
+}
 
 type EagerTestimonials = {
   readonly [__modelMeta__]: {
@@ -278,6 +312,7 @@ type EagerCategory = {
   readonly id: string;
   readonly name?: string | null;
   readonly products?: (ProductCategory | null)[] | null;
+  readonly resourcess?: (ResourcesCategory | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -290,6 +325,7 @@ type LazyCategory = {
   readonly id: string;
   readonly name?: string | null;
   readonly products: AsyncCollection<ProductCategory>;
+  readonly resourcess: AsyncCollection<ResourcesCategory>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -352,6 +388,40 @@ export declare type Product = LazyLoading extends LazyLoadingDisabled ? EagerPro
 
 export declare const Product: (new (init: ModelInit<Product>) => Product) & {
   copyOf(source: Product, mutator: (draft: MutableModel<Product>) => MutableModel<Product> | void): Product;
+}
+
+type EagerResourcesCategory = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<ResourcesCategory, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly resourcesId?: string | null;
+  readonly categoryId?: string | null;
+  readonly resources: Resources;
+  readonly category: Category;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyResourcesCategory = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<ResourcesCategory, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly resourcesId?: string | null;
+  readonly categoryId?: string | null;
+  readonly resources: AsyncItem<Resources>;
+  readonly category: AsyncItem<Category>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type ResourcesCategory = LazyLoading extends LazyLoadingDisabled ? EagerResourcesCategory : LazyResourcesCategory
+
+export declare const ResourcesCategory: (new (init: ModelInit<ResourcesCategory>) => ResourcesCategory) & {
+  copyOf(source: ResourcesCategory, mutator: (draft: MutableModel<ResourcesCategory>) => MutableModel<ResourcesCategory> | void): ResourcesCategory;
 }
 
 type EagerBlogPostTags = {

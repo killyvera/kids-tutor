@@ -80,7 +80,7 @@ export default function MyProduct(props) {
         Features: {},
         extras: {},
         Categories: { height: "68px", shrink: "0" },
-        marketplaces: { height: "68px", shrink: "0" },
+        marketplaces: { height: "auto", shrink: "0" },
         Rating39222921: { size: "small" },
         Rating39222920: {},
         "$250.00mxn": { fontSize: "19px" },

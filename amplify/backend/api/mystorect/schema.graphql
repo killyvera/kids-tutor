@@ -1,3 +1,11 @@
+type Resources @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  description: String
+  file: String
+  Categories: [Category] @manyToMany(relationName: "ResourcesCategory")
+}
+
 type Testimonials @model @auth(rules: [{allow: public}]) {
   id: ID!
   content: String
@@ -69,6 +77,7 @@ type Category @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   products: [Product] @manyToMany(relationName: "ProductCategory")
+  resourcess: [Resources] @manyToMany(relationName: "ResourcesCategory")
 }
 
 type Product @model @auth(rules: [{allow: public}]) {
