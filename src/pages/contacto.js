@@ -36,7 +36,7 @@ export default function Home() {
       </Head>
       <main style={{ textAlign: '-webkit-center' }} className='' >
         <MyNavBar />
-        <H1>Quieres conocernos? Envianos un mensaje.</H1>
+        <H1>Quieres conocernos? Envianos un mensaje<br/>Visita nuestras redes sociales.</H1>
         <ContactCreateForm />
         <MyFooter />
       </main>
