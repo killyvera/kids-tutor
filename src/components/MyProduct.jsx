@@ -23,6 +23,7 @@ import {
 import Slider from "react-slick";
 import BadgeList from "@/components/BadgeList";
 import Marketplaces from "@/components/Marketplaces";
+import StripeTest from "./stripeTest";
 
 export default function MyProduct(props) {
   const settings = {
@@ -124,6 +125,7 @@ export default function MyProduct(props) {
       position="relative"
       padding="0px 0px 0px 0px"
       display="flex"
+      backgroundColor="white"
       {...getOverrideProps(overrides, "MyProduct")}
       {...rest}
     >
@@ -133,7 +135,7 @@ export default function MyProduct(props) {
         width="unset"
         height="unset"
         justifyContent="center"
-        alignItems="center"
+        alignItems="start"
         shrink="0"
         position="relative"
         padding="0px 0px 0px 0px"
@@ -141,8 +143,8 @@ export default function MyProduct(props) {
         {...getOverrideProps(overrides, "Frame 422")}
       >
         <View
-          width="496.5px"
-          height="555px"
+          width="100%"
+          height=""
           display="block"
           gap="unset"
           alignItems="unset"
@@ -153,9 +155,9 @@ export default function MyProduct(props) {
           {...getOverrideProps(overrides, "carousel39562908")}
         >
           <View
-            padding="40px"
-            width="496.5px"
-            height="555px"
+            padding=""
+            width="100%"
+            height=""
             display="block"
             gap="unset"
             alignItems="unset"
@@ -163,7 +165,7 @@ export default function MyProduct(props) {
             position="absolute"
             top="0px"
             left="0px"
-            backgroundColor="#ffdbdb"
+            backgroundColor="white"
             children={carousel}
             {...getOverrideProps(overrides, "carousel39222906")}
           >
@@ -193,7 +195,7 @@ export default function MyProduct(props) {
           gap="0px"
           direction="column"
           width="497px"
-          height="555px"
+          height=""
           justifyContent="center"
           alignItems="center"
           shrink="0"
@@ -369,7 +371,9 @@ export default function MyProduct(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={`${product?.dimensions}${"cms"} / ${product?.weight}${"kg"}`}
+            children={`${product?.dimensions}${"cms"} / ${
+              product?.weight
+            }${"kg"}`}
             {...getOverrideProps(overrides, "extras")}
           ></Text>
           <View
@@ -407,6 +411,7 @@ export default function MyProduct(props) {
             {...getOverrideProps(overrides, "marketplaces")}
           >
             <Marketplaces />
+            <StripeTest />
           </View>
           <Flex
             gap="16px"
@@ -436,7 +441,7 @@ export default function MyProduct(props) {
               {...getOverrideProps(overrides, "Rating39222920")}
             >
               <Rating
-              fillColor={'pink'}
+                fillColor={"pink"}
                 width="unset"
                 height="unset"
                 shrink="0"
