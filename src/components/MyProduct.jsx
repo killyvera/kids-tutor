@@ -428,6 +428,7 @@ export default function MyProduct(props) {
             {...getOverrideProps(overrides, "Bottom Row")}
           >
             <Flex
+            className="scale-75"
               gap="16px"
               direction="row"
               width="unset"

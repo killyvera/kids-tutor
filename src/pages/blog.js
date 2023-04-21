@@ -18,7 +18,7 @@ import { ProductCollection } from '@/ui-components'
 import YoutubeBackground from '@/components/YoutubeBackground'
 import Spacer from '@/components/Spacer'
 import MyResources from '@/components/MyResources'
-import MyPostList from '@/ui-components/MyPostList'
+import MyPostList from '@/components/MyPostList'
 
 Amplify.configure(awsexports)
 

@@ -75,7 +75,7 @@ export default function MyPost(props) {
     <Flex
       gap="16px"
       direction="column"
-      width="80%"
+      width="70%"
       height=""
       justifyContent="flex-start"
       alignItems="center"

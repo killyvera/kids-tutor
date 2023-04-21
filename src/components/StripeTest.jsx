@@ -22,35 +22,10 @@ export default function StripeTest() {
   return (
     <form action="/api/checkout_sessions" method="POST">
       <section>
-        <button type="submit" role="link">
-          ¡Adquíerelo en nuestra Tienda Ya!
+        <button className='bg-blue-500 text-sm sm:text-base transition hover:scale-110 text-gray-100 p-2 mt-4 rounded' type="submit" role="link">
+          Obtener en la tienda oficial ahora
         </button>
       </section>
-      <style jsx>
-        {`
-          section {
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            border-radius: 6px;
-            justify-content: space-between;
-          }
-          button {
-            height: 40px;
-            background: #556cd6;
-            border-radius: 4px;
-            color: white;
-            border: 0;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
-          }
-          button:hover {
-            opacity: 0.8;
-          }
-        `}
-      </style>
     </form>
   );
 }

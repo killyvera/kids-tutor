@@ -14,7 +14,7 @@ const Marketplaces = () => {
         <img
           src="/mercadolibre.png"
           alt="Mercado Libre"
-          className="h-50 w-70 object-contain rounded"
+          className="h-50 w-70 object-contain rounded transition hover:scale-125"
         />
       </a>
       {/* Enlace de Amazon */}
@@ -26,7 +26,7 @@ const Marketplaces = () => {
         <img
           src="/amazon.png"
           alt="Amazon"
-          className="h-50 w-70 object-contain rounded"
+          className="h-50 w-70 object-contain rounded transition hover:scale-125"
         />
       </a>
       {/* Enlace de Etsy */}
@@ -34,7 +34,7 @@ const Marketplaces = () => {
         <img
           src="/etsy.png"
           alt="Etsy"
-          className="h-50 w-70 object-contain rounded"
+          className="h-50 w-70 object-contain rounded transition hover:scale-125"
         />
       </a>
     </div>
