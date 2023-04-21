@@ -23,7 +23,7 @@ import {
 import Slider from "react-slick";
 import BadgeList from "@/components/BadgeList";
 import Marketplaces from "@/components/Marketplaces";
-import StripeTest from "./stripeTest";
+import StripeTest from "@/stripeTest";
 
 export default function MyProduct(props) {
   const settings = {
