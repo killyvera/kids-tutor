@@ -12,8 +12,6 @@ import {
   mergeVariantsAndOverrides,
 } from "@aws-amplify/ui-react/internal";
 import { Flex, Image, Text, useBreakpointValue } from "@aws-amplify/ui-react";
-import formatFecha from "@/helpers/formatDate";
-
 export default function MyPost(props) {
   const { blogPost, overrides: overridesProp, ...restProp } = props;
   const variants = [
@@ -53,7 +51,7 @@ export default function MyPost(props) {
         link: { textAlign: "center", shrink: "0", alignSelf: "stretch" },
         stamp: { direction: "column", height: "68px" },
         Body: { width: "251px", justifyContent: "center" },
-        MyPost: {width:'95%', height: "", padding: "9px 24px 9px 24px" },
+        MyPost: { height: "880px", padding: "9px 24px 9px 24px" },
       },
       variantValues: { breakpoint: "small" },
     },
@@ -75,8 +73,8 @@ export default function MyPost(props) {
     <Flex
       gap="16px"
       direction="column"
-      width="80%"
-      height=""
+      width="unset"
+      height="719px"
       justifyContent="flex-start"
       alignItems="center"
       overflow="hidden"
@@ -253,7 +251,7 @@ export default function MyPost(props) {
               position="relative"
               padding="0px 0px 0px 0px"
               whiteSpace="pre-wrap"
-              children={formatFecha(blogPost?.createdAt)}
+              children={blogPost?.createdAt}
               {...getOverrideProps(overrides, "date")}
             ></Text>
           </Flex>

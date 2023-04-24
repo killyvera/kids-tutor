@@ -36,7 +36,7 @@ export default function MyPost(props) {
     },
     {
       overrides: {
-        cover: { width: "251px", height: "236px" },
+        cover: { width: "100%", height: "unset" },
         "New Amplify Studio gives designers the ability to export UI to React code":
           {},
         title: {},
@@ -52,7 +52,7 @@ export default function MyPost(props) {
         },
         link: { textAlign: "center", shrink: "0", alignSelf: "stretch" },
         stamp: { direction: "column", height: "68px" },
-        Body: { width: "251px", justifyContent: "center" },
+        Body: { width: "", justifyContent: "center" },
         MyPost: {width:'95%', height: "", padding: "9px 24px 9px 24px" },
       },
       variantValues: { breakpoint: "small" },
@@ -91,7 +91,7 @@ export default function MyPost(props) {
       <Flex
         gap="17px"
         direction="column"
-        width="912px"
+        width=""
         height="unset"
         justifyContent="flex-start"
         alignItems="center"
@@ -104,8 +104,8 @@ export default function MyPost(props) {
         {...getOverrideProps(overrides, "Body")}
       >
         <Image
-          width="912px"
-          height="456px"
+          width="100%"
+          height="unset"
           display="block"
           gap="unset"
           alignItems="unset"
@@ -133,7 +133,7 @@ export default function MyPost(props) {
           {...getOverrideProps(overrides, "title")}
         >
           <Text
-            fontFamily="Inter"
+            fontFamily="Lato"
             fontSize="20px"
             fontWeight="700"
             color="rgba(13,26,38,1)"
@@ -159,7 +159,7 @@ export default function MyPost(props) {
           ></Text>
         </Flex>
         <Text
-          fontFamily="Inter"
+          fontFamily="Lato"
           fontSize="16px"
           fontWeight="400"
           color="rgba(13,26,38,1)"
@@ -258,7 +258,7 @@ export default function MyPost(props) {
             ></Text>
           </Flex>
           <Text
-            fontFamily="Inter"
+            fontFamily="Lato"
             fontSize="16px"
             fontWeight="400"
             color="rgba(13,26,38,1)"

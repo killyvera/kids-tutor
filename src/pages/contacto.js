@@ -19,7 +19,7 @@ import YoutubeBackground from '@/components/YoutubeBackground'
 import Spacer from '@/components/Spacer'
 import MyResources from '@/components/MyResources'
 import MyPostList from '@/ui-components/MyPostList'
-import ContactCreateForm from '@/ui-components/ContactCreateForm'
+import ContactCreateForm from '@/components/ContactCreateForm'
 
 Amplify.configure(awsexports)
 

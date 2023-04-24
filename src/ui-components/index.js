@@ -30,6 +30,7 @@ export { default as MyHeroResponsive2 } from "./MyHeroResponsive2";
 export { default as MyPostList } from "./MyPostList";
 export { default as HeroLayout4 } from "./HeroLayout4";
 export { default as NavBar } from "./NavBar";
+export { default as MySocialMedia } from "./MySocialMedia";
 export { default as UserOrderMention } from "./UserOrderMention";
 export { default as CommentCard } from "./CommentCard";
 export { default as MyIcon } from "./MyIcon";

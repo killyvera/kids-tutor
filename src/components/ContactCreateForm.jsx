@@ -69,6 +69,8 @@ export default function ContactCreateForm(props) {
   };
   return (
     <Grid
+    className="bg-white rounded-md my-20"
+    width="50%"
       as="form"
       rowGap={tokens.space.large.value}
       columnGap={tokens.space.large.value}
@@ -223,7 +225,7 @@ export default function ContactCreateForm(props) {
           <Button
             children="Enviar"
             type="submit"
-            variation="primary"
+            variation="secondary"
             isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>

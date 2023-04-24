@@ -1,4 +1,5 @@
 import React from 'react'
+import SocialMediaIcons from './SocialMediaIcons'
 
 export default function MyFooter() {
  return (
@@ -10,6 +11,9 @@ export default function MyFooter() {
                 <img src="/logoFull.png" className="h-12 mr-3" alt="Flowbite Logo" />
                 <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Kids Tutor</span>
             </a>
+            <ul>
+                <SocialMediaIcons />
+            </ul>
             <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-100 sm:mb-0">
                 <li>
                     <a href="#" className="mr-4 hover:underline md:mr-6 ">About</a>

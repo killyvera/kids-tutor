@@ -4,17 +4,12 @@ import { Inter } from 'next/font/google'
 import MyNavBar from '@/components/MyNavBar'
 import HeroResponsive from '@/components/HeroResponsive'
 import MyColleges from '@/components/MyColleges'
-
-import { Amplify } from 'aws-amplify'
-import awsexports from 'src/aws-exports.js'
-
 import H1 from '@/components/H1'
 import MyCallToAction from '@/components/MyCallToAction'
 import MyProductFeatures from '@/components/MyProductFeatures'
 import MyFooter from '@/components/MyFooter'
 import MyTestimonials from '@/components/MyTestimonials'
 import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
-Amplify.configure(awsexports)
 
 const inter = Inter({ subsets: ['latin'] })
 

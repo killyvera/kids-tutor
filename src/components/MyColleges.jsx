@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { DataStore } from '@aws-amplify/datastore';
+
+
+import { DataStore, Amplify, withSSRContext } from '@aws-amplify/datastore';
 import { Colleges } from '@/models';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -62,5 +64,16 @@ const MyColleges = () => {
         </div>
     );
 };
+
+async function getServerSideProps() {
+    const { DataStore } = withSSRContext();
+    const colleges = await DataStore.query(Colleges);
+  
+    return {
+      props: {
+        colleges: JSON.parse(JSON.stringify(colleges)),
+      },
+    };
+  }
 
 export default MyColleges;

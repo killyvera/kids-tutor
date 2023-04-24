@@ -35,8 +35,7 @@ export default function MyPostList(props) {
       searchPlaceholder="Search..."
       itemsPerPage={2}
       direction="column"
-      alignItems="center"
-      justifyContent="center"
+      justifyContent="stretch"
       items={items || []}
       {...getOverrideProps(overrides, "MyPostList")}
       {...rest}
