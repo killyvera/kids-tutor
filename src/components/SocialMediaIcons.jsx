@@ -6,7 +6,7 @@ const socialIcons = [
     url: "https://www.facebook.com/",
     icon: "/Facebook.png",
   },
-  { name: "Youtube", url: "https://youtube.com", icon: "/Youtube.png" },
+  { name: "Youtube", url: "https://youtube.com", icon: "/You.png" },
   {
     name: "Instagram",
     url: "https://www.instagram.com/",
