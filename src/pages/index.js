@@ -10,11 +10,25 @@ import MyProductFeatures from '@/components/MyProductFeatures'
 import MyFooter from '@/components/MyFooter'
 import MyTestimonials from '@/components/MyTestimonials'
 import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
+import { withSSRContext } from 'aws-amplify'
+import { Colleges, Testimonials } from '@/models'
+import { serializeModel } from '@aws-amplify/datastore/ssr';
 
+export async function getServerSideProps() {
+  const { DataStore } = withSSRContext();
+  const collegesList = await DataStore.query(Colleges);
+  const testimonialList = await DataStore.query(Testimonials)
+  return {
+    props: {
+      collegesList: serializeModel(collegesList),
+      testimonialList: serializeModel(testimonialList)
+    },
+  };
+}
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Home({collegesList, testimonialList}) {
   return (
     <>
       <Head>
@@ -27,14 +41,14 @@ export default function Home() {
         <MyNavBar />
         <HeroResponsive />
         <H1>Colegios que usan nuestros métodos y productos de aprendizaje.</H1>
-        <MyColleges />
+        <MyColleges collegesList={collegesList}/>
         <MyCallToAction
           mainText={'Alto Nivel Academico, gracias a la labor conjunta basada en resultados con nuestro equipo de expertos.'}
           buttonLabel={'Integra tu Colegio Ahora'}
         />
         <MyProductFeatures />
         <H1>¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros clientes satisfechos tienen historias que compartir.</H1>
-        <MyTestimonials />
+        <MyTestimonials testimonialList={testimonialList}/>
         <MyFooter />
       </main>
     </>

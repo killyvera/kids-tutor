@@ -6,16 +6,8 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import MyCollege from './MyCollege';
 
-const MyColleges = () => {
-    const [colleges, setColleges] = useState([]);
-
-    useEffect(() => {
-        const fetchColleges = async () => {
-            const models = await DataStore.query(Colleges);
-            setColleges(models);
-        };
-        fetchColleges();
-    }, []);
+const MyColleges = ({collegesList}) => {
+    const [colleges, setColleges] = useState(collegesList);
 
     const settings = {
         autoplay: true,
