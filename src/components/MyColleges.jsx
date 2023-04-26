@@ -1,15 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { DataStore } from '@aws-amplify/datastore';
 import { Colleges } from '@/models';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import MyCollege from './MyCollege';
-import Amplify from '@aws-amplify/core';
-import config from '@/aws-exports';
-Amplify.configure({ ...config, ssr: true });
 
-const MyColleges = ({ colleges }) => {
-    const [collegeList, setCollegeList] = useState(colleges);
+const MyColleges = () => {
+    const [colleges, setColleges] = useState([]);
+
+    useEffect(() => {
+        const fetchColleges = async () => {
+            const models = await DataStore.query(Colleges);
+            setColleges(models);
+        };
+        fetchColleges();
+    }, []);
 
     const settings = {
         autoplay: true,
@@ -47,7 +53,7 @@ const MyColleges = ({ colleges }) => {
     return (
         <div style={{maxWidth: '80%'}} >
             <Slider {...settings}>
-                {collegeList.map((college) => (
+                {colleges.map((college) => (
                     <div key={college.id}>
                         <MyCollege colleges={college} />
                     </div>
@@ -58,16 +64,3 @@ const MyColleges = ({ colleges }) => {
 };
 
 export default MyColleges;
-
-export async function getServerSideProps() {
-    const { DataStore } = require('@aws-amplify/datastore');
-    const amplifyConfig = require('@/aws-exports').default;
-    const config = amplifyConfig.default ? amplifyConfig.default : amplifyConfig;
-    const models = await DataStore.query(Colleges);
-    const colleges = JSON.parse(JSON.stringify(models));
-    return {
-        props: {
-            colleges,
-        },
-    };
-}
