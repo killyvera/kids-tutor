@@ -46,6 +46,7 @@ export { default as HeroLayout1 } from "./HeroLayout1";
 export { default as ProductCollection } from "./ProductCollection";
 export { default as MySource } from "./MySource";
 export { default as ProductDetail } from "./ProductDetail";
+export { default as MyResource } from "./MyResource";
 export { default as ActionCard } from "./ActionCard";
 export { default as MyNav } from "./MyNav";
 export { default as MarketingPricing } from "./MarketingPricing";

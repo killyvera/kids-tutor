@@ -75,14 +75,6 @@ export default function MyProductFeatures() {
                   title="Spain"
                 />
                 <img
-                  src="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/fr.svg"
-                  alt="Bandera de Francia"
-                  className="h-6 w-6 object-contain mx-auto hover:scale-105"
-                  loading="lazy"
-                  title="France"
-                />
-
-                <img
                   src="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/mx.svg"
                   alt="Bandera de México"
                   className="h-6 w-6 object-contain mx-auto hover:scale-105"

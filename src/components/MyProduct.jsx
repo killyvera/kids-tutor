@@ -147,8 +147,8 @@ export default function MyProduct(props) {
           height=""
           display="block"
           gap="unset"
-          alignItems="unset"
-          justifyContent="unset"
+          alignItems="center"
+          justifyContent="center"
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
@@ -156,21 +156,21 @@ export default function MyProduct(props) {
         >
           <View
             padding=""
-            width="100%"
+            width="80%"
             height=""
             display="block"
             gap="unset"
-            alignItems="unset"
-            justifyContent="unset"
+            alignItems="center"
+            justifyContent="center"
             position="absolute"
             top="0px"
-            left="0px"
+            left="30px"
             backgroundColor="white"
             children={carousel}
             {...getOverrideProps(overrides, "carousel39222906")}
           >
             <Slider {...settings}>
-              <div height="100%">
+              <div>
                 <img
                   className="w-full h-full object-cover"
                   src={product?.cover}
@@ -428,7 +428,7 @@ export default function MyProduct(props) {
             {...getOverrideProps(overrides, "Bottom Row")}
           >
             <Flex
-            className="scale-75"
+            className="scale-75 transition hover:scale-100"
               gap="16px"
               direction="row"
               width="unset"

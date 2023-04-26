@@ -11,6 +11,7 @@ type Resources @model @auth(rules: [{allow: public}]) {
   description: String
   file: String
   Categories: [Category] @manyToMany(relationName: "ResourcesCategory")
+  cover: String
 }
 
 type Testimonials @model @auth(rules: [{allow: public}]) {

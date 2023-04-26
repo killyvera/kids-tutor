@@ -16,11 +16,13 @@ export declare type ResourcesCreateFormInputValues = {
     title?: string;
     description?: string;
     file?: string;
+    cover?: string;
 };
 export declare type ResourcesCreateFormValidationValues = {
     title?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     file?: ValidationFunction<string>;
+    cover?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ResourcesCreateFormOverridesProps = {
@@ -28,6 +30,7 @@ export declare type ResourcesCreateFormOverridesProps = {
     title?: PrimitiveOverrideProps<TextFieldProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
     file?: PrimitiveOverrideProps<TextFieldProps>;
+    cover?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ResourcesCreateFormProps = React.PropsWithChildren<{
     overrides?: ResourcesCreateFormOverridesProps | undefined | null;

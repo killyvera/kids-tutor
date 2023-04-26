@@ -48,6 +48,7 @@ type EagerResources = {
   readonly description?: string | null;
   readonly file?: string | null;
   readonly Categories?: (ResourcesCategory | null)[] | null;
+  readonly cover?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -62,6 +63,7 @@ type LazyResources = {
   readonly description?: string | null;
   readonly file?: string | null;
   readonly Categories: AsyncCollection<ResourcesCategory>;
+  readonly cover?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
