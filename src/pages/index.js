@@ -11,6 +11,7 @@ import MyFooter from '@/components/MyFooter'
 import MyTestimonials from '@/components/MyTestimonials'
 import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
