@@ -17,16 +17,18 @@ import { serializeModel } from '@aws-amplify/datastore/ssr';
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
   const collegesList = await DataStore.query(Colleges);
+  const testimonialList = await DataStore.query(Testimonials)
   return {
     props: {
       collegesList: serializeModel(collegesList),
+      testimonialList: serializeModel(testimonialList)
     },
   };
 }
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({collegesList}) {
+export default function Home({collegesList, testimonialList}) {
   return (
     <>
       <Head>
@@ -46,7 +48,7 @@ export default function Home({collegesList}) {
         />
         <MyProductFeatures />
         <H1>¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros clientes satisfechos tienen historias que compartir.</H1>
-        <MyTestimonials />
+        <MyTestimonials testimonialList={testimonialList}/>
         <MyFooter />
       </main>
     </>

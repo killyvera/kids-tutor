@@ -7,16 +7,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import MyCollege from './MyCollege';
 import Testimonial from '@/components/Testimonial';
 
-const MyTestimonials = () => {
-    const [testimonials, setTestimonials] = useState([]);
-
-    useEffect(() => {
-        const fetchTestimonials = async () => {
-            const models = await DataStore.query(Testimonials);
-            setTestimonials(models);
-        };
-        fetchTestimonials();
-    }, []);
+const MyTestimonials = ({testimonialList}) => {
+    const [testimonials, setTestimonials] = useState(testimonialList);
 
     const settings = {
         rtl: true,
@@ -56,7 +48,7 @@ const MyTestimonials = () => {
     return (
         <div className='m-8 py-10 ' style={{maxWidth: '90%'}} >
             <Slider{...settings}>
-                {testimonials.map((testimonial) => (
+                {testimonialList?.map((testimonial) => (
                     <div key={testimonial.id}>
                         <Testimonial testimonial={testimonial} />
                     </div>
