@@ -53,11 +53,11 @@ const MyColleges = () => {
     return (
         <div style={{maxWidth: '80%'}} >
             <Slider {...settings}>
-                {colleges.map((college) => (
+                {colleges? colleges.map((college) => (
                     <div key={college.id}>
                         <MyCollege colleges={college} />
                     </div>
-                ))}
+                )): <p>Loading...</p>}
             </Slider>
         </div>
     );
