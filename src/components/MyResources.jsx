@@ -1,6 +1,11 @@
-import React from "react";
+import MyResource from "@/ui-components/MyResource";
+import { useState } from "react";
+import MyBadgeList from './MyBadgeList'
 
-function MyResources() {
+function MyResources({resourceList}) {
+
+  const [resources, setResources] = useState(resourceList)
+
   return (
     <div className="text-gray-900 pt-12 pr-0 pb-14 pl-0 bg-white">
       <div
@@ -49,70 +54,32 @@ function MyResources() {
           </div>
         </div>
         <div className="grid grid-cols-12 sm:px-5 gap-x-8 gap-y-16">
-          <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4">
-            <img
-              src="https://images.unsplash.com/photo-1539632346654-dd4c3cffad8c?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60"
-              className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
-            />
-            <p
-              className="bg-green-500 flex items-center leading-none text-sm font-medium text-gray-50 pt-1.5 pr-3 pb-1.5 pl-3
-            rounded-full uppercase inline-block"
-            >
-              Inglés
-            </p>
-            <a className="text-lg font-bold sm:text-xl md:text-2xl">
-              Recursos de Inglés.
-            </a>
-            <p className="text-sm text-black">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam,
-            </p>
-          </div>
-          <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4">
-            <img
-              src="https://plus.unsplash.com/premium_photo-1661772701481-d2c7a4e9e934?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTl8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60"
-              className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
-            />
-            <p
-              className="bg-purple-500 flex items-center leading-none text-sm font-medium text-gray-50 pt-1.5 pr-3 pb-1.5 pl-3
-            rounded-full uppercase inline-block"
-            >
-              Matemáticas
-            </p>
-            <a className="text-lg font-bold sm:text-xl md:text-2xl">
-              Contenido Matemáticas Divertidas.
-            </a>
-            <p className="text-sm text-black">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam,
-            </p>
-          </div>
-          <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4">
-            <img
-              src="https://images.unsplash.com/photo-1484820540004-14229fe36ca4?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MzR8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60"
-              className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
-            />
-            <p
-              className="bg-green-500 flex items-center leading-none text-sm font-medium text-gray-50 pt-1.5 pr-3 pb-1.5 pl-3
-            rounded-full uppercase inline-block"
-            >
-              Plantillas
-            </p>
-            <a className="text-lg font-bold sm:text-xl md:text-2xl">
-              Plantillas, e imprimibles para descargar.
-            </a>
-            <p className="text-sm text-black">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam,
-            </p>
-          </div>
+        {resourceList?.map((resource)=>(
+          <ResourcesCard key={resource.id}  resource={resource}/>
+        ))}
         </div>
       </div>
     </div>
   );
+}
+
+const ResourcesCard = ({resource})=>{
+  console.log(resource)
+  return(
+    <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4">
+            <img
+              src={resource.cover}
+              className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
+            />
+            <MyBadgeList resourceId={resource.id} />
+            <a className="text-lg font-bold sm:text-xl md:text-2xl">
+              {resource.title}
+            </a>
+            <p className="text-sm text-black">
+              {resource.description}
+            </p>
+          </div>
+  )
 }
 
 export default MyResources;

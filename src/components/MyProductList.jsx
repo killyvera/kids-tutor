@@ -30,7 +30,7 @@ export default function MyProductList(props) {
   return (
     <Collection
       type="list"
-      isSearchable={true}
+      isSearchable={false}
       isPaginated={true}
       searchPlaceholder="Buscar..."
       itemsPerPage={2}

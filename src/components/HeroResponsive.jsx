@@ -125,7 +125,7 @@ export default function HeroResponsive(props) {
           {...getOverrideProps(overrides, "logo")}
         ></Image>
         <Text
-          fontFamily=""
+          fontFamily="Lato"
           fontSize="40px"
           fontWeight="600"
           color="rgba(255,255,255,1)"
@@ -146,7 +146,7 @@ export default function HeroResponsive(props) {
           {...getOverrideProps(overrides, "p1")}
         ></Text>
         <Text
-          fontFamily=""
+          fontFamily="Lato"
           fontSize="20px"
           fontWeight="500"
           color="rgba(255,255,255,1)"
@@ -183,7 +183,7 @@ export default function HeroResponsive(props) {
           display="flex"
           {...getOverrideProps(overrides, "grid")}
         >
-          <Image
+          {/* <Image
             className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
             src="/acreditationImage1.png"
             width="90px"
@@ -233,10 +233,10 @@ export default function HeroResponsive(props) {
             padding="0px 0px 0px 0px"
             objectFit="cover"
             {...getOverrideProps(overrides, "acreditationImage3")}
-          ></Image>
+          ></Image> */}
           <Button
-            className="rounded p-1 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300"
-            width="unset"
+            className="rounded p-3 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300"
+            width="300px"
             height="unset"
             shrink="0"
             boxShadow="1px 8px 10px rgba(0.32083332538604736, 0.32083332538604736, 0.32083332538604736, 0.5699999928474426)"
