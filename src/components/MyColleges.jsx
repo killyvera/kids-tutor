@@ -15,7 +15,7 @@ const MyColleges = ({collegesList}) => {
         arrows: false,
         infinite: true,
         speed: 500,
-        slidesToShow: 3,
+        slidesToShow: 1,
         slidesToScroll: 1,
         centerMode: true,
         centerPadding: '10',
@@ -24,7 +24,7 @@ const MyColleges = ({collegesList}) => {
                 breakpoint: 1024,
                 settings: {
                     arrows: false,
-                    slidesToShow: 3,
+                    slidesToShow: 1,
                     slidesToScroll: 1,
                     infinite: true,
                     dots: false,
@@ -34,7 +34,7 @@ const MyColleges = ({collegesList}) => {
                 breakpoint: 600,
                 settings: {
                     arrows: false,
-                    slidesToShow: 2,
+                    slidesToShow: 1,
                     slidesToScroll: 1,
                     initialSlide: 0,
                 },

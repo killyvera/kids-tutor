@@ -145,11 +145,14 @@ export default function HeroResponsive(props) {
           children="Descubre la Educación en diversión con Kids Tutor"
           {...getOverrideProps(overrides, "p1")}
         ></Text>
+        <div className="bg-red-400 bg-opacity-10 backdrop-blur-[2px]" >
         <Text
+        backgroundColor=""
+        borderRadius="3px"
           fontFamily="Lato"
-          fontSize="20px"
+          fontSize="25px"
           fontWeight="500"
-          color="rgba(255,255,255,1)"
+          color="white"
           lineHeight="33.25407028198242px"
           textAlign="center"
           display="block"
@@ -167,6 +170,7 @@ export default function HeroResponsive(props) {
           children="¡Haz que el aprendizaje de tus hijos sea divertido y efectivo hoy mismo! Compra nuestros juegos didácticos y juegos de mesa."
           {...getOverrideProps(overrides, "p2")}
         ></Text>
+        </div>
         <>
         <Flex
           className="hover:scale-x-110 hover:scale-y-110 transition duration-300"
@@ -245,6 +249,7 @@ export default function HeroResponsive(props) {
             variation="primary"
             children="¡Obtén los tuyos ahora!"
             {...getOverrideProps(overrides, "Button")}
+            marginBottom="40px"
           ></Button>
         </Flex>
         </>
