@@ -1,5 +1,10 @@
 /* styles/globals.css */
-@import '~@aws-amplify/ui-react/styles.css';
+@import "~@aws-amplify/ui-react/styles.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slick-next:before,
+.slick-prev:before {
+  color: #e55959 !important;
+}

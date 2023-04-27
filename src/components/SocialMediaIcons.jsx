@@ -3,13 +3,13 @@ import React from "react";
 const socialIcons = [
   {
     name: "Facebook",
-    url: "https://www.facebook.com/",
+    url: "https://www.facebook.com/kidstutor.co",
     icon: "/Facebook.png",
   },
-  { name: "Youtube", url: "https://youtube.com", icon: "/You.png" },
+  { name: "Youtube", url: "https://www.youtube.com/@kidstutorstem", icon: "/You.png" },
   {
     name: "Instagram",
-    url: "https://www.instagram.com/",
+    url: "https://www.instagram.com/kidstutor.co/",
     icon: "/Instagram.png",
   },
 ];

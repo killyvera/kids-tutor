@@ -30,7 +30,7 @@ export default function MyPostList(props) {
   return (
     <Collection
       type="list"
-      isSearchable={true}
+      isSearchable={false}
       isPaginated={true}
       searchPlaceholder="Search..."
       itemsPerPage={2}

@@ -16,16 +16,16 @@ export default function MyFooter() {
             </ul>
             <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-100 sm:mb-0">
                 <li>
-                    <a href="#" className="mr-4 hover:underline md:mr-6 ">About</a>
+                    <a href="#500" className="mr-4 hover:underline md:mr-6 ">Home</a>
                 </li>
                 <li>
-                    <a href="#" className="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+                    <a href="#" className="mr-4 hover:underline md:mr-6">Productos</a>
                 </li>
                 <li>
-                    <a href="#" className="mr-4 hover:underline md:mr-6 ">Licensing</a>
+                    <a href="#" className="mr-4 hover:underline md:mr-6 ">Recursos Gratis</a>
                 </li>
                 <li>
-                    <a href="#" className="hover:underline">Contact</a>
+                    <a href="#" className="hover:underline">Contacto</a>
                 </li>
             </ul>
         </div>

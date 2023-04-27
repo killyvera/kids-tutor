@@ -26,23 +26,27 @@ export default function ResourcesCreateForm(props) {
     title: "",
     description: "",
     file: "",
+    cover: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
   const [file, setFile] = React.useState(initialValues.file);
+  const [cover, setCover] = React.useState(initialValues.cover);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
     setDescription(initialValues.description);
     setFile(initialValues.file);
+    setCover(initialValues.cover);
     setErrors({});
   };
   const validations = {
     title: [],
     description: [],
     file: [],
+    cover: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -73,6 +77,7 @@ export default function ResourcesCreateForm(props) {
           title,
           description,
           file,
+          cover,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -130,6 +135,7 @@ export default function ResourcesCreateForm(props) {
               title: value,
               description,
               file,
+              cover,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -156,6 +162,7 @@ export default function ResourcesCreateForm(props) {
               title,
               description: value,
               file,
+              cover,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -182,6 +189,7 @@ export default function ResourcesCreateForm(props) {
               title,
               description,
               file: value,
+              cover,
             };
             const result = onChange(modelFields);
             value = result?.file ?? value;
@@ -195,6 +203,33 @@ export default function ResourcesCreateForm(props) {
         errorMessage={errors.file?.errorMessage}
         hasError={errors.file?.hasError}
         {...getOverrideProps(overrides, "file")}
+      ></TextField>
+      <TextField
+        label="Cover"
+        isRequired={false}
+        isReadOnly={false}
+        value={cover}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              file,
+              cover: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.cover ?? value;
+          }
+          if (errors.cover?.hasError) {
+            runValidationTasks("cover", value);
+          }
+          setCover(value);
+        }}
+        onBlur={() => runValidationTasks("cover", cover)}
+        errorMessage={errors.cover?.errorMessage}
+        hasError={errors.cover?.hasError}
+        {...getOverrideProps(overrides, "cover")}
       ></TextField>
       <Flex
         justifyContent="space-between"

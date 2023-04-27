@@ -125,7 +125,7 @@ export default function HeroResponsive(props) {
           {...getOverrideProps(overrides, "logo")}
         ></Image>
         <Text
-          fontFamily=""
+          fontFamily="Lato"
           fontSize="40px"
           fontWeight="600"
           color="rgba(255,255,255,1)"
@@ -145,11 +145,14 @@ export default function HeroResponsive(props) {
           children="Descubre la Educación en diversión con Kids Tutor"
           {...getOverrideProps(overrides, "p1")}
         ></Text>
+        <div className="bg-red-400 bg-opacity-10 backdrop-blur-[2px]" >
         <Text
-          fontFamily=""
-          fontSize="20px"
+        backgroundColor=""
+        borderRadius="3px"
+          fontFamily="Lato"
+          fontSize="25px"
           fontWeight="500"
-          color="rgba(255,255,255,1)"
+          color="white"
           lineHeight="33.25407028198242px"
           textAlign="center"
           display="block"
@@ -167,6 +170,7 @@ export default function HeroResponsive(props) {
           children="¡Haz que el aprendizaje de tus hijos sea divertido y efectivo hoy mismo! Compra nuestros juegos didácticos y juegos de mesa."
           {...getOverrideProps(overrides, "p2")}
         ></Text>
+        </div>
         <>
         <Flex
           className="hover:scale-x-110 hover:scale-y-110 transition duration-300"
@@ -183,7 +187,7 @@ export default function HeroResponsive(props) {
           display="flex"
           {...getOverrideProps(overrides, "grid")}
         >
-          <Image
+          {/* <Image
             className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
             src="/acreditationImage1.png"
             width="90px"
@@ -233,10 +237,10 @@ export default function HeroResponsive(props) {
             padding="0px 0px 0px 0px"
             objectFit="cover"
             {...getOverrideProps(overrides, "acreditationImage3")}
-          ></Image>
+          ></Image> */}
           <Button
-            className="rounded p-1 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300"
-            width="unset"
+            className="rounded p-3 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300"
+            width="300px"
             height="unset"
             shrink="0"
             boxShadow="1px 8px 10px rgba(0.32083332538604736, 0.32083332538604736, 0.32083332538604736, 0.5699999928474426)"
@@ -245,6 +249,7 @@ export default function HeroResponsive(props) {
             variation="primary"
             children="¡Obtén los tuyos ahora!"
             {...getOverrideProps(overrides, "Button")}
+            marginBottom="40px"
           ></Button>
         </Flex>
         </>

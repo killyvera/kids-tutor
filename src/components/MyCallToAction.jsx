@@ -30,7 +30,7 @@ const MyCallToAction = ({ mainText, secondaryText, buttonLabel }) => {
                     {secondaryText}
                 </Text>
             )}
-            <Button
+            {/* <Button
                 className="rounded p-1 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300 mb-14"
                 size="large"
                 boxShadow="1px 8px 10px rgba(0.32083332538604736, 0.32083332538604736, 0.32083332538604736, 0.5699999928474426)"
@@ -39,7 +39,7 @@ const MyCallToAction = ({ mainText, secondaryText, buttonLabel }) => {
                 mt={{ base: "6", md: "0" }}
             >
                 {buttonLabel}
-            </Button>
+            </Button> */}
         </Flex>
     );
 };

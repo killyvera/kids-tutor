@@ -44,7 +44,6 @@ export default function Home({collegesList, testimonialList}) {
         <MyColleges collegesList={collegesList}/>
         <MyCallToAction
           mainText={'Alto Nivel Academico, gracias a la labor conjunta basada en resultados con nuestro equipo de expertos.'}
-          buttonLabel={'Integra tu Colegio Ahora'}
         />
         <MyProductFeatures />
         <H1>¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros clientes satisfechos tienen historias que compartir.</H1>

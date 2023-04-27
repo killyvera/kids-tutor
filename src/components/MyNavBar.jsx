@@ -26,8 +26,8 @@ const MyNavBar = () => {
     >
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Image
-          width={"120"}
-          height={"120"}
+          width={"100"}
+          height={"32"}
           src="/logo.png"
           alt="Logo"
           className="w-32"
