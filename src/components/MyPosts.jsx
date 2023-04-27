@@ -1,10 +1,12 @@
 import MyResource from "@/ui-components/MyResource";
 import { useState } from "react";
 import MyBadgeList from './MyBadgeList'
+import MyCard from "./MyCard";
 
-function MyResources({resourceList}) {
+function MyPosts({list}) {
+    console.log(list)
 
-  const [resources, setResources] = useState(resourceList)
+  const [postList, setPostList] = useState(list)
 
   return (
     <div className="text-gray-900 pt-12 pr-0 pb-14 pl-0 bg-white">
@@ -37,10 +39,10 @@ function MyResources({resourceList}) {
                     />
                   </svg>
                 </p>
-                <p className="inline text-xs font-medium">¡Nuevo Contenido Gratis!</p>
+                <p className="inline text-xs font-medium">¡Nuevo Post Agregado!</p>
               </div>
               <a className="text-4xl font-bold leading-none lg:text-5xl xl:text-6xl">
-                Más Plantillas. Más Juegos.
+                Contenido Actualizado.
               </a>
             </div>
           </div>
@@ -54,8 +56,8 @@ function MyResources({resourceList}) {
           </div>
         </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
-        {resourceList?.map((resource)=>(
-          <ResourcesCard key={resource.id}  resource={resource}/>
+        {list.map((element)=>(
+            <MyCard key={element.id}  element={element}/>
         ))}
         </div>
       </div>
@@ -63,23 +65,4 @@ function MyResources({resourceList}) {
   );
 }
 
-const ResourcesCard = ({resource})=>{
-  console.log(resource)
-  return(
-    <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4">
-            <img
-              src={resource.cover}
-              className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
-            />
-            <MyBadgeList resourceId={resource.id} />
-            <a className="text-lg font-bold sm:text-xl md:text-2xl">
-              {resource.title}
-            </a>
-            <p className="text-sm text-black">
-              {resource.description}
-            </p>
-          </div>
-  )
-}
-
-export default MyResources;
+export default MyPosts;

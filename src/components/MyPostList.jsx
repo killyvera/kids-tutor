@@ -13,6 +13,7 @@ import {
 } from "@aws-amplify/ui-react/internal";
 import MyPost from "./MyPost";
 import { Collection } from "@aws-amplify/ui-react";
+import MyCard from "./MyCard";
 export default function MyPostList(props) {
   const { items: itemsProp, overrideItems, overrides, ...rest } = props;
   const [items, setItems] = React.useState(undefined);
@@ -42,11 +43,12 @@ export default function MyPostList(props) {
       {...rest}
     >
       {(item, index) => (
-        <MyPost
-          blogPost={item}
-          key={item.id}
-          {...(overrideItems && overrideItems({ item, index }))}
-        ></MyPost>
+        // <MyPost
+        //   blogPost={item}
+        //   key={item.id}
+        //   {...(overrideItems && overrideItems({ item, index }))}
+        // ></MyPost>
+        <MyCard resource={items} key={items.id} />
       )}
     </Collection>
   );
