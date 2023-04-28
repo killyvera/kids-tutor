@@ -3,7 +3,6 @@ import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 
 const MyCard = ({ element, type }) => {
-  console.log(element + " " + type);
 
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">

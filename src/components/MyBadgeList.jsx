@@ -6,14 +6,12 @@ import { ResourcesCategory } from '@/models';
 export default function BadgeList({ resourceId }) {
   const [categoryList, setCategoryList] = useState([]);
   const { tokens } = useTheme();
-  console.log(resourceId)
 
   useEffect(()=>{
     const categories = DataStore.query(ResourcesCategory)
     categories? setCategoryList(categories) : console.log('no data')
 
   },[])
-  console.log(categoryList)
 
   return (
     <div className='scale-75' style={{ textAlign: "center"}} >
