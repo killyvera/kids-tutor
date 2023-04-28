@@ -22,5 +22,5 @@ export async function getStaticProps(context) {
 }
 
 export default function PostDetail({ post }) {
-    return <MyCard element={post} />
+    return <MyCard element={post} type={'post'}/>
 }

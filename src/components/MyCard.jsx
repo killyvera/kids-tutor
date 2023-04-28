@@ -10,22 +10,24 @@ const MyCard = ({ element, type }) => {
         alt="Blog image description from backend"
         height={"1"}
         width={"400"}
-        src={element.cover}
+        src={element?.cover}
         className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
       />
       <div className="flex justify-between w-full mb-2">
-        <p className="text-sm text-gray-500">{element.author}</p>
+        <p className="text-sm text-gray-500">{element?.author}</p>
         <p className="text-sm text-gray-500">
-          {new Date(element.createdAt).toLocaleDateString("es-ES", {
+          {new Date(element?.createdAt).toLocaleDateString("es-ES", {
             year: "numeric",
             month: "long",
             day: "numeric",
           })}
         </p>
+
+        <p>{type}</p>
       </div>
       <MyBadgeList resourceId={element?.id} />
-      <Link href={'/blog/'+element.id} className="text-lg font-bold sm:text-xl md:text-2xl" >
-        {element.title}
+      <Link href={'/blog/'+element?.id} className="text-lg font-bold sm:text-xl md:text-2xl" >
+        {element?.title}
       
       </Link>
       <p className="text-sm text-black">
