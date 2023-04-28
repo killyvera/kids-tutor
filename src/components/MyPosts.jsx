@@ -2,6 +2,7 @@ import MyResource from "@/ui-components/MyResource";
 import { useState } from "react";
 import MyBadgeList from "./MyBadgeList";
 import MyCard from "./MyCard";
+import Link from "next/link";
 
 function MyPosts({ list }) {
 
@@ -40,9 +41,9 @@ function MyPosts({ list }) {
                 </p>
                 <p className="inline text-xs font-medium">POST MÁS RECIENTE</p>
               </div>
-              <a className="text-3xl font-bold leading-none lg:text-3xl xl:text-4xl">
+              <Link href={'/blog/' + firstPost.id} className="text-3xl font-bold leading-none lg:text-3xl xl:text-4xl">
                 {firstPost.title}
-              </a>
+              </Link>
               <p className="text-sm text-black">
                 {firstPost.content.slice(0, 150) + "..."}
               </p>

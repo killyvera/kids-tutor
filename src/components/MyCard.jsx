@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 
 const MyCard = ({ element, type }) => {
@@ -24,9 +25,10 @@ const MyCard = ({ element, type }) => {
         </p>
       </div>
       <MyBadgeList resourceId={element?.id} />
-      <a className="text-lg font-bold sm:text-xl md:text-2xl">
+      <Link href={'/blog/'+element.id} className="text-lg font-bold sm:text-xl md:text-2xl" >
         {element.title}
-      </a>
+      
+      </Link>
       <p className="text-sm text-black">
         {element?.content.slice(0, 150) + "..."}
       </p>
