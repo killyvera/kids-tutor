@@ -4,9 +4,9 @@ import { DataStore, Amplify, withSSRContext } from "aws-amplify";
 import { BlogPost } from "@/models";
 import MyCard from "@/components/MyCard";
 
-export async function getStaticPaths({ req }) {
-  const SSR = withSSRContext({ req });
-  const posts = await SSR.DataStore.query(BlogPost);
+export async function getStaticPaths() {
+  const {DataStore} = withSSRContext();
+  const posts = await DataStore.query(BlogPost);
   return {
     paths: posts.map((post) => ({ params: { id: post.id } })),
     fallback: true,
@@ -14,8 +14,8 @@ export async function getStaticPaths({ req }) {
 }
 
 export async function getStaticProps(context) {
-  const SSR = withSSRContext({ context });
-  const post = await SSR.DataStore.query(BlogPost, context.params.id);
+  const {DataStore} = withSSRContext();
+  const post = await DataStore.query(BlogPost, context.params.id);
   return {
     props: { post: serializeModel(post) },
   };
