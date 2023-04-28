@@ -40,14 +40,14 @@ function MyResources({resourceList}) {
                 <p className="inline text-xs font-medium">¡Nuevo Contenido Gratis!</p>
               </div>
               <a className="text-4xl font-bold leading-none lg:text-5xl xl:text-6xl">
-                Más Plantillas. Más Juegos.
+                Más Plantillas ✂. 🦖Más Juegos.
               </a>
             </div>
           </div>
           <div className="w-full md:w-1/2">
             <div className="block">
               <img
-                src="https://images.unsplash.com/flagged/photo-1551887373-6edba6dacbb1?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mzd8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60"
+                src="https://i.ibb.co/z2yMvB5/Aprender-a-recortar-Actividades-edad-y-consejos-01.jpg"
                 className="object-cover rounded-lg max-h-64 sm:max-h-96 btn- w-full h-full"
               />
             </div>
