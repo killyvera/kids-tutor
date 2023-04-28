@@ -38,7 +38,7 @@ export async function getServerSideProps() {
 }
 
 export default function Blog({list}) {
-  console.log(list)
+
   return (
     <>
       <Head>
