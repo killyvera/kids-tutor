@@ -1,12 +1,11 @@
 import MyResource from "@/ui-components/MyResource";
 import { useState } from "react";
-import MyBadgeList from './MyBadgeList'
+import MyBadgeList from "./MyBadgeList";
 import MyCard from "./MyCard";
 
-function MyPosts({list}) {
-    console.log(list)
+function MyPosts({ list }) {
 
-  const [postList, setPostList] = useState(list)
+  const [firstPost, ...postList] = list;
 
   return (
     <div className="text-gray-900 pt-12 pr-0 pb-14 pl-0 bg-white">
@@ -21,7 +20,7 @@ function MyPosts({list}) {
             md:space-y-5"
             >
               <div
-                className="bg-orange-500 flex items-center leading-none rounded-full text-gray-50 pt-1.5 pr-3 pb-1.5 pl-2
+                className="bg-yellow-500 flex items-center leading-none rounded-full text-gray-50 pt-1.5 pr-3 pb-1.5 pl-2
               uppercase inline-block"
               >
                 <p className="inline">
@@ -39,26 +38,39 @@ function MyPosts({list}) {
                     />
                   </svg>
                 </p>
-                <p className="inline text-xs font-medium">¡Nuevo Post Agregado!</p>
+                <p className="inline text-xs font-medium">POST MÁS RECIENTE</p>
               </div>
-              <a className="text-4xl font-bold leading-none lg:text-5xl xl:text-6xl">
-                Contenido Actualizado.
+              <a className="text-3xl font-bold leading-none lg:text-3xl xl:text-4xl">
+                {firstPost.title}
               </a>
+              <p className="text-sm text-black">
+                {firstPost.content.slice(0, 150) + "..."}
+              </p>
+              <div className="flex justify-between w-full mb-2">
+                <p className="text-sm text-gray-500">{firstPost.author}</p>
+                <p className="text-sm text-gray-500">
+                  {new Date(firstPost.createdAt).toLocaleDateString("es-ES", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+              </div>
             </div>
           </div>
           <div className="w-full md:w-1/2">
             <div className="block">
               <img
-                src="https://images.unsplash.com/flagged/photo-1551887373-6edba6dacbb1?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mzd8fHxlbnwwfHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=60"
+                src={firstPost.cover}
                 className="object-cover rounded-lg max-h-64 sm:max-h-96 btn- w-full h-full"
               />
             </div>
           </div>
         </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
-        {list.map((element)=>(
-            <MyCard key={element.id}  element={element}/>
-        ))}
+          {postList.map((element) => (
+            <MyCard key={element.id} element={element} />
+          ))}
         </div>
       </div>
     </div>
