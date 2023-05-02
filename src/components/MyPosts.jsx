@@ -5,7 +5,6 @@ import MyCard from "./MyCard";
 import Link from "next/link";
 
 function MyPosts({ list }) {
-
   const [firstPost, ...postList] = list;
 
   return (
@@ -70,7 +69,7 @@ function MyPosts({ list }) {
         </div> */}
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
           {list.map((element) => (
-            <MyCard key={element.id} element={element} />
+            <MyCard key={element.id} element={element} type={"blog"} />
           ))}
         </div>
       </div>

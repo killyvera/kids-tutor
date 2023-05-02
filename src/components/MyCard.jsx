@@ -3,7 +3,7 @@ import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 
 const MyCard = ({ element, type }) => {
-
+  console.log(element, type)
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Image
@@ -26,12 +26,14 @@ const MyCard = ({ element, type }) => {
         <p>{type}</p>
       </div>
       <MyBadgeList resourceId={element?.id} />
-      <Link href={'/blog/'+element?.id} className="text-lg font-bold sm:text-xl md:text-2xl" >
+      <Link
+        href={"/" + type + "/" + element?.id}
+        className="text-lg font-bold sm:text-xl md:text-2xl"
+      >
         {element?.title}
-      
       </Link>
       <p className="text-sm text-black">
-        {element?.content.slice(0, 150) + "..."}
+        {element? element?.description?.slice(0, 150) + "..." : element?.content.slice(0, 150) + "..."}
       </p>
     </div>
   );
