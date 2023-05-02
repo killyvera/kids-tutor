@@ -6,7 +6,7 @@ import Link from "next/link";
 import MyProductCard from "./MyProductCard";
 import MyProduct from "./MyProduct";
 
-function MyProductList({ list }) {
+function MyProductList({ list, categories }) {
   const [firstPost, ...postList] = list;
 
   return (
@@ -71,7 +71,12 @@ function MyProductList({ list }) {
         </div> */}
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
           {list.map((element) => (
-            <MyProductCard element={element} type={'products'} />
+            <MyProductCard
+            categories={categories}
+              element={element}
+              type={"products"}
+              key={element.id}
+            />
           ))}
         </div>
       </div>

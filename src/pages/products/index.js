@@ -2,28 +2,48 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import MyNavBar from "@/components/MyNavBar";
-import { DataStore, withSSRContext } from 'aws-amplify'
-import { serializeModel } from '@aws-amplify/datastore/ssr';
+import { DataStore, withSSRContext } from "aws-amplify";
+import { serializeModel } from "@aws-amplify/datastore/ssr";
+import { useState } from "react";
 
 import H1 from "@/components/H1";
 import MyFooter from "@/components/MyFooter";
 import MyProductList from "@/components/MyProductList";
-import { Product } from "@/models";
-import { list } from "postcss";
+import { Product, ProductCategory, Category } from "@/models";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
   const productList = await DataStore.query(Product);
+  const productCategories = await DataStore.query(ProductCategory);
+  const categoryIdsSet = new Set(productCategories.map((pc) => pc.categoryId));
+  const categoryIds = [...categoryIdsSet];
+
+  const cachedCategories = {};
+
+  const categories = await Promise.all(
+    categoryIds.map(async (categoryId) => {
+      if (cachedCategories[categoryId]) {
+        return cachedCategories[categoryId];
+      } else {
+        const category = await DataStore.query(Category, categoryId);
+        cachedCategories[categoryId] = category;
+        return category;
+      }
+    })
+  );
 
   return {
     props: {
-      productList: serializeModel(productList)
+      productList: serializeModel(productList),
+      categories: serializeModel(categories),
     },
   };
 }
 
-export default function Products({productList}) {
+export default function Products({ productList, categories }) {
+  console.log(productList, categories)
   return (
     <>
       <Head>
