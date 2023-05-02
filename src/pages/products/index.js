@@ -1,26 +1,29 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import MyNavBar from '@/components/MyNavBar'
-import HeroResponsive from '@/components/HeroResponsive'
-import MyColleges from '@/components/MyColleges'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import MyNavBar from "@/components/MyNavBar";
+import { DataStore, withSSRContext } from 'aws-amplify'
+import { serializeModel } from '@aws-amplify/datastore/ssr';
 
-import { Amplify } from 'aws-amplify'
-import awsexports from 'src/aws-exports.js'
+import H1 from "@/components/H1";
+import MyFooter from "@/components/MyFooter";
+import MyProductList from "@/components/MyProductList";
+import { Product } from "@/models";
+import { list } from "postcss";
+const inter = Inter({ subsets: ["latin"] });
 
-import H1 from '@/components/H1'
-import MyCallToAction from '@/components/MyCallToAction'
-import MyProductFeatures from '@/components/MyProductFeatures'
-import MyFooter from '@/components/MyFooter'
-import MyTestimonials from '@/components/MyTestimonials'
-import MyHeroResponsive2 from '@/ui-components/MyHeroResponsive2'
-import MyProductList from '@/components/MyProductList'
-import Spacer from '@/components/Spacer'
-Amplify.configure(awsexports)
+export async function getServerSideProps() {
+  const { DataStore } = withSSRContext();
+  const productList = await DataStore.query(Product);
 
-const inter = Inter({ subsets: ['latin'] })
+  return {
+    props: {
+      productList: serializeModel(productList)
+    },
+  };
+}
 
-export default function Products() {
+export default function Products({productList}) {
   return (
     <>
       <Head>
@@ -29,12 +32,12 @@ export default function Products() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{ textAlign: '-webkit-center' }} className='' >
+      <main style={{ textAlign: "-webkit-center" }} className="">
         <MyNavBar />
         <H1>Productos Certificados por expertos a tu alcance.</H1>
-        <MyProductList />
+        <MyProductList list={productList} />
         <MyFooter />
       </main>
     </>
-  )
+  );
 }
