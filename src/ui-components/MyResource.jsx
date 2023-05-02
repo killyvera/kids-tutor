@@ -6,10 +6,18 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import {
+  getOverrideProps,
+  useNavigateAction,
+} from "@aws-amplify/ui-react/internal";
 import { Flex, Image, Text, View } from "@aws-amplify/ui-react";
 export default function MyResource(props) {
-  const { resources, overrides, ...rest } = props;
+  const { resources, className, overrides, ...rest } = props;
+  const downloadFromCloudOnClick = useNavigateAction({
+    target: "_blank",
+    type: "url",
+    url: resources?.file,
+  });
   return (
     <Flex
       gap="6px"
@@ -66,7 +74,10 @@ export default function MyResource(props) {
           left="calc(50% - 47px - 0px)"
           padding="0px 0px 0px 0px"
           objectFit="contain"
-          src="/DownloandIcon.png"
+          src="https://i.ibb.co/fFZkJ1Z/Download-From-Cloud.png"
+          onClick={() => {
+            downloadFromCloudOnClick();
+          }}
           {...getOverrideProps(overrides, "Download From Cloud")}
         ></Image>
       </View>

@@ -8,6 +8,7 @@ import * as React from "react";
 import { Resources } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { FlexProps, ImageProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
+import { SyntheticEvent } from "react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type MyResourceOverridesProps = {
     MyResource?: PrimitiveOverrideProps<FlexProps>;
@@ -19,6 +20,7 @@ export declare type MyResourceOverridesProps = {
 } & EscapeHatchProps;
 export declare type MyResourceProps = React.PropsWithChildren<Partial<FlexProps> & {
     resources?: Resources;
+    className?: (event: SyntheticEvent) => void;
 } & {
     overrides?: MyResourceOverridesProps | undefined | null;
 }>;

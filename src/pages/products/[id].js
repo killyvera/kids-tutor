@@ -19,13 +19,13 @@ export async function getStaticProps(context) {
 
   // Obtener el recurso correspondiente al ID dado en la ruta
   const product = await SSR.DataStore.query(Product, context.params.id);
-  const categories = await SSR.DataStore.query(ProductCategory, c=>c.productId.eq(context.params.id))
-  return {
-    props: {
-      product: serializeModel(product),
-      categories: serializeModel(categories),
-    },
-  };
+  // const categories = await SSR.DataStore.query(ProductCategory, c=>c.productId.eq(context.params.id))
+  // return {
+  //   props: {
+  //     product: serializeModel(product),
+  //     categories: serializeModel(categories),
+  //   },
+  // };
 }
 
 export default function productDetail({ product, categories }) {

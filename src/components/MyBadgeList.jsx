@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Badge, useTheme } from '@aws-amplify/ui-react';
 import { DataStore, withSSRContext } from 'aws-amplify';
-import { ResourcesCategory } from '@/models';
+import { CategoryResources } from '@/models';
 
 export default function BadgeList({ resourceId }) {
   const [categoryList, setCategoryList] = useState([]);
   const { tokens } = useTheme();
 
   useEffect(()=>{
-    const categories = DataStore.query(ResourcesCategory)
+    const categories = DataStore.query(CategoryResources)
     categories? setCategoryList(categories) : console.log('no data')
 
   },[])

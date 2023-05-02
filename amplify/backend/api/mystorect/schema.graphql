@@ -10,7 +10,7 @@ type Resources @model @auth(rules: [{allow: public}]) {
   title: String
   description: String
   file: String
-  Categories: [Category] @manyToMany(relationName: "ResourcesCategory")
+  Categories: [Category] @manyToMany(relationName: "CategoryResources")
   cover: String
 }
 
@@ -85,7 +85,7 @@ type Category @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
   products: [Product] @manyToMany(relationName: "ProductCategory")
-  resourcess: [Resources] @manyToMany(relationName: "ResourcesCategory")
+  resources: [Resources] @manyToMany(relationName: "CategoryResources")
 }
 
 type Product @model @auth(rules: [{allow: public}]) {

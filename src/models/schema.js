@@ -108,7 +108,7 @@ export const schema = {
                     "name": "Categories",
                     "isArray": true,
                     "type": {
-                        "model": "ResourcesCategory"
+                        "model": "CategoryResources"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -893,11 +893,11 @@ export const schema = {
                         ]
                     }
                 },
-                "resourcess": {
-                    "name": "resourcess",
+                "resources": {
+                    "name": "resources",
                     "isArray": true,
                     "type": {
-                        "model": "ResourcesCategory"
+                        "model": "CategoryResources"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1110,8 +1110,8 @@ export const schema = {
                 }
             ]
         },
-        "ResourcesCategory": {
-            "name": "ResourcesCategory",
+        "CategoryResources": {
+            "name": "CategoryResources",
             "fields": {
                 "id": {
                     "name": "id",
@@ -1182,7 +1182,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "ResourcesCategories",
+            "pluralName": "CategoryResources",
             "attributes": [
                 {
                     "type": "model",
@@ -1408,5 +1408,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "f33590cd9a7add0215ad46505b58463f"
+    "version": "c77a262f2bf1b5f692c235255363d1ee"
 };
