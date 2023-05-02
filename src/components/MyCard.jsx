@@ -22,8 +22,6 @@ const MyCard = ({ element, type }) => {
             day: "numeric",
           })}
         </p>
-
-        <p>{type}</p>
       </div>
       <MyBadgeList resourceId={element?.id} />
       <Link
@@ -33,7 +31,9 @@ const MyCard = ({ element, type }) => {
         {element?.title}
       </Link>
       <p className="text-sm text-black">
-        {element? element?.description?.slice(0, 150) + "..." : element?.content.slice(0, 150) + "..."}
+        {element?.description
+          ? element?.description?.slice(0, 150) + "..."
+          : element?.content.slice(0, 150) + "..."}
       </p>
     </div>
   );

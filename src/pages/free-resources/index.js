@@ -8,6 +8,7 @@ import MyResources from '@/components/MyResources'
 import { DataStore, withSSRContext } from 'aws-amplify'
 import { Resources } from '@/models'
 import { serializeModel } from '@aws-amplify/datastore/ssr';
+import Layout from '@/components/Layout'
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
@@ -30,10 +31,10 @@ export default function FreeResources({resourceList}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: '-webkit-center' }} className='' >
-        <MyNavBar />
+        <Layout>
         <H1>Descarga contenido exclusivo gratis.</H1>
         <MyResources resourceList={resourceList} />
-        <MyFooter />
+        </Layout>
       </main>
     </>
   )

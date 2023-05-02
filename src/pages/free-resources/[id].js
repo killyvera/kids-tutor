@@ -1,8 +1,9 @@
 import { serializeModel } from "@aws-amplify/datastore/ssr";
 import { DataStore, Amplify, withSSRContext } from "aws-amplify";
+import { hydrate } from '@aws-amplify/datastore/ssr';
 import Layout from "@/components/Layout";
 
-import { Resources } from "@/models";
+import { Resources, Category, ResourcesCategory } from "@/models";
 import MyCard from "@/components/MyCard";
 
 export async function getStaticPaths({ req }) {
@@ -16,12 +17,23 @@ export async function getStaticPaths({ req }) {
 
 export async function getStaticProps(context) {
   const SSR = withSSRContext({ context });
+
+  // Obtener el recurso correspondiente al ID dado en la ruta
   const resource = await SSR.DataStore.query(Resources, context.params.id);
+  const categories = await SSR.DataStore.query(ResourcesCategory, c=>c.resources.id.eq(context.params.id))
   return {
-    props: { resource: serializeModel(resource) },
+    props: {
+      resource: serializeModel(resource),
+      categories: serializeModel(categories),
+    },
   };
 }
 
-export default function ResourceDetail({ resource }) {
-  return <Layout><MyCard element={resource} type={"free-resource"} /></Layout>;
+export default function ResourceDetail({ resource, categories }) {
+  console.log(categories, resource);
+  return (
+    <Layout>
+      <MyCard element={resource} type={"free-resource"} />
+    </Layout>
+  );
 }
