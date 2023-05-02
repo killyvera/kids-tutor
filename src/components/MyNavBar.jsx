@@ -60,7 +60,7 @@ const MyNavBar = () => {
             Home
           </Link>
           <Link
-            href="/recursos-gratuitos"
+            href="/free-resources"
             className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl"
           >
             Recursos Gratuitos

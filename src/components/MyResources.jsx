@@ -1,8 +1,10 @@
 import MyResource from "@/ui-components/MyResource";
 import { useState } from "react";
 import MyBadgeList from './MyBadgeList'
+import MyCard from "./MyCard";
 
 function MyResources({resourceList}) {
+  console.log(resourceList)
 
   const [resources, setResources] = useState(resourceList)
 
@@ -55,31 +57,13 @@ function MyResources({resourceList}) {
         </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
         {resourceList?.map((resource)=>(
-          <ResourcesCard key={resource.id}  resource={resource}/>
+          console.log(resource),
+          <MyCard key={resource.id} element={resource} type={'free-resources'}/>
         ))}
         </div>
       </div>
     </div>
   );
-}
-
-const ResourcesCard = ({resource})=>{
-  console.log(resource)
-  return(
-    <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4">
-            <img
-              src={resource.cover}
-              className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
-            />
-            <MyBadgeList resourceId={resource.id} />
-            <a className="text-lg font-bold sm:text-xl md:text-2xl">
-              {resource.title}
-            </a>
-            <p className="text-sm text-black">
-              {resource.description}
-            </p>
-          </div>
-  )
 }
 
 export default MyResources;
