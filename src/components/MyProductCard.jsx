@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 
-const MyProductCard = ({ element, type }) => {
-  console.log(element, type);
+const MyProductCard = ({ element, type, categories }) => {
+  console.log(element, type, categories);
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Image
@@ -17,7 +17,7 @@ const MyProductCard = ({ element, type }) => {
         <p className="text-sm text-gray-500">{element?.sku}</p>
         <p className="text-sm text-gray-500">{element?.stock}</p>
       </div>
-      <MyBadgeList resourceId={element?.id} />
+      <MyBadgeList resourceId={element?.id} categories={categories} />
       <Link
         href={"/" + type + "/" + element?.id}
         className="text-lg font-bold sm:text-xl md:text-2xl"
