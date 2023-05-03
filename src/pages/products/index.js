@@ -38,12 +38,13 @@ export async function getServerSideProps() {
     props: {
       productList: serializeModel(productList),
       categories: serializeModel(categories),
+      productCategories: serializeModel(productCategories)  
     },
   };
 }
 
-export default function Products({ productList, categories }) {
-  console.log(productList, categories)
+export default function Products({ productList, categories, productCategories }) {
+  // console.log(productList, categories, productCategories)
   return (
     <>
       <Head>
@@ -55,7 +56,7 @@ export default function Products({ productList, categories }) {
       <main style={{ textAlign: "-webkit-center" }} className="">
         <MyNavBar />
         <H1>Productos Certificados por expertos a tu alcance.</H1>
-        <MyProductList list={productList} />
+        <MyProductList list={productList} categories={categories} productCategories={productCategories} />
         <MyFooter />
       </main>
     </>

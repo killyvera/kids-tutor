@@ -29,10 +29,10 @@ export async function getStaticProps(context) {
 }
 
 export default function ResourceDetail({ resource, categories }) {
-  console.log(categories, resource);
+  // console.log(categories, resource);
   return (
     <Layout>
-      <MyCard element={resource} type={"free-resource"} />
+      <MyCard element={resource} type={"free-resources"} />
     </Layout>
   );
 }

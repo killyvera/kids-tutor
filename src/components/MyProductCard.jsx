@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 
-const MyProductCard = ({ element, type, categories }) => {
-  console.log(element, type, categories);
+const MyProductCard = ({ element, type, categories, productCategories }) => {
+  // console.log(element, type, categories, productCategories);
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Image
@@ -17,7 +17,7 @@ const MyProductCard = ({ element, type, categories }) => {
         <p className="text-sm text-gray-500">{element?.sku}</p>
         <p className="text-sm text-gray-500">{element?.stock}</p>
       </div>
-      <MyBadgeList resourceId={element?.id} categories={categories} />
+      <MyBadgeList resourceId={element?.id} categories={productCategories? getProductCategories(productCategories, categories, element.id) : categories} />
       <Link
         href={"/" + type + "/" + element?.id}
         className="text-lg font-bold sm:text-xl md:text-2xl"
@@ -31,3 +31,15 @@ const MyProductCard = ({ element, type, categories }) => {
   );
 };
 export default MyProductCard;
+
+function getProductCategories(productCategories, categories, productId) {
+  const categoryIds = productCategories
+    .filter((pc) => pc.productId === productId)
+    .map((pc) => pc.categoryId);
+
+  const categoriesList = categories.filter((category) =>
+    categoryIds.includes(category.id)
+  );
+
+  return categoriesList;
+}

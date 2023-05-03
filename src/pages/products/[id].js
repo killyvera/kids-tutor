@@ -39,7 +39,7 @@ export async function getStaticProps(context) {
 }
 
 export default function productDetail({ product, categories }) {
-  console.log(categories, product);
+  // console.log(categories, product);
   return (
     <Layout>
       <MyProductCard element={product} type={"products"} categories={categories} />

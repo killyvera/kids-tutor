@@ -4,7 +4,7 @@ import MyBadgeList from './MyBadgeList'
 import MyCard from "./MyCard";
 
 function MyResources({resourceList}) {
-  console.log(resourceList)
+  // console.log(resourceList)
 
   const [resources, setResources] = useState(resourceList)
 
@@ -57,7 +57,7 @@ function MyResources({resourceList}) {
         </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
         {resourceList?.map((resource)=>(
-          console.log(resource),
+          // console.log(resource),
           <MyCard key={resource.id} element={resource} type={'free-resources'}/>
         ))}
         </div>
