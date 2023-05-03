@@ -8,7 +8,7 @@ export default function BadgeList({ categories }) {
   const { tokens } = useTheme();
   // console.log(categories);
   return (
-    <div className="scale-75" style={{ textAlign: "center" }}>
+    <div className="" style={{ textAlign: "center" }}>
       {categories ? (
         categoryList.map((category) => (
           <Badge
