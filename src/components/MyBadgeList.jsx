@@ -6,7 +6,7 @@ import { CategoryResources } from "@/models";
 export default function BadgeList({ categories }) {
   const [categoryList, setCategoryList] = useState(categories);
   const { tokens } = useTheme();
-  console.log(categories);
+  // console.log(categories);
   return (
     <div className="scale-75" style={{ textAlign: "center" }}>
       {categories ? (
