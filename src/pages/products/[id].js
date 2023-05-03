@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 
 import { Product, ProductCategory, Category } from "@/models";
 import MyProductCard from "@/components/MyProductCard";
+import ProductDetails from "@/components/ProductDetails";
 
 export async function getStaticPaths({ req }) {
   const SSR = withSSRContext({ req });
@@ -42,7 +43,7 @@ export default function productDetail({ product, categories }) {
   // console.log(categories, product);
   return (
     <Layout>
-      <MyProductCard element={product} type={"products"} categories={categories} />
+      <ProductDetails element={product} type={"products"} categories={categories} />
     </Layout>
   );
 }

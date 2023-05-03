@@ -22,9 +22,9 @@ export default function StripeTest() {
   return (
     <form action="/api/checkout_sessions" method="POST">
       <section>
-        <button className='bg-blue-500 text-sm sm:text-base transition hover:scale-110 text-gray-100 p-2 mt-4 rounded' type="submit" role="link">
-          Obtener en la tienda oficial ahora
-        </button>
+      <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+                Comprar Aquí
+              </button>
       </section>
     </form>
   );

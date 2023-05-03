@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
-
+import titleToLink from "@/helpers/titleToLink";
 const MyProductCard = ({ element, type, categories, productCategories }) => {
   // console.log(element, type, categories, productCategories);
   return (
@@ -13,10 +13,6 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
         src={element?.cover}
         className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
       />
-      <div className="flex justify-between w-full mb-2">
-        <p className="text-sm text-gray-500">{element?.sku}</p>
-        <p className="text-sm text-gray-500">{element?.stock}</p>
-      </div>
       <MyBadgeList resourceId={element?.id} categories={productCategories? getProductCategories(productCategories, categories, element.id) : categories} />
       <Link
         href={"/" + type + "/" + element?.id}
