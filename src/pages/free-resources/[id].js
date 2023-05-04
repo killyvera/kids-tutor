@@ -3,7 +3,7 @@ import { DataStore, Amplify, withSSRContext } from "aws-amplify";
 import Layout from "@/components/Layout";
 
 import { Resources } from "@/models";
-import MyCard from "@/components/MyCard";
+import ResourceDetail from '@/components/ResourceDetail'
 
 export async function getStaticPaths({ req }) {
   const SSR = withSSRContext({ req });
@@ -28,11 +28,11 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function ResourceDetail({ resource, categories }) {
+export default function resource({ resource, categories }) {
   // console.log(categories, resource);
   return (
     <Layout>
-      <MyCard element={resource} type={"free-resources"} />
+      <ResourceDetail element={resource} type={"free-resources"} />
     </Layout>
   );
 }
