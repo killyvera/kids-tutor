@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 
 import { BlogPost } from "@/models";
 import MyCard from "@/components/MyCard";
+import PostDetail from "@/components/PostDetail";
 
 export async function getStaticPaths({ req }) {
   const SSR = withSSRContext({ req });
@@ -22,6 +23,7 @@ export async function getStaticProps(context) {
   };
 }
 
-export default function PostDetail({ post }) {
-    return <Layout><MyCard element={post} type={'post'}/></Layout>
+export default function post({ post }) {
+    return <Layout><PostDetail element={post} type={'post'}/></Layout>
 }
+
