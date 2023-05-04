@@ -14,7 +14,7 @@ export default function PostDetail({ element, type }) {
           </div>
 
           <img
-            src={element.cover}
+            src={element?.cover}
             class="w-full object-cover lg:rounded"
             style={{ height: "28em" }}
           />
