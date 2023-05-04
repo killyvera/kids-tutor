@@ -9,7 +9,7 @@ type Resources @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String
   description: String
-  file: String
+  files: AWSJSON
   Categories: [Category] @manyToMany(relationName: "CategoryResources")
   cover: String
 }
