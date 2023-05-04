@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Resources } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -26,14 +32,14 @@ export default function ResourcesUpdateForm(props) {
   const initialValues = {
     title: "",
     description: "",
-    file: "",
+    files: "",
     cover: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
-  const [file, setFile] = React.useState(initialValues.file);
+  const [files, setFiles] = React.useState(initialValues.files);
   const [cover, setCover] = React.useState(initialValues.cover);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -42,7 +48,11 @@ export default function ResourcesUpdateForm(props) {
       : initialValues;
     setTitle(cleanValues.title);
     setDescription(cleanValues.description);
-    setFile(cleanValues.file);
+    setFiles(
+      typeof cleanValues.files === "string"
+        ? cleanValues.files
+        : JSON.stringify(cleanValues.files)
+    );
     setCover(cleanValues.cover);
     setErrors({});
   };
@@ -60,7 +70,7 @@ export default function ResourcesUpdateForm(props) {
   const validations = {
     title: [],
     description: [],
-    file: [],
+    files: [{ type: "JSON" }],
     cover: [],
   };
   const runValidationTasks = async (
@@ -91,7 +101,7 @@ export default function ResourcesUpdateForm(props) {
         let modelFields = {
           title,
           description,
-          file,
+          files,
           cover,
         };
         const validationResponses = await Promise.all(
@@ -150,7 +160,7 @@ export default function ResourcesUpdateForm(props) {
             const modelFields = {
               title: value,
               description,
-              file,
+              files,
               cover,
             };
             const result = onChange(modelFields);
@@ -177,7 +187,7 @@ export default function ResourcesUpdateForm(props) {
             const modelFields = {
               title,
               description: value,
-              file,
+              files,
               cover,
             };
             const result = onChange(modelFields);
@@ -193,33 +203,33 @@ export default function ResourcesUpdateForm(props) {
         hasError={errors.description?.hasError}
         {...getOverrideProps(overrides, "description")}
       ></TextField>
-      <TextField
-        label="File"
+      <TextAreaField
+        label="Files"
         isRequired={false}
         isReadOnly={false}
-        value={file}
+        value={files}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               title,
               description,
-              file: value,
+              files: value,
               cover,
             };
             const result = onChange(modelFields);
-            value = result?.file ?? value;
+            value = result?.files ?? value;
           }
-          if (errors.file?.hasError) {
-            runValidationTasks("file", value);
+          if (errors.files?.hasError) {
+            runValidationTasks("files", value);
           }
-          setFile(value);
+          setFiles(value);
         }}
-        onBlur={() => runValidationTasks("file", file)}
-        errorMessage={errors.file?.errorMessage}
-        hasError={errors.file?.hasError}
-        {...getOverrideProps(overrides, "file")}
-      ></TextField>
+        onBlur={() => runValidationTasks("files", files)}
+        errorMessage={errors.files?.errorMessage}
+        hasError={errors.files?.hasError}
+        {...getOverrideProps(overrides, "files")}
+      ></TextAreaField>
       <TextField
         label="Cover"
         isRequired={false}
@@ -231,7 +241,7 @@ export default function ResourcesUpdateForm(props) {
             const modelFields = {
               title,
               description,
-              file,
+              files,
               cover: value,
             };
             const result = onChange(modelFields);

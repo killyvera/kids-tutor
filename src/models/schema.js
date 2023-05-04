@@ -97,10 +97,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "file": {
-                    "name": "file",
+                "files": {
+                    "name": "files",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSJSON",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1408,5 +1408,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "c77a262f2bf1b5f692c235255363d1ee"
+    "version": "94be00839860b7631d76b9b5f2df1246"
 };

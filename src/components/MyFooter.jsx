@@ -7,19 +7,19 @@ export default function MyFooter() {
     <footer style={{ backgroundColor: "#de6868" }}>
       <div className="w-full container mx-auto p-4 md:px-6 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
-          <a
-            href="https://flowbite.com/"
+          <Link
+            href="/"
             className="flex items-center mb-4 sm:mb-0"
           >
             <img
               src="/logoFull.png"
               className="h-12 mr-3"
-              alt="Flowbite Logo"
+              alt="Kids Tutor Logo"
             />
             <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Kids Tutor
             </span>
-          </a>
+          </Link>
           <ul>
             <SocialMediaIcons />
           </ul>
