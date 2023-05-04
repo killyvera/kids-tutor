@@ -181,7 +181,7 @@ export default function ContactCreateForm(props) {
       <TextAreaField
         label="me gustaria compartirte:"
         descriptiveText=""
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         placeholder="Escribe tu mensaje aquí..."
         onChange={(e) => {
