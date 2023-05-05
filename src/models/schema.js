@@ -1068,6 +1068,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "marketplaces": {
+                    "name": "marketplaces",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "images": {
+                    "name": "images",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1408,5 +1422,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "94be00839860b7631d76b9b5f2df1246"
+    "version": "fd93d87109c4d83ba1fc3f0a518162e1"
 };

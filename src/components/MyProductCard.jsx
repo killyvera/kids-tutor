@@ -9,7 +9,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Link href={"/" + type + "/" + element?.id} className="w-full">
       <Image
-        alt="Blog image description from backend"
+        alt=" image description from backend"
         height={"1"}
         width={"400"}
         src={element?.cover}

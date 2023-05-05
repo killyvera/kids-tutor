@@ -390,6 +390,8 @@ type EagerProduct = {
   readonly bottom?: string | null;
   readonly front?: string | null;
   readonly back?: string | null;
+  readonly marketplaces?: string | null;
+  readonly images?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -414,6 +416,8 @@ type LazyProduct = {
   readonly bottom?: string | null;
   readonly front?: string | null;
   readonly back?: string | null;
+  readonly marketplaces?: string | null;
+  readonly images?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

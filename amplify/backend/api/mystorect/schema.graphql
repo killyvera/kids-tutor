@@ -104,5 +104,7 @@ type Product @model @auth(rules: [{allow: public}]) {
   bottom: String
   front: String
   back: String
+  marketplaces: AWSJSON
+  images: AWSJSON
 }
  

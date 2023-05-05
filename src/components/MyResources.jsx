@@ -1,12 +1,12 @@
 import MyResource from "@/ui-components/MyResource";
 import { useState } from "react";
-import MyBadgeList from './MyBadgeList'
+import MyBadgeList from "./MyBadgeList";
 import MyCard from "./MyCard";
 
-function MyResources({resourceList}) {
+function MyResources({ resourceList, categories, resourceCategories }) {
   // console.log(resourceList)
 
-  const [resources, setResources] = useState(resourceList)
+  const [resources, setResources] = useState(resourceList);
 
   return (
     <div className="text-gray-900 pt-12 pr-0 pb-14 pl-0 bg-white">
@@ -39,7 +39,9 @@ function MyResources({resourceList}) {
                     />
                   </svg>
                 </p>
-                <p className="inline text-xs font-medium">¡Nuevo Contenido Gratis!</p>
+                <p className="inline text-xs font-medium">
+                  ¡Nuevo Contenido Gratis!
+                </p>
               </div>
               <a className="text-4xl font-bold leading-none lg:text-5xl xl:text-6xl">
                 Más Plantillas ✂. 🦖Más Juegos.
@@ -56,10 +58,20 @@ function MyResources({resourceList}) {
           </div>
         </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
-        {resourceList?.map((resource)=>(
-          console.log(resource),
-          <MyCard key={resource.id} element={resource} type={'free-resources'}/>
-        ))}
+          {resourceList?.map(
+            (resource) => (
+              console.log(resource),
+              (
+                <MyCard
+                  key={resource.id}
+                  element={resource}
+                  type={"free-resources"}
+                  categories={categories}
+                  resourceCategories={resourceCategories}
+                />
+              )
+            )
+          )}
         </div>
       </div>
     </div>
