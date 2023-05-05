@@ -1,10 +1,10 @@
 import MyResource from "@/ui-components/MyResource";
 import { useState } from "react";
 import MyBadgeList from "./MyBadgeList";
-import MyCard from "./MyCard";
+import MyCardResource from "./MyCardResource";
 
 function MyResources({ resourceList, categories, resourceCategories }) {
-  // console.log(resourceList)
+console.log(resourceList, categories, resourceCategories)
 
   const [resources, setResources] = useState(resourceList);
 
@@ -62,7 +62,7 @@ function MyResources({ resourceList, categories, resourceCategories }) {
             (resource) => (
               console.log(resource),
               (
-                <MyCard
+                <MyCardResource
                   key={resource.id}
                   element={resource}
                   type={"free-resources"}

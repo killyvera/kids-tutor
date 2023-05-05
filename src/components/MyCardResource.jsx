@@ -1,10 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
-import titleToLink from "@/helpers/titleToLink";
-import Marketplaces from "./Marketplaces";
-const MyProductCard = ({ element, type, categories, productCategories }) => {
-  // console.log(element, type, categories, productCategories);
+
+const MyCardResource = ({ element, type, categories, resourceCategories }) => {
+  console.log(element, type, categories, resourceCategories);
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Link href={"/" + type + "/" + element?.id} className="w-full">
@@ -16,11 +15,21 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
           className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
         />
       </Link>
+      <div className="flex justify-between w-full mb-2">
+        <p className="text-sm text-gray-500">{element?.author}</p>
+        <p className="text-sm text-gray-500">
+          {new Date(element?.createdAt).toLocaleDateString("es-ES", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      </div>
       <MyBadgeList
         resourceId={element?.id}
         categories={
-          productCategories
-            ? getProductCategories(productCategories, categories, element.id)
+          resourceCategories
+            ? getCategories(resourceCategories, categories, element.id)
             : categories
         }
       />
@@ -28,20 +37,22 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
         href={"/" + type + "/" + element?.id}
         className="text-lg font-bold sm:text-xl md:text-2xl"
       >
-        {element?.name}
+        {element?.title}
       </Link>
       <p className="text-sm text-black">
-        {element?.description.slice(0, 150) + "..."}
+        {element?.description
+          ? element?.description?.slice(0, 150) + "..."
+          : element?.content.slice(0, 150) + "..."}
       </p>
     </div>
   );
 };
-export default MyProductCard;
+export default MyCardResource;
 
-function getProductCategories(productCategories, categories, productId) {
-  const categoryIds = productCategories
-    .filter((pc) => pc.productId === productId)
-    .map((pc) => pc.categoryId);
+function getCategories(resourceCategories, categories, Id) {
+  const categoryIds = resourceCategories
+    .filter((rc) => rc.resourcesId === Id)
+    .map((rc) => rc.categoryId);
 
   const categoriesList = categories.filter((category) =>
     categoryIds.includes(category.id)
