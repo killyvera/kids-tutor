@@ -14,7 +14,7 @@ const ProductDetail = ({ element, categories, productCategories }) => {
     dots: true, // Habilitar miniaturas
     // Resto de configuraciones del carousel
   };
-  // console.log(element, type, categories, productCategories);
+  console.log(element, categories, productCategories);
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <div className="container px-5 py-24 mx-auto">
@@ -117,7 +117,7 @@ const ProductDetail = ({ element, categories, productCategories }) => {
                     ? getProductCategories(
                         productCategories,
                         categories,
-                        element.id
+                        element?.id
                       )
                     : categories
                 }

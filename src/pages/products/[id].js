@@ -43,7 +43,7 @@ export default function product({ product, categories }) {
   // console.log(categories, product);
   return (
     <Layout>
-      <ProductDetails element={product} type={"products"} categories={categories} />
+      <ProductDetails element={product} categories={categories} />
     </Layout>
   );
 }
