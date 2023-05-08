@@ -5,40 +5,37 @@ import { Rating } from "@aws-amplify/ui-react";
 import StripeTest from "./StripeTest";
 import Marketplaces from "./Marketplaces";
 import Slider from "react-slick";
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 // https://tailwindcomponents.com/component/product-detail
 
-const ProductDetail = ({ element, categories, productCategories }) => {
+const ProductDetail = ({ element, categories}) => {
   const settings = {
     dots: true, // Habilitar miniaturas
     // Resto de configuraciones del carousel
   };
-  console.log(element, categories, productCategories);
+  // console.log("------" + element?.id, categories);
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-        <Slider {...settings} className="lg:w-1/2 rounded w-full">
-              <div>
-                <img
-                  className="w-full h-full object-cover"
-                  src={element?.cover}
-                />
-              </div>
-              <div>
-                <img
-                  className="w-full h-full object-cover"
-                  src={element?.top}
-                />
-              </div>
-              <div>
-                <img
-                  className="w-full h-full object-cover"
-                  src={element?.bottom}
-                />
-              </div>
-            </Slider>
+          <Slider {...settings} className="lg:w-1/2 rounded w-full">
+            <div>
+              <img
+                className="w-full h-full object-cover"
+                src={element?.cover}
+              />
+            </div>
+            <div>
+              <img className="w-full h-full object-cover" src={element?.top} />
+            </div>
+            <div>
+              <img
+                className="w-full h-full object-cover"
+                src={element?.bottom}
+              />
+            </div>
+          </Slider>
           {/* <img
             alt="ecommerce"
             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
@@ -110,18 +107,7 @@ const ProductDetail = ({ element, categories, productCategories }) => {
             </div>
             <p className="leading-relaxed">{element?.description}</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-              <MyBadgeList
-                resourceId={element?.id}
-                categories={
-                  productCategories
-                    ? getProductCategories(
-                        productCategories,
-                        categories,
-                        element?.id
-                      )
-                    : categories
-                }
-              />
+              <MyBadgeList resourceId={element?.id} categories={categories} />
             </div>
             <Marketplaces marketplaces={element?.marketplaces} />
             <div className="flex place-content-between">
@@ -151,15 +137,3 @@ const ProductDetail = ({ element, categories, productCategories }) => {
   );
 };
 export default ProductDetail;
-
-function getProductCategories(productCategories, categories, productId) {
-  const categoryIds = productCategories
-    .filter((pc) => pc.productId === productId)
-    .map((pc) => pc.categoryId);
-
-  const categoriesList = categories.filter((category) =>
-    categoryIds.includes(category.id)
-  );
-
-  return categoriesList;
-}
