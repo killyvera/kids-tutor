@@ -15,7 +15,7 @@ export default function BadgeList({ categories }) {
             style={{ margin: "3px" }}
             backgroundColor={category?.color? category?.color : 'gray'}
             color={tokens.colors.neutral[10]}
-            className={"flagged"}
+            className={"flagged transition hover:scale-125"}
             key={category?.id}
           >
             {category?.name}

@@ -5,6 +5,7 @@ import titleToLink from "@/helpers/titleToLink";
 import Marketplaces from "./Marketplaces";
 const MyProductCard = ({ element, type, categories, productCategories }) => {
   // console.log(element, type, categories, productCategories);
+  console.log(element)
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Link href={"/" + type + "/" + element?.id} className="w-full">
@@ -33,6 +34,9 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
       <p className="text-sm text-black">
         {element?.description.slice(0, 150) + "..."}
       </p>
+      <div className="self-center" >
+        <Marketplaces marketplaces={element?.marketplaces} />
+      </div>
     </div>
   );
 };
