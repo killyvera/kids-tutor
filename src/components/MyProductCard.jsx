@@ -14,7 +14,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
           height={"1"}
           width={"400"}
           src={element?.cover}
-          className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
+          className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-105"
         />
       </Link>
       <MyBadgeList
@@ -34,8 +34,12 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
       <p className="text-sm text-black">
         {element?.description.slice(0, 150) + "..."}
       </p>
-      <div className="self-center" >
+      <div className="self-center w-full" >
         <Marketplaces marketplaces={element?.marketplaces} />
+        <div className="flex flex-row py-10 justify-between items-center">
+          <p className="text-red-500 mr-9" >{'MXN $' + element?.price + '.00'}</p>
+          <button className="bg-red-400 py-2 px-3 rounded text-white" >Adquierelo aquí</button>
+        </div>
       </div>
     </div>
   );

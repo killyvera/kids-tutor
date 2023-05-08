@@ -3,6 +3,7 @@ import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 import { Rating } from "@aws-amplify/ui-react";
 import StripeTest from "./StripeTest";
+import Marketplaces from "./Marketplaces";
 
 // https://tailwindcomponents.com/component/product-detail
 
@@ -96,6 +97,7 @@ const ProductDetail = ({ element, categories, productCategories }) => {
                 }
               />
             </div>
+            <Marketplaces marketplaces={element?.marketplaces}/>
             <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">
                 {"MXN " + element?.price + ".00"}
