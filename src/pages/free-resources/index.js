@@ -6,14 +6,14 @@ import MyFooter from "@/components/MyFooter";
 import MyResources from "@/components/MyResources";
 
 import { DataStore, withSSRContext } from "aws-amplify";
-import { Resources, CategoryResources, Category } from "@/models";
+import { Resources, ResourcesCategory, Category } from "@/models";
 import { serializeModel } from "@aws-amplify/datastore/ssr";
 import Layout from "@/components/Layout";
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
   const resourceList = await DataStore.query(Resources);
-  const resourceCategories = await DataStore.query(CategoryResources);
+  const resourceCategories = await DataStore.query(ResourcesCategory);
   const categoryIdsSet = new Set(resourceCategories.map((pc) => pc.categoryId));
   const categoryIds = [...categoryIdsSet];
 

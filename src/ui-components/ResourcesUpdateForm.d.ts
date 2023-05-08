@@ -18,12 +18,18 @@ export declare type ResourcesUpdateFormInputValues = {
     description?: string;
     files?: string;
     cover?: string;
+    autor?: string;
+    rating?: number;
+    short?: string;
 };
 export declare type ResourcesUpdateFormValidationValues = {
     title?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     files?: ValidationFunction<string>;
     cover?: ValidationFunction<string>;
+    autor?: ValidationFunction<string>;
+    rating?: ValidationFunction<number>;
+    short?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ResourcesUpdateFormOverridesProps = {
@@ -32,6 +38,9 @@ export declare type ResourcesUpdateFormOverridesProps = {
     description?: PrimitiveOverrideProps<TextFieldProps>;
     files?: PrimitiveOverrideProps<TextAreaFieldProps>;
     cover?: PrimitiveOverrideProps<TextFieldProps>;
+    autor?: PrimitiveOverrideProps<TextFieldProps>;
+    rating?: PrimitiveOverrideProps<TextFieldProps>;
+    short?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ResourcesUpdateFormProps = React.PropsWithChildren<{
     overrides?: ResourcesUpdateFormOverridesProps | undefined | null;

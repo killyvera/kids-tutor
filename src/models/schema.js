@@ -108,7 +108,7 @@ export const schema = {
                     "name": "Categories",
                     "isArray": true,
                     "type": {
-                        "model": "CategoryResources"
+                        "model": "ResourcesCategory"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -122,6 +122,43 @@ export const schema = {
                 },
                 "cover": {
                     "name": "cover",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "autor": {
+                    "name": "autor",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Tags": {
+                    "name": "Tags",
+                    "isArray": true,
+                    "type": {
+                        "model": "TagsResources"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "resources"
+                        ]
+                    }
+                },
+                "rating": {
+                    "name": "rating",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "short": {
+                    "name": "short",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -492,6 +529,45 @@ export const schema = {
                         ]
                     }
                 },
+                "color": {
+                    "name": "color",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "products": {
+                    "name": "products",
+                    "isArray": true,
+                    "type": {
+                        "model": "ProductTags"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "tags"
+                        ]
+                    }
+                },
+                "resources": {
+                    "name": "resources",
+                    "isArray": true,
+                    "type": {
+                        "model": "TagsResources"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "tags"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -572,8 +648,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Tags": {
-                    "name": "Tags",
+                "tags": {
+                    "name": "tags",
                     "isArray": true,
                     "type": {
                         "model": "BlogPostTags"
@@ -897,7 +973,7 @@ export const schema = {
                     "name": "resources",
                     "isArray": true,
                     "type": {
-                        "model": "CategoryResources"
+                        "model": "ResourcesCategory"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -908,6 +984,13 @@ export const schema = {
                             "category"
                         ]
                     }
+                },
+                "color": {
+                    "name": "color",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1082,6 +1165,22 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "tags": {
+                    "name": "tags",
+                    "isArray": true,
+                    "type": {
+                        "model": "ProductTags"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "product"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1124,8 +1223,8 @@ export const schema = {
                 }
             ]
         },
-        "CategoryResources": {
-            "name": "CategoryResources",
+        "ResourcesCategory": {
+            "name": "ResourcesCategory",
             "fields": {
                 "id": {
                     "name": "id",
@@ -1196,7 +1295,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "CategoryResources",
+            "pluralName": "ResourcesCategories",
             "attributes": [
                 {
                     "type": "model",
@@ -1217,6 +1316,104 @@ export const schema = {
                         "name": "byCategory",
                         "fields": [
                             "categoryId"
+                        ]
+                    }
+                }
+            ]
+        },
+        "TagsResources": {
+            "name": "TagsResources",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "resourcesId": {
+                    "name": "resourcesId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "tagsId": {
+                    "name": "tagsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "resources": {
+                    "name": "resources",
+                    "isArray": false,
+                    "type": {
+                        "model": "Resources"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "resourcesId"
+                        ]
+                    }
+                },
+                "tags": {
+                    "name": "tags",
+                    "isArray": false,
+                    "type": {
+                        "model": "Tags"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "tagsId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "TagsResources",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byResources",
+                        "fields": [
+                            "resourcesId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byTags",
+                        "fields": [
+                            "tagsId"
                         ]
                     }
                 }
@@ -1315,6 +1512,104 @@ export const schema = {
                         "name": "byBlogPost",
                         "fields": [
                             "blogPostId"
+                        ]
+                    }
+                }
+            ]
+        },
+        "ProductTags": {
+            "name": "ProductTags",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tagsId": {
+                    "name": "tagsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "productId": {
+                    "name": "productId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "tags": {
+                    "name": "tags",
+                    "isArray": false,
+                    "type": {
+                        "model": "Tags"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "tagsId"
+                        ]
+                    }
+                },
+                "product": {
+                    "name": "product",
+                    "isArray": false,
+                    "type": {
+                        "model": "Product"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "productId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "ProductTags",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byTags",
+                        "fields": [
+                            "tagsId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byProduct",
+                        "fields": [
+                            "productId"
                         ]
                     }
                 }
@@ -1422,5 +1717,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "fd93d87109c4d83ba1fc3f0a518162e1"
+    "version": "791334a771af09f2f6c40e303e5c4359"
 };

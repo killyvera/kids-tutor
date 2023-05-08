@@ -15,7 +15,7 @@ const MyCardResource = ({ element, type, categories, resourceCategories }) => {
           className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
         />
       </Link>
-      <div className="flex justify-between w-full mb-2">
+      {/* <div className="flex justify-between w-full mb-2">
         <p className="text-sm text-gray-500">{element?.author}</p>
         <p className="text-sm text-gray-500">
           {new Date(element?.createdAt).toLocaleDateString("es-ES", {
@@ -24,7 +24,7 @@ const MyCardResource = ({ element, type, categories, resourceCategories }) => {
             day: "numeric",
           })}
         </p>
-      </div>
+      </div> */}
       <MyBadgeList
         resourceId={element?.id}
         categories={

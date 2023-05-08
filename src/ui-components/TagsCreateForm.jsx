@@ -24,15 +24,19 @@ export default function TagsCreateForm(props) {
   } = props;
   const initialValues = {
     tag_name: "",
+    color: "",
   };
   const [tag_name, setTag_name] = React.useState(initialValues.tag_name);
+  const [color, setColor] = React.useState(initialValues.color);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTag_name(initialValues.tag_name);
+    setColor(initialValues.color);
     setErrors({});
   };
   const validations = {
     tag_name: [],
+    color: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -61,6 +65,7 @@ export default function TagsCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           tag_name,
+          color,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -116,6 +121,7 @@ export default function TagsCreateForm(props) {
           if (onChange) {
             const modelFields = {
               tag_name: value,
+              color,
             };
             const result = onChange(modelFields);
             value = result?.tag_name ?? value;
@@ -129,6 +135,31 @@ export default function TagsCreateForm(props) {
         errorMessage={errors.tag_name?.errorMessage}
         hasError={errors.tag_name?.hasError}
         {...getOverrideProps(overrides, "tag_name")}
+      ></TextField>
+      <TextField
+        label="Color"
+        isRequired={false}
+        isReadOnly={false}
+        value={color}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              tag_name,
+              color: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.color ?? value;
+          }
+          if (errors.color?.hasError) {
+            runValidationTasks("color", value);
+          }
+          setColor(value);
+        }}
+        onBlur={() => runValidationTasks("color", color)}
+        errorMessage={errors.color?.errorMessage}
+        hasError={errors.color?.hasError}
+        {...getOverrideProps(overrides, "color")}
       ></TextField>
       <Flex
         justifyContent="space-between"
