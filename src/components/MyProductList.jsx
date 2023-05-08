@@ -8,6 +8,17 @@ import MyProduct from "./MyProduct";
 
 function MyProductList({ list, categories, productCategories }) {
   const [firstPost, ...postList] = list;
+  const [filteredProducts, setFilteredProducts] = useState(list);
+
+  const handleFilterClick = (filter) => {
+    let filteredList = [];
+    if (filter === "todos") {
+      filteredList = list;
+    } else {
+      filteredList = list.filter((product) => product.type[filter]);
+    }
+    setFilteredProducts(filteredList);
+  };
 
   // console.log(productCategories)
 
@@ -71,16 +82,32 @@ function MyProductList({ list, categories, productCategories }) {
             </div>
           </div>
         </div> */}
-                  <div className="space-x-1">
-            <button className="bg-blue-500 py-2 px-1 rounded text-white">Todos</button>
-            <button className="bg-blue-500 py-2 px-1 rounded text-white">Fisicos </button>
-            <button className="bg-blue-500 py-2 px-1 rounded text-white">Descargable</button>
+        <div className="space-x-1 flex flex-row justify-center">
+          <div className="bg-white-500 border border-gray-400 py-2 px-1 rounded text-gray-400">
+            Filtrar productos por:
           </div>
+          <button
+            className="bg-blue-500 py-2 px-1 rounded text-white"
+            onClick={() => handleFilterClick("todos")}
+          >
+            Todos
+          </button>
+          <button className="bg-blue-500 py-2 px-1 rounded text-white"
+          onClick={() => handleFilterClick("physical")}
+          >
+            Fisicos{" "}
+          </button>
+          <button className="bg-blue-500 py-2 px-1 rounded text-white"
+          onClick={() => handleFilterClick("downloadable")}
+          >
+            Descargables
+          </button>
+        </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
-          {list.map((element) => (
+          {filteredProducts.map((element) => (
             <MyProductCard
-            categories={categories}
-            productCategories={productCategories}
+              categories={categories}
+              productCategories={productCategories}
               element={element}
               type={"products"}
               key={element.id}

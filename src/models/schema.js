@@ -1181,6 +1181,13 @@ export const schema = {
                         ]
                     }
                 },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1717,5 +1724,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.6",
-    "version": "791334a771af09f2f6c40e303e5c4359"
+    "version": "f844ced11d3faa5115f2c0133d693f29"
 };
