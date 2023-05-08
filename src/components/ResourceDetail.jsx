@@ -22,7 +22,7 @@ const ProductDetail = ({ element, type, categories, productCategories }) => {
           <div className="flex justify-between w-full mb-2">
         <h2 className="text-sm text-gray-500 tracking-widest">{' Kids Tutor Free Resources'}</h2>
         <p className="text-sm text-gray-500">
-          {element?.stock + ' disponibles'}
+          {'1087 descargas'}
         </p>
       </div>
             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">

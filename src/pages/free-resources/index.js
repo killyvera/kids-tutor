@@ -1,27 +1,47 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import MyNavBar from '@/components/MyNavBar'
-import H1 from '@/components/H1'
-import MyFooter from '@/components/MyFooter'
-import MyResources from '@/components/MyResources'
+import Head from "next/head";
+import Image from "next/image";
+import MyNavBar from "@/components/MyNavBar";
+import H1 from "@/components/H1";
+import MyFooter from "@/components/MyFooter";
+import MyResources from "@/components/MyResources";
 
-import { DataStore, withSSRContext } from 'aws-amplify'
-import { Resources } from '@/models'
-import { serializeModel } from '@aws-amplify/datastore/ssr';
-import Layout from '@/components/Layout'
+import { DataStore, withSSRContext } from "aws-amplify";
+import { Resources, ResourcesCategory, Category } from "@/models";
+import { serializeModel } from "@aws-amplify/datastore/ssr";
+import Layout from "@/components/Layout";
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
   const resourceList = await DataStore.query(Resources);
+  const resourceCategories = await DataStore.query(ResourcesCategory);
+  const categoryIdsSet = new Set(resourceCategories.map((pc) => pc.categoryId));
+  const categoryIds = [...categoryIdsSet];
+
+ const cachedCategories = {};
+
+  const categories = await Promise.all(
+    categoryIds.map(async (categoryId) => {
+      if (cachedCategories[categoryId]) {
+        return [cachedCategories[categoryId]];
+      } else {
+        const category = await DataStore.query(Category, categoryId);
+        cachedCategories[categoryId] = category;
+        return category;
+      }
+    })
+  );
 
   return {
     props: {
-      resourceList: serializeModel(resourceList)
+      resourceList: serializeModel(resourceList),
+      categories: serializeModel(categories),
+      resourceCategories: serializeModel(resourceCategories),
     },
   };
 }
 
-export default function FreeResources({resourceList}) {
+export default function FreeResources({ resourceList, categories, resourceCategories }) {
+  console.log(resourceList, categories, resourceCategories)
   return (
     <>
       <Head>
@@ -30,12 +50,12 @@ export default function FreeResources({resourceList}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{ textAlign: '-webkit-center' }} className='' >
+      <main style={{ textAlign: "-webkit-center" }} className="">
         <Layout>
-        <H1>Descarga contenido exclusivo gratis.</H1>
-        <MyResources resourceList={resourceList} />
+          <H1>Descarga contenido exclusivo gratis.</H1>
+          <MyResources resourceList={resourceList} categories={categories} resourceCategories={resourceCategories} />
         </Layout>
       </main>
     </>
-  )
+  );
 }

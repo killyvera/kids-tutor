@@ -13,12 +13,12 @@ export default function BadgeList({ categories }) {
         categoryList.map((category) => (
           <Badge
             style={{ margin: "3px" }}
-            backgroundColor={tokens.colors.pink[60]}
+            backgroundColor={category?.color? category?.color : 'gray'}
             color={tokens.colors.neutral[10]}
-            className={"flagged"}
-            key={category.id}
+            className={"flagged transition hover:scale-125"}
+            key={category?.id}
           >
-            {category.name}
+            {category?.name}
           </Badge>
         ))
       ) : (

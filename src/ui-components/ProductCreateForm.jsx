@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Product } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -36,6 +42,8 @@ export default function ProductCreateForm(props) {
     bottom: "",
     front: "",
     back: "",
+    marketplaces: "",
+    images: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -52,6 +60,10 @@ export default function ProductCreateForm(props) {
   const [bottom, setBottom] = React.useState(initialValues.bottom);
   const [front, setFront] = React.useState(initialValues.front);
   const [back, setBack] = React.useState(initialValues.back);
+  const [marketplaces, setMarketplaces] = React.useState(
+    initialValues.marketplaces
+  );
+  const [images, setImages] = React.useState(initialValues.images);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
@@ -67,6 +79,8 @@ export default function ProductCreateForm(props) {
     setBottom(initialValues.bottom);
     setFront(initialValues.front);
     setBack(initialValues.back);
+    setMarketplaces(initialValues.marketplaces);
+    setImages(initialValues.images);
     setErrors({});
   };
   const validations = {
@@ -83,6 +97,8 @@ export default function ProductCreateForm(props) {
     bottom: [],
     front: [],
     back: [],
+    marketplaces: [{ type: "JSON" }],
+    images: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -123,6 +139,8 @@ export default function ProductCreateForm(props) {
           bottom,
           front,
           back,
+          marketplaces,
+          images,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -190,6 +208,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -226,6 +246,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -262,6 +284,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.sku ?? value;
@@ -302,6 +326,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -342,6 +368,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.stock ?? value;
@@ -378,6 +406,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.dimensions ?? value;
@@ -418,6 +448,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.weight ?? value;
@@ -458,6 +490,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -494,6 +528,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -530,6 +566,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.top ?? value;
@@ -566,6 +604,8 @@ export default function ProductCreateForm(props) {
               bottom: value,
               front,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.bottom ?? value;
@@ -602,6 +642,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front: value,
               back,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.front ?? value;
@@ -638,6 +680,8 @@ export default function ProductCreateForm(props) {
               bottom,
               front,
               back: value,
+              marketplaces,
+              images,
             };
             const result = onChange(modelFields);
             value = result?.back ?? value;
@@ -652,6 +696,80 @@ export default function ProductCreateForm(props) {
         hasError={errors.back?.hasError}
         {...getOverrideProps(overrides, "back")}
       ></TextField>
+      <TextAreaField
+        label="Marketplaces"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces: value,
+              images,
+            };
+            const result = onChange(modelFields);
+            value = result?.marketplaces ?? value;
+          }
+          if (errors.marketplaces?.hasError) {
+            runValidationTasks("marketplaces", value);
+          }
+          setMarketplaces(value);
+        }}
+        onBlur={() => runValidationTasks("marketplaces", marketplaces)}
+        errorMessage={errors.marketplaces?.errorMessage}
+        hasError={errors.marketplaces?.hasError}
+        {...getOverrideProps(overrides, "marketplaces")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Images"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces,
+              images: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.images ?? value;
+          }
+          if (errors.images?.hasError) {
+            runValidationTasks("images", value);
+          }
+          setImages(value);
+        }}
+        onBlur={() => runValidationTasks("images", images)}
+        errorMessage={errors.images?.errorMessage}
+        hasError={errors.images?.hasError}
+        {...getOverrideProps(overrides, "images")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

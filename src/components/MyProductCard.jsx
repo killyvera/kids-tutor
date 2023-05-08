@@ -5,18 +5,26 @@ import titleToLink from "@/helpers/titleToLink";
 import Marketplaces from "./Marketplaces";
 const MyProductCard = ({ element, type, categories, productCategories }) => {
   // console.log(element, type, categories, productCategories);
+  console.log(element)
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Link href={"/" + type + "/" + element?.id} className="w-full">
-      <Image
-        alt="Blog image description from backend"
-        height={"1"}
-        width={"400"}
-        src={element?.cover}
-        className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
-      />
+        <Image
+          alt=" image description from backend"
+          height={"1"}
+          width={"400"}
+          src={element?.cover}
+          className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
+        />
       </Link>
-      <MyBadgeList resourceId={element?.id} categories={productCategories? getProductCategories(productCategories, categories, element.id) : categories} />
+      <MyBadgeList
+        resourceId={element?.id}
+        categories={
+          productCategories
+            ? getProductCategories(productCategories, categories, element.id)
+            : categories
+        }
+      />
       <Link
         href={"/" + type + "/" + element?.id}
         className="text-lg font-bold sm:text-xl md:text-2xl"
@@ -26,6 +34,9 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
       <p className="text-sm text-black">
         {element?.description.slice(0, 150) + "..."}
       </p>
+      <div className="self-center" >
+        <Marketplaces marketplaces={element?.marketplaces} />
+      </div>
     </div>
   );
 };

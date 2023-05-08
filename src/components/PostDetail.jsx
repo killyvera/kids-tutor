@@ -137,14 +137,13 @@ export default function PostDetail({ element, type }) {
                     Bernard Thomas{" "}
                   </p>
                   <p class="font-semibold text-gray-600 text-xs">
-                    Creative & Entrepenour
+                    Creative & Entrepreneur
                   </p>
                 </div>
               </div>
               <p class="text-gray-700 py-3">
-                Aprender es diversión. Descubre cómo
-                Kids Tutor está cambiando la forma en que
-                los niños aprenden hoy.
+                Aprender es diversión. Descubre cómo Kids Tutor está cambiando
+                la forma en que los niños aprenden hoy.
               </p>
               <button class="px-2 py-1 text-gray-100 bg-blue-500 flex w-full items-center justify-center rounded">
                 Mensaje

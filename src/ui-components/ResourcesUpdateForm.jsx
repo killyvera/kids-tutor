@@ -34,6 +34,9 @@ export default function ResourcesUpdateForm(props) {
     description: "",
     files: "",
     cover: "",
+    autor: "",
+    rating: "",
+    short: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [description, setDescription] = React.useState(
@@ -41,6 +44,9 @@ export default function ResourcesUpdateForm(props) {
   );
   const [files, setFiles] = React.useState(initialValues.files);
   const [cover, setCover] = React.useState(initialValues.cover);
+  const [autor, setAutor] = React.useState(initialValues.autor);
+  const [rating, setRating] = React.useState(initialValues.rating);
+  const [short, setShort] = React.useState(initialValues.short);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = resourcesRecord
@@ -54,6 +60,9 @@ export default function ResourcesUpdateForm(props) {
         : JSON.stringify(cleanValues.files)
     );
     setCover(cleanValues.cover);
+    setAutor(cleanValues.autor);
+    setRating(cleanValues.rating);
+    setShort(cleanValues.short);
     setErrors({});
   };
   const [resourcesRecord, setResourcesRecord] = React.useState(resources);
@@ -72,6 +81,9 @@ export default function ResourcesUpdateForm(props) {
     description: [],
     files: [{ type: "JSON" }],
     cover: [],
+    autor: [],
+    rating: [],
+    short: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -103,6 +115,9 @@ export default function ResourcesUpdateForm(props) {
           description,
           files,
           cover,
+          autor,
+          rating,
+          short,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -162,6 +177,9 @@ export default function ResourcesUpdateForm(props) {
               description,
               files,
               cover,
+              autor,
+              rating,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -189,6 +207,9 @@ export default function ResourcesUpdateForm(props) {
               description: value,
               files,
               cover,
+              autor,
+              rating,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -216,6 +237,9 @@ export default function ResourcesUpdateForm(props) {
               description,
               files: value,
               cover,
+              autor,
+              rating,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.files ?? value;
@@ -243,6 +267,9 @@ export default function ResourcesUpdateForm(props) {
               description,
               files,
               cover: value,
+              autor,
+              rating,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -256,6 +283,100 @@ export default function ResourcesUpdateForm(props) {
         errorMessage={errors.cover?.errorMessage}
         hasError={errors.cover?.hasError}
         {...getOverrideProps(overrides, "cover")}
+      ></TextField>
+      <TextField
+        label="Autor"
+        isRequired={false}
+        isReadOnly={false}
+        value={autor}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              files,
+              cover,
+              autor: value,
+              rating,
+              short,
+            };
+            const result = onChange(modelFields);
+            value = result?.autor ?? value;
+          }
+          if (errors.autor?.hasError) {
+            runValidationTasks("autor", value);
+          }
+          setAutor(value);
+        }}
+        onBlur={() => runValidationTasks("autor", autor)}
+        errorMessage={errors.autor?.errorMessage}
+        hasError={errors.autor?.hasError}
+        {...getOverrideProps(overrides, "autor")}
+      ></TextField>
+      <TextField
+        label="Rating"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={rating}
+        onChange={(e) => {
+          let value = isNaN(parseFloat(e.target.value))
+            ? e.target.value
+            : parseFloat(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              files,
+              cover,
+              autor,
+              rating: value,
+              short,
+            };
+            const result = onChange(modelFields);
+            value = result?.rating ?? value;
+          }
+          if (errors.rating?.hasError) {
+            runValidationTasks("rating", value);
+          }
+          setRating(value);
+        }}
+        onBlur={() => runValidationTasks("rating", rating)}
+        errorMessage={errors.rating?.errorMessage}
+        hasError={errors.rating?.hasError}
+        {...getOverrideProps(overrides, "rating")}
+      ></TextField>
+      <TextField
+        label="Short"
+        isRequired={false}
+        isReadOnly={false}
+        value={short}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              files,
+              cover,
+              autor,
+              rating,
+              short: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.short ?? value;
+          }
+          if (errors.short?.hasError) {
+            runValidationTasks("short", value);
+          }
+          setShort(value);
+        }}
+        onBlur={() => runValidationTasks("short", short)}
+        errorMessage={errors.short?.errorMessage}
+        hasError={errors.short?.hasError}
+        {...getOverrideProps(overrides, "short")}
       ></TextField>
       <Flex
         justifyContent="space-between"

@@ -2,8 +2,8 @@ import { serializeModel } from "@aws-amplify/datastore/ssr";
 import { DataStore, Amplify, withSSRContext } from "aws-amplify";
 import Layout from "@/components/Layout";
 
-import { Resources } from "@/models";
-import ResourceDetail from '@/components/ResourceDetail'
+import { Resources, ResourcesCategory, Category } from "@/models";
+import ResourceDetail from "@/components/ResourceDetail";
 
 export async function getStaticPaths({ req }) {
   const SSR = withSSRContext({ req });
@@ -19,20 +19,30 @@ export async function getStaticProps(context) {
 
   // Obtener el recurso correspondiente al ID dado en la ruta
   const resource = await SSR.DataStore.query(Resources, context.params.id);
-  // const categories = await SSR.DataStore.query(CategoryResources, c=>c.resources.id.eq(context.params.id))
+  const resourceCategories = await SSR.DataStore.query(ResourcesCategory, (c) =>
+    c.resourcesId.eq(context.params.id)
+  );
+  const categoryIds = resourceCategories.map((rc) => rc.categoryId);
+
+  const categories = await Promise.all(
+    categoryIds.map(async (categoryId) => {
+      return await SSR.DataStore.query(Category, categoryId);
+    })
+  );
+
   return {
     props: {
       resource: serializeModel(resource),
-      // categories: serializeModel(categories),
+      categories: serializeModel(categories),
     },
   };
 }
 
 export default function resource({ resource, categories }) {
-  // console.log(categories, resource);
+  console.log(categories, resource);
   return (
     <Layout>
-      <ResourceDetail element={resource} type={"free-resources"} />
+      <ResourceDetail element={resource} type={"free-resources"} categories={categories} />
     </Layout>
   );
 }
