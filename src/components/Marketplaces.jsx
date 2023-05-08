@@ -9,7 +9,7 @@ const Marketplaces = ({ marketplaces }) => {
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center pb-7">
     <h1 className="" >Obtenlo Ahora en</h1>
     <div className="flex justify-center items-center space-x-3 mt-3">
       {marketplaces !== null? Object.entries(marketplaces).map(([key, value]) => (

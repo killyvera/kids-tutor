@@ -3,6 +3,7 @@ import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 import titleToLink from "@/helpers/titleToLink";
 import Marketplaces from "./Marketplaces";
+
 const MyProductCard = ({ element, type, categories, productCategories }) => {
   // console.log(element, type, categories, productCategories);
   console.log(element)
@@ -35,11 +36,16 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
         {element?.description.slice(0, 150) + "..."}
       </p>
       <div className="self-center w-full" >
-        <Marketplaces marketplaces={element?.marketplaces} />
-        <div className="flex flex-row py-10 justify-between items-center">
+      <div className="flex flex-row py-10 justify-between items-center">
           <p className="text-red-500 mr-9" >{'MXN $' + element?.price + '.00'}</p>
-          <button className="bg-red-400 py-2 px-3 rounded text-white" >Adquierelo aquí</button>
+          <Link
+          href={"/" + type + "/" + element?.id}
+          >
+          <button className="bg-blue-500 py-2 px-3 rounded text-white transition hover:scale-110" >Adquierelo aquí</button>
+          </Link>
         </div>
+        <Marketplaces marketplaces={element?.marketplaces} />
+
       </div>
     </div>
   );

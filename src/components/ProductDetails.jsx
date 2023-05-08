@@ -4,20 +4,46 @@ import MyBadgeList from "./MyBadgeList";
 import { Rating } from "@aws-amplify/ui-react";
 import StripeTest from "./StripeTest";
 import Marketplaces from "./Marketplaces";
-
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 // https://tailwindcomponents.com/component/product-detail
 
 const ProductDetail = ({ element, categories, productCategories }) => {
+  const settings = {
+    dots: true, // Habilitar miniaturas
+    // Resto de configuraciones del carousel
+  };
   // console.log(element, type, categories, productCategories);
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
-          <img
+        <Slider {...settings} className="lg:w-1/2 rounded w-full">
+              <div>
+                <img
+                  className="w-full h-full object-cover"
+                  src={element?.cover}
+                />
+              </div>
+              <div>
+                <img
+                  className="w-full h-full object-cover"
+                  src={element?.top}
+                />
+              </div>
+              <div>
+                <img
+                  className="w-full h-full object-cover"
+                  src={element?.bottom}
+                />
+              </div>
+            </Slider>
+          {/* <img
             alt="ecommerce"
             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
             src={element?.cover}
-          />
+          /> */}
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <div className="flex justify-between w-full mb-2">
               <h2 className="text-sm text-gray-500 tracking-widest">
@@ -97,7 +123,7 @@ const ProductDetail = ({ element, categories, productCategories }) => {
                 }
               />
             </div>
-            <Marketplaces marketplaces={element?.marketplaces}/>
+            <Marketplaces marketplaces={element?.marketplaces} />
             <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">
                 {"MXN " + element?.price + ".00"}
