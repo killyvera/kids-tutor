@@ -110,7 +110,7 @@ const ProductDetail = ({ element, categories}) => {
               <MyBadgeList resourceId={element?.id} categories={categories} />
             </div>
             <Marketplaces marketplaces={element?.marketplaces} />
-            <div className="flex place-content-between">
+            {/* <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">
                 {"MXN " + element?.price + ".00"}
               </span>
@@ -129,7 +129,7 @@ const ProductDetail = ({ element, categories}) => {
                   </svg>
                 </button>
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
