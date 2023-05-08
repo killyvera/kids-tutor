@@ -71,6 +71,11 @@ function MyProductList({ list, categories, productCategories }) {
             </div>
           </div>
         </div> */}
+                  <div className="space-x-1">
+            <button className="bg-blue-500 py-2 px-1 rounded text-white">Todos</button>
+            <button className="bg-blue-500 py-2 px-1 rounded text-white">Fisicos </button>
+            <button className="bg-blue-500 py-2 px-1 rounded text-white">Descargable</button>
+          </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
           {list.map((element) => (
             <MyProductCard

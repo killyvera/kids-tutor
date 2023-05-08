@@ -21,7 +21,7 @@ const Marketplaces = ({ marketplaces }) => {
             className="rounded transition hover:scale-105"
           />
         </a>
-      )): <p className="bg-red-400 text-white px-4 py-2 rounded">Agotado o No Disponible</p>}
+      )): <p className="bg-red-500 text-white px-4 py-2 rounded">AGOTADO <br/> No Disponible</p>}
     </div>
     </div>
   );
