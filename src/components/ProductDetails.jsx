@@ -107,7 +107,7 @@ const ProductDetail = ({ element, categories}) => {
             </div>
             <p className="leading-relaxed">{element?.description}</p>
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-              <MyBadgeList resourceId={element?.id} categories={categories} />
+              {/* <MyBadgeList resourceId={element?.id} categories={categories} /> */}
             </div>
             <Marketplaces marketplaces={element?.marketplaces} />
             <div className="flex place-content-between">
