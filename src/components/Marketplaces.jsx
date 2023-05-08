@@ -9,20 +9,20 @@ const Marketplaces = ({ marketplaces }) => {
   };
 
   return (
-    <>
-    <h1 className="justify-center pb-2" >Obtenlo Ahora en</h1>
-    <div className="flex justify-center items-center space-x-4">
+    <div className="text-center pb-7">
+    <h1 className="" >Obtenlo Ahora en</h1>
+    <div className="flex justify-center items-center space-x-3 mt-3">
       {marketplaces !== null? Object.entries(marketplaces).map(([key, value]) => (
         <a href={value} target="_blank" rel="noopener noreferrer" key={key}>
           <img
             src={`/${marketplaceIcons[key]}`}
             alt={key}
-            className="scale-75 rounded transition hover:scale-100"
+            className="rounded transition hover:scale-105"
           />
         </a>
       )): <p>Agotado o No Disponible</p>}
     </div>
-    </>
+    </div>
   );
 };
 
