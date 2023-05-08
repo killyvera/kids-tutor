@@ -1,6 +1,7 @@
 import React from "react";
 
 const Marketplaces = ({ marketplaces }) => {
+  console.log(marketplaces)
   const marketplaceIcons = {
     mercadolibre: "mercadolibre.png",
     amazon: "amazon.png",
