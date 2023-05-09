@@ -45,6 +45,7 @@ export default function ProductUpdateForm(props) {
     back: "",
     marketplaces: "",
     images: "",
+    type: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -65,6 +66,7 @@ export default function ProductUpdateForm(props) {
     initialValues.marketplaces
   );
   const [images, setImages] = React.useState(initialValues.images);
+  const [type, setType] = React.useState(initialValues.type);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = productRecord
@@ -93,6 +95,11 @@ export default function ProductUpdateForm(props) {
         ? cleanValues.images
         : JSON.stringify(cleanValues.images)
     );
+    setType(
+      typeof cleanValues.type === "string"
+        ? cleanValues.type
+        : JSON.stringify(cleanValues.type)
+    );
     setErrors({});
   };
   const [productRecord, setProductRecord] = React.useState(product);
@@ -120,6 +127,7 @@ export default function ProductUpdateForm(props) {
     back: [],
     marketplaces: [{ type: "JSON" }],
     images: [{ type: "JSON" }],
+    type: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -162,6 +170,7 @@ export default function ProductUpdateForm(props) {
           back,
           marketplaces,
           images,
+          type,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -232,6 +241,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -270,6 +280,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -308,6 +319,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.sku ?? value;
@@ -350,6 +362,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -392,6 +405,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.stock ?? value;
@@ -430,6 +444,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.dimensions ?? value;
@@ -472,6 +487,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.weight ?? value;
@@ -514,6 +530,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -552,6 +569,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -590,6 +608,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.top ?? value;
@@ -628,6 +647,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.bottom ?? value;
@@ -666,6 +686,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.front ?? value;
@@ -704,6 +725,7 @@ export default function ProductUpdateForm(props) {
               back: value,
               marketplaces,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.back ?? value;
@@ -742,6 +764,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces: value,
               images,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.marketplaces ?? value;
@@ -780,6 +803,7 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images: value,
+              type,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -793,6 +817,45 @@ export default function ProductUpdateForm(props) {
         errorMessage={errors.images?.errorMessage}
         hasError={errors.images?.hasError}
         {...getOverrideProps(overrides, "images")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Type"
+        isRequired={false}
+        isReadOnly={false}
+        value={type}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces,
+              images,
+              type: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.type ?? value;
+          }
+          if (errors.type?.hasError) {
+            runValidationTasks("type", value);
+          }
+          setType(value);
+        }}
+        onBlur={() => runValidationTasks("type", type)}
+        errorMessage={errors.type?.errorMessage}
+        hasError={errors.type?.hasError}
+        {...getOverrideProps(overrides, "type")}
       ></TextAreaField>
       <Flex
         justifyContent="space-between"

@@ -409,6 +409,7 @@ type EagerProduct = {
   readonly marketplaces?: string | null;
   readonly images?: string | null;
   readonly tags?: (ProductTags | null)[] | null;
+  readonly type?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -436,6 +437,7 @@ type LazyProduct = {
   readonly marketplaces?: string | null;
   readonly images?: string | null;
   readonly tags: AsyncCollection<ProductTags>;
+  readonly type?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

@@ -115,5 +115,6 @@ type Product @model @auth(rules: [{allow: public}]) {
   marketplaces: AWSJSON
   images: AWSJSON
   tags: [Tags] @manyToMany(relationName: "ProductTags")
+  type: AWSJSON
 }
  
