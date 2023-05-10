@@ -239,7 +239,7 @@ export default function HeroResponsive(props) {
             {...getOverrideProps(overrides, "acreditationImage3")}
           ></Image> */}
           <Button
-            className="rounded p-3 text-gray-100 hover:scale-x-105 bg-blue-500 hover:bg-blue-700 transition duration-300"
+            className="rounded p-3 text-gray-100"
             width="300px"
             height="unset"
             shrink="0"
