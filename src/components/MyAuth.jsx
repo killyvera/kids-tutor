@@ -1,5 +1,6 @@
 import { View, Text, Heading, Button, Image} from "@aws-amplify/ui-react";
 import { Authenticator, useTheme, useAuthenticator } from "@aws-amplify/ui-react";
+import Link from "next/link";
 
 import React from 'react'
 
@@ -17,12 +18,18 @@ const components = {
       const { tokens } = useTheme();
   
       return (
-        <View textAlign="center" padding={tokens.space.large}>
+        <View textAlign="center" padding={tokens.space.large} className="flex flex-row items-center text-center justify-evenly" >
+            <Link href={'/'} >
+            <p className="text-red-400 bg-white rounded-full py-2 px-3" >{'< Volver'}</p>
+            </Link>
+            <Link href="/" >
           <Image
+          className="transition hover:scale-110"
           width='200px'
             alt="Amplify logo"
             src="/logo.png"
           />
+          </Link>
         </View>
       );
     },
@@ -185,8 +192,8 @@ const components = {
   const formFields = {
     signIn: {
       username: {
-        label: 'webos',
-        placeholder: "Enter your emailsss",
+        label: 'Email',
+        placeholder: "Enter your email",
       },
     },
     signUp: {
