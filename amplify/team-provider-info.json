@@ -10,6 +10,11 @@
       "StackName": "amplify-mystorect-staging-195834",
       "StackId": "arn:aws:cloudformation:us-east-1:500490101011:stack/amplify-mystorect-staging-195834/c7a8b420-b9fd-11ed-b423-0ad00af538c7",
       "AmplifyAppId": "d1c8o6kxtv8w6n"
+    },
+    "categories": {
+      "auth": {
+        "mystorect": {}
+      }
     }
   }
 }

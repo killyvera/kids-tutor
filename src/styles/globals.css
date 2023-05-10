@@ -8,3 +8,29 @@
 .slick-prev:before {
   color: #e55959 !important;
 }
+
+.amplify-button--primary {
+  background-color: #1f5ff5;
+}
+.amplify-button--primary:hover {
+  background-color: #2c54d7;
+  scale: 1.1;
+}
+
+.amplify-tabs-item[data-state=active] {
+  color: white;
+  border-color: rgb(136, 62, 62);
+  background-color: #e55959;
+  transition-property: none;
+}
+
+[data-amplify-authenticator] [data-amplify-router] {
+  background-color: white;
+  border-color: none;
+  border-width: none;
+  border-style: none;
+}
+
+.amplify-tabs-item{
+  border-color: pink;
+}

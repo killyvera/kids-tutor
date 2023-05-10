@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
+// import Image from "next/image";
 import { Inter } from "next/font/google";
 import MyNavBar from "@/components/MyNavBar";
 import { withSSRContext } from "aws-amplify";
@@ -8,6 +8,7 @@ import H1 from "@/components/H1";
 import MyFooter from "@/components/MyFooter";
 import MyPosts from "@/components/MyPosts";
 import { BlogPost } from "@/models";
+import { Authenticator, useTheme, useAuthenticator } from "@aws-amplify/ui-react";
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
@@ -20,7 +21,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Blog({ list }) {
+function Blog({ list, signOut, user }) {
   return (
     <>
       <Head>
@@ -38,6 +39,9 @@ export default function Blog({ list }) {
         <MyPosts list={list} />
         <MyFooter />
       </main>
-    </>
-  );
+      </>
+  )
+
 }
+
+export default Blog;

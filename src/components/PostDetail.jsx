@@ -4,25 +4,25 @@ export default function PostDetail({ element, type }) {
   console.log(element);
   return (
     // <!-- component -->
-    <div class=" bg-slate-50">
-      <main class="pt-20 max-w-screen-lg mx-auto">
-        <div class="mb-4 md:mb-0 w-full mx-auto relative">
-          <div class="px-4 lg:px-0">
-            <h2 class="text-4xl font-semibold text-gray-800 leading-tight pb-9">
+    <div className=" bg-slate-50">
+      <main className="pt-20 max-w-screen-lg mx-auto">
+        <div className="mb-4 md:mb-0 w-full mx-auto relative">
+          <div className="px-4 lg:px-0">
+            <h2 className="text-4xl font-semibold text-gray-800 leading-tight pb-9">
               {element?.title}
             </h2>
           </div>
 
           <img
             src={element?.cover}
-            class="w-full object-cover lg:rounded"
+            className="w-full object-cover lg:rounded"
             style={{ height: "28em" }}
           />
         </div>
 
-        <div class="flex flex-col lg:flex-row lg:space-x-12">
-          <div class="px-4 lg:px-0 mt-12 text-gray-700 text-lg leading-relaxed w-full lg:w-3/4">
-            <p class="pb-6">
+        <div className="flex flex-col lg:flex-row lg:space-x-12">
+          <div className="px-4 lg:px-0 mt-12 text-gray-700 text-lg leading-relaxed w-full lg:w-3/4">
+            <p className="pb-6">
               Advantage old had otherwise sincerity dependent additions. It in
               adapted natural hastily is justice. Six draw you him full not mean
               evil. Prepare garrets it expense windows shewing do an. She
@@ -31,7 +31,7 @@ export default function PostDetail({ element, type }) {
               outlived peculiar rendered led six.
             </p>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Difficulty on insensible reasonable in. From as went he they.
               Preference themselves me as thoroughly partiality considered on in
               estimating. Middletons acceptance discovered projecting so is so
@@ -43,7 +43,7 @@ export default function PostDetail({ element, type }) {
               Listening newspaper in advantage frankness to concluded unwilling.
             </p>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Adieus except say barton put feebly favour him. Entreaties
               unpleasant sufficient few pianoforte discovered uncommonly ask.
               Morning cousins amongst in mr weather do neither. Warmth object
@@ -54,7 +54,7 @@ export default function PostDetail({ element, type }) {
               as raptures quitting.
             </p>
 
-            <div class="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
+            <div className="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
               Sportsman do offending supported extremity breakfast by listening.
               Decisively advantages nor expression unpleasing she led met.
               Estate was tended ten boy nearer seemed. As so seeing latter he
@@ -62,7 +62,7 @@ export default function PostDetail({ element, type }) {
               neat an on be gave show snug tore.
             </div>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Exquisite cordially mr happiness of neglected distrusts.
               Boisterous impossible unaffected he me everything. Is fine loud
               deal an rent open give. Find upon and sent spot song son eyes. Do
@@ -72,11 +72,11 @@ export default function PostDetail({ element, type }) {
               mrs favourable.
             </p>
 
-            <h2 class="text-2xl text-gray-800 font-semibold mb-4 mt-4">
+            <h2 className="text-2xl text-gray-800 font-semibold mb-4 mt-4">
               Uneasy barton seeing remark happen his has
             </h2>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Guest it he tears aware as. Make my no cold of need. He been past
               in by my hard. Warmly thrown oh he common future. Otherwise
               concealed favourite frankness on be at dashwoods defective at.
@@ -84,7 +84,7 @@ export default function PostDetail({ element, type }) {
               terminated. As edward settle limits at in.
             </p>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Dashwood contempt on mr unlocked resolved provided of of. Stanhill
               wondered it it welcomed oh. Hundred no prudent he however smiling
               at an offence. If earnestly extremity he he propriety something
@@ -95,7 +95,7 @@ export default function PostDetail({ element, type }) {
               compact. New all paid few hard pure she.
             </p>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Breakfast agreeable incommode departure it an. By ignorant at on
               wondered relation. Enough at tastes really so cousin am of.
               Extensive therefore supported by extremity of contented. Is
@@ -104,7 +104,7 @@ export default function PostDetail({ element, type }) {
               concerns. By in cold no less been sent hard hill.
             </p>
 
-            <p class="pb-6">
+            <p className="pb-6">
               Detract yet delight written farther his general. If in so bred at
               dare rose lose good. Feel and make two real miss use easy.
               Celebrated delightful an especially increasing instrument am.
@@ -124,30 +124,30 @@ export default function PostDetail({ element, type }) {
             </div>
           </div>
 
-          <div class="w-full lg:w-1/4 m-auto mt-12 max-w-screen-sm">
-            <div class="p-4 border-t border-b md:border md:rounded">
-              <div class="flex py-2">
+          <div className="w-full lg:w-1/4 m-auto mt-12 max-w-screen-sm">
+            <div className="p-4 border-t border-b md:border md:rounded">
+              <div className="flex py-2">
                 <img
                   src="/avatar.png"
-                  class="h-10 w-10 rounded-full mr-2 object-cover"
+                  className="h-10 w-10 rounded-full mr-2 object-cover"
                 />
                 <div>
-                  <p class="font-semibold text-gray-700 text-sm">
+                  <p className="font-semibold text-gray-700 text-sm">
                     {" "}
                     Bernard Thomas{" "}
                   </p>
-                  <p class="font-semibold text-gray-600 text-xs">
+                  <p className="font-semibold text-gray-600 text-xs">
                     Creative & Entrepreneur
                   </p>
                 </div>
               </div>
-              <p class="text-gray-700 py-3">
+              <p className="text-gray-700 py-3">
                 Aprender es diversión. Descubre cómo Kids Tutor está cambiando
                 la forma en que los niños aprenden hoy.
               </p>
-              <button class="px-2 py-1 text-gray-100 bg-blue-500 flex w-full items-center justify-center rounded">
+              <button className="px-2 py-1 text-gray-100 bg-blue-500 flex w-full items-center justify-center rounded">
                 Mensaje
-                <i class="bx bx-user-plus ml-2"></i>
+                <i className="bx bx-user-plus ml-2"></i>
               </button>
             </div>
           </div>
