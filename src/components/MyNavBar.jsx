@@ -1,9 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Auth } from "aws-amplify";
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import MyAuth from "./MyAuth";
 
 const MyNavBar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const { authStatus } = useAuthenticator((context) => [context.authStatus]);
 
   const handleMenuClick = () => setShowMenu(!showMenu);
 
@@ -93,20 +97,28 @@ const MyNavBar = () => {
           </Link>
         </div>
         <div className="flex">
-          <Image
-            width={"24"}
-            height={"24"}
-            src="/cart.png"
-            alt="Cart"
-            className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-          />
-          <Image
+          {authStatus === "authenticated" ? (
+            <>
+            <Image
+              width={"24"}
+              height={"24"}
+              src="/cart.png"
+              alt="Cart"
+              className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+            />
+            <Image
             width={"24"}
             height={"24"}
             src="/user.png"
             alt="User"
             className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
           />
+          </>
+          ) : (
+            <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4" ><Link href={'/login'} >Acceder</Link> / Registrate </p>
+          )}
+
+          
         </div>
       </div>
     </nav>
