@@ -1,10 +1,10 @@
 import MyNavBar from "./MyNavBar";
 import MyFooter from "./MyFooter";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, allProducts, total }) => {
   return (
     <>
-      <MyNavBar />
+      <MyNavBar allProducts={allProducts} total={total} />
       <div className="" >
       {children}
       </div>

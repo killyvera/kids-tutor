@@ -18,6 +18,7 @@ import {
   Text,
   useBreakpointValue, View
 } from "@aws-amplify/ui-react";
+import {motion} from 'framer-motion'
 
 export default function HeroResponsive(props) {
   const { overrides: overridesProp, ...restProp } = props;
