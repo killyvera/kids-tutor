@@ -10,6 +10,7 @@ import H1 from "@/components/H1";
 import MyFooter from "@/components/MyFooter";
 import MyProductList from "@/components/MyProductList";
 import { Product, ProductCategory, Category } from "@/models";
+import Layout from "@/components/Layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,12 +39,18 @@ export async function getServerSideProps() {
     props: {
       productList: serializeModel(productList),
       categories: serializeModel(categories),
-      productCategories: serializeModel(productCategories)  
+      productCategories: serializeModel(productCategories),
     },
   };
 }
 
-export default function Products({ productList, categories, productCategories }) {
+export default function Products({
+  productList,
+  categories,
+  productCategories,
+  allProducts,
+  total
+}) {
   // console.log(productList, categories, productCategories)
   return (
     <>
@@ -54,10 +61,14 @@ export default function Products({ productList, categories, productCategories })
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <MyNavBar />
-        <H1>Productos Certificados por expertos a tu alcance.</H1>
-        <MyProductList list={productList} categories={categories} productCategories={productCategories} />
-        <MyFooter />
+        <Layout allProducts={allProducts} total={total} >
+          <H1>Productos Certificados por expertos a tu alcance.</H1>
+          <MyProductList
+            list={productList}
+            categories={categories}
+            productCategories={productCategories}
+          />
+        </Layout>
       </main>
     </>
   );

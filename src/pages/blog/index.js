@@ -9,6 +9,7 @@ import MyFooter from "@/components/MyFooter";
 import MyPosts from "@/components/MyPosts";
 import { BlogPost } from "@/models";
 import { Authenticator, useTheme, useAuthenticator } from "@aws-amplify/ui-react";
+import Layout from "@/components/Layout";
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
@@ -21,7 +22,7 @@ export async function getServerSideProps() {
   };
 }
 
-function Blog({ list, signOut, user }) {
+function Blog({ list, signOut, user, allProducts, total }) {
   return (
     <>
       <Head>
@@ -34,10 +35,10 @@ function Blog({ list, signOut, user }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <MyNavBar />
+        <Layout allProducts={allProducts} total={total} >
         <H1>Conoce la opinion de nuestros expertos.</H1>
         <MyPosts list={list} />
-        <MyFooter />
+        </Layout>
       </main>
       </>
   )

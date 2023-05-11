@@ -43,7 +43,7 @@ const MyColleges = ({collegesList}) => {
     };
 
     return (
-        <div style={{maxWidth: '80%'}} >
+        <div style={{maxWidth: '80%'}} className='m-20' >
             <Slider {...settings}>
                 {colleges? colleges.map((college) => (
                     <div key={college.id}>
