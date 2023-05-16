@@ -6,8 +6,13 @@ import React from 'react'
 
 export default function MyAuth({children}) {
   return (
-    <Authenticator formFields={formFields} components={components} socialProviders={['facebook']} >
-        {children}
+    <Authenticator initialAuthState="signUp" formFields={formFields} components={components} socialProviders={['facebook', 'google']} >
+        {({signOut, user})=>(
+            <>
+            {console.log(user, signOut)}
+            {children}
+            </>
+        )}
     </Authenticator>
   )
 }
