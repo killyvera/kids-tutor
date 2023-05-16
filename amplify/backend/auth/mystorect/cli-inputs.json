@@ -64,9 +64,10 @@
     "hostedUI": true,
     "hostedUIDomainName": "ptslaimxuxy5",
     "authProvidersUserPool": [
-      "Facebook"
+      "Facebook",
+      "Google"
     ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"public_profile\",\"AttributeMapping\":{\"username\":\"id\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.kidstutor.co/\",\"https://kidstutor.co/\"],\"LogoutURLs\":[\"https://www.kidstutor.co/\",\"https://kidstutor.co/\"]}"
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"public_profile\",\"AttributeMapping\":{\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.kidstutor.co/\"],\"LogoutURLs\":[\"https://www.kidstutor.co/\"]}"
   }
 }

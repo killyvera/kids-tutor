@@ -5,12 +5,25 @@ import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import MyAuth from "./MyAuth";
 import { motion } from "framer-motion";
+import { useRouter } from 'next/router';
 
-const MyNavBar = ({ allProducts, total }) => {
+
+const MyNavBar = ({ allProducts, total, signOut }) => {
+  
   const [showMenu, setShowMenu] = useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const [active, setActive] = useState(false);
   const [visible, setVisible] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await Auth.signOut();
+      // Redirigir al usuario a la página principal
+      router.push('/');
+    } catch (error) {
+      console.log('Error al cerrar sesión:', error);
+    }
+  };
 
   const handleMenuClick = () => setShowMenu(!showMenu);
 
@@ -101,25 +114,29 @@ const MyNavBar = ({ allProducts, total }) => {
               Contactanos
             </Link>
           </div>
-          <div className="flex">
+          <div className="">
             {authStatus === "authenticated" ? (
-              <>
+              <div className="flex flex-row">
+                <div className="flex flex-row scale-75">
                 <Image
-                  width={"24"}
-                  height={"24"}
+                  width={"32"}
+                  height={"32"}
                   src="/cart.png"
                   alt="Cart"
-                  className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
+                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
                   onClick={() => onClose(setVisible, visible)}
                 />
                 <Image
-                  width={"24"}
-                  height={"24"}
+                  width={"32"}
+                  height={"32"}
+                  maxHeight={"24px"}
                   src="/user.png"
                   alt="User"
-                  className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
                 />
-              </>
+                </div>
+                <button  className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110" onClick={handleSignOut} >Sign Out</button>
+              </div>
             ) : (
               <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                 <Link href={"/login"}>Acceder / Registrate </Link>{" "}

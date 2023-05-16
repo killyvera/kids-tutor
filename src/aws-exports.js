@@ -20,8 +20,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://www.kidstutor.co/,https://kidstutor.co/",
-        "redirectSignOut": "https://www.kidstutor.co/,https://kidstutor.co/",
+        "redirectSignIn": "https://www.kidstutor.co/",
+        "redirectSignOut": "https://www.kidstutor.co/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -29,7 +29,8 @@ const awsmobile = {
         "EMAIL"
     ],
     "aws_cognito_social_providers": [
-        "FACEBOOK"
+        "FACEBOOK",
+        "GOOGLE"
     ],
     "aws_cognito_signup_attributes": [],
     "aws_cognito_mfa_configuration": "OFF",

@@ -42,7 +42,8 @@
         },
         "signupAttributes": [],
         "socialProviders": [
-          "FACEBOOK"
+          "FACEBOOK",
+          "GOOGLE"
         ],
         "usernameAttributes": [
           "EMAIL"
