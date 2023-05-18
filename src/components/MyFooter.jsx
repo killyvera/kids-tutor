@@ -43,6 +43,11 @@ export default function MyFooter() {
               Contacto
             </Link>
           </ul>
+          <ul>
+            <Link href={"/privacy-policy"} >
+            Política de Privacidad
+            </Link>
+          </ul>
         </div>
         <hr className="my-6 sm:mx-auto  lg:my-8" />
         <span className="block text-sm  sm:text-center text-gray-100">

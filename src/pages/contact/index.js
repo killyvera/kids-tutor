@@ -20,6 +20,7 @@ import Spacer from '@/components/Spacer'
 import MyResources from '@/components/MyResources'
 import MyPostList from '@/ui-components/MyPostList'
 import ContactCreateForm from '@/components/ContactCreateForm'
+import MyContact from '@/components/MyContact'
 
 Amplify.configure(awsexports)
 
@@ -36,8 +37,8 @@ export default function Home() {
       </Head>
       <main style={{ textAlign: '-webkit-center' }} className='' >
         <MyNavBar />
-        <H1>Quieres conocernos? Envianos un mensaje<br/>Visita nuestras redes sociales.</H1>
-        <ContactCreateForm />
+        <H1>Quieres conocernos? Envíanos un mensaje.</H1>
+        <MyContact />
         <MyFooter />
       </main>
     </>
