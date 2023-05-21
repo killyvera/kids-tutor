@@ -2,8 +2,8 @@ import React from "react";
 
 const TermsAndConditions = () => {
   return (
-    <div className="bg-gray-100 py-8 px-4 md:px-8">
-      <div className="max-w-3xl mx-auto">
+    <div className="bg-gray-100 px-4 md:px-8">
+      <div className="max-w-3xl mx-auto  style={{maxWidth: '80%'}}">
         <h1 className="text-2xl font-bold mb-4">
           Términos y Condiciones de KidsTutor.co
         </h1>

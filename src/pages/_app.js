@@ -9,7 +9,7 @@ Amplify.configure({ ...awsexports, ssr: true });
 
 export default function App({ Component, pageProps }) {
   const[ allProducts, setAllProducts] = useState(['hellooo', 1, true]);
-  const[ total, setTotal] = useState(33);
+  const[ total, setTotal] = useState();
   const [countProducts, setCountProducts] = useState(0)
   return (
     <Authenticator.Provider>
