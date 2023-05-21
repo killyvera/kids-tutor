@@ -126,7 +126,7 @@ export default function HeroResponsive(props) {
           {...getOverrideProps(overrides, "logo")}
         ></Image>
         <Text
-          fontFamily="Lato"
+          fontFamily="Gloria Hallelujah"
           fontSize="40px"
           fontWeight="600"
           color="rgba(255,255,255,1)"
@@ -240,7 +240,7 @@ export default function HeroResponsive(props) {
             {...getOverrideProps(overrides, "acreditationImage3")}
           ></Image> */}
           <Button
-            className="rounded p-3 text-gray-100"
+            // className="rounded p-3 text-gray-100"
             width="300px"
             height="unset"
             shrink="0"

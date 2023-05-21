@@ -16,22 +16,22 @@ export default function MySocialMedia(props) {
   const { overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         Facebook: {},
         "YouTube Logo": {},
         Instagram: {},
         MySocialMedia: {},
       },
-      variantValues: { breakpoint: "large" },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         Facebook: {},
         "YouTube Logo": {},
         Instagram: {},
         MySocialMedia: { width: "87px", height: "26px" },
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({

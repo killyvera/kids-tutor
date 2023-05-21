@@ -6,11 +6,192 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Tags } from "../models";
+import {
+  Autocomplete,
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  ScrollView,
+  Text,
+  TextField,
+  useTheme,
+} from "@aws-amplify/ui-react";
+import {
+  getOverrideProps,
+  useDataStoreBinding,
+} from "@aws-amplify/ui-react/internal";
+import {
+  Tags,
+  BlogPost,
+  Product,
+  Resources,
+  BlogPostTags,
+  ProductTags,
+  TagsResources,
+} from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function TagsCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -24,19 +205,89 @@ export default function TagsCreateForm(props) {
   } = props;
   const initialValues = {
     tag_name: "",
+    blogposts: [],
     color: "",
+    products: [],
+    resources: [],
   };
   const [tag_name, setTag_name] = React.useState(initialValues.tag_name);
+  const [blogposts, setBlogposts] = React.useState(initialValues.blogposts);
   const [color, setColor] = React.useState(initialValues.color);
+  const [products, setProducts] = React.useState(initialValues.products);
+  const [resources, setResources] = React.useState(initialValues.resources);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTag_name(initialValues.tag_name);
+    setBlogposts(initialValues.blogposts);
+    setCurrentBlogpostsValue(undefined);
+    setCurrentBlogpostsDisplayValue("");
     setColor(initialValues.color);
+    setProducts(initialValues.products);
+    setCurrentProductsValue(undefined);
+    setCurrentProductsDisplayValue("");
+    setResources(initialValues.resources);
+    setCurrentResourcesValue(undefined);
+    setCurrentResourcesDisplayValue("");
     setErrors({});
+  };
+  const [currentBlogpostsDisplayValue, setCurrentBlogpostsDisplayValue] =
+    React.useState("");
+  const [currentBlogpostsValue, setCurrentBlogpostsValue] =
+    React.useState(undefined);
+  const blogpostsRef = React.createRef();
+  const [currentProductsDisplayValue, setCurrentProductsDisplayValue] =
+    React.useState("");
+  const [currentProductsValue, setCurrentProductsValue] =
+    React.useState(undefined);
+  const productsRef = React.createRef();
+  const [currentResourcesDisplayValue, setCurrentResourcesDisplayValue] =
+    React.useState("");
+  const [currentResourcesValue, setCurrentResourcesValue] =
+    React.useState(undefined);
+  const resourcesRef = React.createRef();
+  const getIDValue = {
+    blogposts: (r) => JSON.stringify({ id: r?.id }),
+    products: (r) => JSON.stringify({ id: r?.id }),
+    resources: (r) => JSON.stringify({ id: r?.id }),
+  };
+  const blogpostsIdSet = new Set(
+    Array.isArray(blogposts)
+      ? blogposts.map((r) => getIDValue.blogposts?.(r))
+      : getIDValue.blogposts?.(blogposts)
+  );
+  const productsIdSet = new Set(
+    Array.isArray(products)
+      ? products.map((r) => getIDValue.products?.(r))
+      : getIDValue.products?.(products)
+  );
+  const resourcesIdSet = new Set(
+    Array.isArray(resources)
+      ? resources.map((r) => getIDValue.resources?.(r))
+      : getIDValue.resources?.(resources)
+  );
+  const blogPostRecords = useDataStoreBinding({
+    type: "collection",
+    model: BlogPost,
+  }).items;
+  const productRecords = useDataStoreBinding({
+    type: "collection",
+    model: Product,
+  }).items;
+  const resourcesRecords = useDataStoreBinding({
+    type: "collection",
+    model: Resources,
+  }).items;
+  const getDisplayValue = {
+    blogposts: (r) => `${r?.title ? r?.title + " - " : ""}${r?.id}`,
+    products: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
+    resources: (r) => `${r?.title ? r?.title + " - " : ""}${r?.id}`,
   };
   const validations = {
     tag_name: [],
+    blogposts: [],
     color: [],
+    products: [],
+    resources: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -65,20 +316,31 @@ export default function TagsCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           tag_name,
+          blogposts,
           color,
+          products,
+          resources,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
               promises.push(
                 ...modelFields[fieldName].map((item) =>
-                  runValidationTasks(fieldName, item)
+                  runValidationTasks(
+                    fieldName,
+                    item,
+                    getDisplayValue[fieldName]
+                  )
                 )
               );
               return promises;
             }
             promises.push(
-              runValidationTasks(fieldName, modelFields[fieldName])
+              runValidationTasks(
+                fieldName,
+                modelFields[fieldName],
+                getDisplayValue[fieldName]
+              )
             );
             return promises;
           }, [])
@@ -95,7 +357,52 @@ export default function TagsCreateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(new Tags(modelFields));
+          const modelFieldsToSave = {
+            tag_name: modelFields.tag_name,
+            color: modelFields.color,
+          };
+          const tags = await DataStore.save(new Tags(modelFieldsToSave));
+          const promises = [];
+          promises.push(
+            ...blogposts.reduce((promises, blogPost) => {
+              promises.push(
+                DataStore.save(
+                  new BlogPostTags({
+                    tags,
+                    blogPost,
+                  })
+                )
+              );
+              return promises;
+            }, [])
+          );
+          promises.push(
+            ...products.reduce((promises, product) => {
+              promises.push(
+                DataStore.save(
+                  new ProductTags({
+                    tags,
+                    product,
+                  })
+                )
+              );
+              return promises;
+            }, [])
+          );
+          promises.push(
+            ...resources.reduce((promises, resources) => {
+              promises.push(
+                DataStore.save(
+                  new TagsResources({
+                    tags,
+                    resources,
+                  })
+                )
+              );
+              return promises;
+            }, [])
+          );
+          await Promise.all(promises);
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -121,7 +428,10 @@ export default function TagsCreateForm(props) {
           if (onChange) {
             const modelFields = {
               tag_name: value,
+              blogposts,
               color,
+              products,
+              resources,
             };
             const result = onChange(modelFields);
             value = result?.tag_name ?? value;
@@ -136,6 +446,83 @@ export default function TagsCreateForm(props) {
         hasError={errors.tag_name?.hasError}
         {...getOverrideProps(overrides, "tag_name")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              tag_name,
+              blogposts: values,
+              color,
+              products,
+              resources,
+            };
+            const result = onChange(modelFields);
+            values = result?.blogposts ?? values;
+          }
+          setBlogposts(values);
+          setCurrentBlogpostsValue(undefined);
+          setCurrentBlogpostsDisplayValue("");
+        }}
+        currentFieldValue={currentBlogpostsValue}
+        label={"Blogposts"}
+        items={blogposts}
+        hasError={errors?.blogposts?.hasError}
+        errorMessage={errors?.blogposts?.errorMessage}
+        getBadgeText={getDisplayValue.blogposts}
+        setFieldValue={(model) => {
+          setCurrentBlogpostsDisplayValue(
+            model ? getDisplayValue.blogposts(model) : ""
+          );
+          setCurrentBlogpostsValue(model);
+        }}
+        inputFieldRef={blogpostsRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Blogposts"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search BlogPost"
+          value={currentBlogpostsDisplayValue}
+          options={blogPostRecords
+            .filter((r) => !blogpostsIdSet.has(getIDValue.blogposts?.(r)))
+            .map((r) => ({
+              id: getIDValue.blogposts?.(r),
+              label: getDisplayValue.blogposts?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentBlogpostsValue(
+              blogPostRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentBlogpostsDisplayValue(label);
+            runValidationTasks("blogposts", label);
+          }}
+          onClear={() => {
+            setCurrentBlogpostsDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.blogposts?.hasError) {
+              runValidationTasks("blogposts", value);
+            }
+            setCurrentBlogpostsDisplayValue(value);
+            setCurrentBlogpostsValue(undefined);
+          }}
+          onBlur={() =>
+            runValidationTasks("blogposts", currentBlogpostsDisplayValue)
+          }
+          errorMessage={errors.blogposts?.errorMessage}
+          hasError={errors.blogposts?.hasError}
+          ref={blogpostsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "blogposts")}
+        ></Autocomplete>
+      </ArrayField>
       <TextField
         label="Color"
         isRequired={false}
@@ -146,7 +533,10 @@ export default function TagsCreateForm(props) {
           if (onChange) {
             const modelFields = {
               tag_name,
+              blogposts,
               color: value,
+              products,
+              resources,
             };
             const result = onChange(modelFields);
             value = result?.color ?? value;
@@ -161,6 +551,160 @@ export default function TagsCreateForm(props) {
         hasError={errors.color?.hasError}
         {...getOverrideProps(overrides, "color")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              tag_name,
+              blogposts,
+              color,
+              products: values,
+              resources,
+            };
+            const result = onChange(modelFields);
+            values = result?.products ?? values;
+          }
+          setProducts(values);
+          setCurrentProductsValue(undefined);
+          setCurrentProductsDisplayValue("");
+        }}
+        currentFieldValue={currentProductsValue}
+        label={"Products"}
+        items={products}
+        hasError={errors?.products?.hasError}
+        errorMessage={errors?.products?.errorMessage}
+        getBadgeText={getDisplayValue.products}
+        setFieldValue={(model) => {
+          setCurrentProductsDisplayValue(
+            model ? getDisplayValue.products(model) : ""
+          );
+          setCurrentProductsValue(model);
+        }}
+        inputFieldRef={productsRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Products"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search Product"
+          value={currentProductsDisplayValue}
+          options={productRecords
+            .filter((r) => !productsIdSet.has(getIDValue.products?.(r)))
+            .map((r) => ({
+              id: getIDValue.products?.(r),
+              label: getDisplayValue.products?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentProductsValue(
+              productRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentProductsDisplayValue(label);
+            runValidationTasks("products", label);
+          }}
+          onClear={() => {
+            setCurrentProductsDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.products?.hasError) {
+              runValidationTasks("products", value);
+            }
+            setCurrentProductsDisplayValue(value);
+            setCurrentProductsValue(undefined);
+          }}
+          onBlur={() =>
+            runValidationTasks("products", currentProductsDisplayValue)
+          }
+          errorMessage={errors.products?.errorMessage}
+          hasError={errors.products?.hasError}
+          ref={productsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "products")}
+        ></Autocomplete>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              tag_name,
+              blogposts,
+              color,
+              products,
+              resources: values,
+            };
+            const result = onChange(modelFields);
+            values = result?.resources ?? values;
+          }
+          setResources(values);
+          setCurrentResourcesValue(undefined);
+          setCurrentResourcesDisplayValue("");
+        }}
+        currentFieldValue={currentResourcesValue}
+        label={"Resources"}
+        items={resources}
+        hasError={errors?.resources?.hasError}
+        errorMessage={errors?.resources?.errorMessage}
+        getBadgeText={getDisplayValue.resources}
+        setFieldValue={(model) => {
+          setCurrentResourcesDisplayValue(
+            model ? getDisplayValue.resources(model) : ""
+          );
+          setCurrentResourcesValue(model);
+        }}
+        inputFieldRef={resourcesRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Resources"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search Resources"
+          value={currentResourcesDisplayValue}
+          options={resourcesRecords
+            .filter((r) => !resourcesIdSet.has(getIDValue.resources?.(r)))
+            .map((r) => ({
+              id: getIDValue.resources?.(r),
+              label: getDisplayValue.resources?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentResourcesValue(
+              resourcesRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentResourcesDisplayValue(label);
+            runValidationTasks("resources", label);
+          }}
+          onClear={() => {
+            setCurrentResourcesDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.resources?.hasError) {
+              runValidationTasks("resources", value);
+            }
+            setCurrentResourcesDisplayValue(value);
+            setCurrentResourcesValue(undefined);
+          }}
+          onBlur={() =>
+            runValidationTasks("resources", currentResourcesDisplayValue)
+          }
+          errorMessage={errors.resources?.errorMessage}
+          hasError={errors.resources?.hasError}
+          ref={resourcesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "resources")}
+        ></Autocomplete>
+      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

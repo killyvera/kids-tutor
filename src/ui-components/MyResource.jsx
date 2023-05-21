@@ -14,9 +14,9 @@ import { Flex, Image, Text, View } from "@aws-amplify/ui-react";
 export default function MyResource(props) {
   const { resources, className, overrides, ...rest } = props;
   const downloadFromCloudOnClick = useNavigateAction({
-    target: "_blank",
     type: "url",
     url: resources?.file,
+    target: "_blank",
   });
   return (
     <Flex

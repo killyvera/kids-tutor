@@ -7,20 +7,194 @@
 /* eslint-disable */
 import * as React from "react";
 import {
+  Autocomplete,
+  Badge,
   Button,
+  Divider,
   Flex,
   Grid,
+  Icon,
+  ScrollView,
+  Text,
   TextAreaField,
   TextField,
+  useTheme,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Resources } from "../models";
+import {
+  getOverrideProps,
+  useDataStoreBinding,
+} from "@aws-amplify/ui-react/internal";
+import {
+  Resources,
+  Category,
+  Tags as Tags0,
+  ResourcesCategory,
+  TagsResources,
+} from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function ResourcesUpdateForm(props) {
   const {
     id: idProp,
-    resources,
+    resources: resourcesModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -33,8 +207,10 @@ export default function ResourcesUpdateForm(props) {
     title: "",
     description: "",
     files: "",
+    Categories: [],
     cover: "",
     autor: "",
+    Tags: [],
     rating: "",
     short: "",
   };
@@ -43,14 +219,21 @@ export default function ResourcesUpdateForm(props) {
     initialValues.description
   );
   const [files, setFiles] = React.useState(initialValues.files);
+  const [Categories, setCategories] = React.useState(initialValues.Categories);
   const [cover, setCover] = React.useState(initialValues.cover);
   const [autor, setAutor] = React.useState(initialValues.autor);
+  const [Tags, setTags] = React.useState(initialValues.Tags);
   const [rating, setRating] = React.useState(initialValues.rating);
   const [short, setShort] = React.useState(initialValues.short);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = resourcesRecord
-      ? { ...initialValues, ...resourcesRecord }
+      ? {
+          ...initialValues,
+          ...resourcesRecord,
+          Categories: linkedCategories,
+          Tags: linkedTags,
+        }
       : initialValues;
     setTitle(cleanValues.title);
     setDescription(cleanValues.description);
@@ -59,29 +242,101 @@ export default function ResourcesUpdateForm(props) {
         ? cleanValues.files
         : JSON.stringify(cleanValues.files)
     );
+    setCategories(cleanValues.Categories ?? []);
+    setCurrentCategoriesValue(undefined);
+    setCurrentCategoriesDisplayValue("");
     setCover(cleanValues.cover);
     setAutor(cleanValues.autor);
+    setTags(cleanValues.Tags ?? []);
+    setCurrentTagsValue(undefined);
+    setCurrentTagsDisplayValue("");
     setRating(cleanValues.rating);
     setShort(cleanValues.short);
     setErrors({});
   };
-  const [resourcesRecord, setResourcesRecord] = React.useState(resources);
+  const [resourcesRecord, setResourcesRecord] =
+    React.useState(resourcesModelProp);
+  const [linkedCategories, setLinkedCategories] = React.useState([]);
+  const canUnlinkCategories = false;
+  const [linkedTags, setLinkedTags] = React.useState([]);
+  const canUnlinkTags = false;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? await DataStore.query(Resources, idProp)
-        : resources;
+        : resourcesModelProp;
       setResourcesRecord(record);
+      const linkedCategories = record
+        ? await Promise.all(
+            (
+              await record.Categories.toArray()
+            ).map((r) => {
+              return r.category;
+            })
+          )
+        : [];
+      setLinkedCategories(linkedCategories);
+      const linkedTags = record
+        ? await Promise.all(
+            (
+              await record.Tags.toArray()
+            ).map((r) => {
+              return r.tags;
+            })
+          )
+        : [];
+      setLinkedTags(linkedTags);
     };
     queryData();
-  }, [idProp, resources]);
-  React.useEffect(resetStateValues, [resourcesRecord]);
+  }, [idProp, resourcesModelProp]);
+  React.useEffect(resetStateValues, [
+    resourcesRecord,
+    linkedCategories,
+    linkedTags,
+  ]);
+  const [currentCategoriesDisplayValue, setCurrentCategoriesDisplayValue] =
+    React.useState("");
+  const [currentCategoriesValue, setCurrentCategoriesValue] =
+    React.useState(undefined);
+  const CategoriesRef = React.createRef();
+  const [currentTagsDisplayValue, setCurrentTagsDisplayValue] =
+    React.useState("");
+  const [currentTagsValue, setCurrentTagsValue] = React.useState(undefined);
+  const TagsRef = React.createRef();
+  const getIDValue = {
+    Categories: (r) => JSON.stringify({ id: r?.id }),
+    Tags: (r) => JSON.stringify({ id: r?.id }),
+  };
+  const CategoriesIdSet = new Set(
+    Array.isArray(Categories)
+      ? Categories.map((r) => getIDValue.Categories?.(r))
+      : getIDValue.Categories?.(Categories)
+  );
+  const TagsIdSet = new Set(
+    Array.isArray(Tags)
+      ? Tags.map((r) => getIDValue.Tags?.(r))
+      : getIDValue.Tags?.(Tags)
+  );
+  const categoryRecords = useDataStoreBinding({
+    type: "collection",
+    model: Category,
+  }).items;
+  const tagsRecords = useDataStoreBinding({
+    type: "collection",
+    model: Tags0,
+  }).items;
+  const getDisplayValue = {
+    Categories: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
+    Tags: (r) => `${r?.tag_name ? r?.tag_name + " - " : ""}${r?.id}`,
+  };
   const validations = {
     title: [],
     description: [],
     files: [{ type: "JSON" }],
+    Categories: [],
     cover: [],
     autor: [],
+    Tags: [],
     rating: [],
     short: [],
   };
@@ -114,8 +369,10 @@ export default function ResourcesUpdateForm(props) {
           title,
           description,
           files,
+          Categories,
           cover,
           autor,
+          Tags,
           rating,
           short,
         };
@@ -124,13 +381,21 @@ export default function ResourcesUpdateForm(props) {
             if (Array.isArray(modelFields[fieldName])) {
               promises.push(
                 ...modelFields[fieldName].map((item) =>
-                  runValidationTasks(fieldName, item)
+                  runValidationTasks(
+                    fieldName,
+                    item,
+                    getDisplayValue[fieldName]
+                  )
                 )
               );
               return promises;
             }
             promises.push(
-              runValidationTasks(fieldName, modelFields[fieldName])
+              runValidationTasks(
+                fieldName,
+                modelFields[fieldName],
+                getDisplayValue[fieldName]
+              )
             );
             return promises;
           }, [])
@@ -147,11 +412,160 @@ export default function ResourcesUpdateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(
-            Resources.copyOf(resourcesRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
+          const promises = [];
+          const categoriesToLinkMap = new Map();
+          const categoriesToUnLinkMap = new Map();
+          const categoriesMap = new Map();
+          const linkedCategoriesMap = new Map();
+          Categories.forEach((r) => {
+            const count = categoriesMap.get(getIDValue.Categories?.(r));
+            const newCount = count ? count + 1 : 1;
+            categoriesMap.set(getIDValue.Categories?.(r), newCount);
+          });
+          linkedCategories.forEach((r) => {
+            const count = linkedCategoriesMap.get(getIDValue.Categories?.(r));
+            const newCount = count ? count + 1 : 1;
+            linkedCategoriesMap.set(getIDValue.Categories?.(r), newCount);
+          });
+          linkedCategoriesMap.forEach((count, id) => {
+            const newCount = categoriesMap.get(id);
+            if (newCount) {
+              const diffCount = count - newCount;
+              if (diffCount > 0) {
+                categoriesToUnLinkMap.set(id, diffCount);
+              }
+            } else {
+              categoriesToUnLinkMap.set(id, count);
+            }
+          });
+          categoriesMap.forEach((count, id) => {
+            const originalCount = linkedCategoriesMap.get(id);
+            if (originalCount) {
+              const diffCount = count - originalCount;
+              if (diffCount > 0) {
+                categoriesToLinkMap.set(id, diffCount);
+              }
+            } else {
+              categoriesToLinkMap.set(id, count);
+            }
+          });
+          categoriesToUnLinkMap.forEach(async (count, id) => {
+            const resourcesCategoryRecords = await DataStore.query(
+              ResourcesCategory,
+              (r) =>
+                r.and((r) => {
+                  const recordKeys = JSON.parse(id);
+                  return [
+                    r.categoryId.eq(recordKeys.id),
+                    r.resourcesId.eq(resourcesRecord.id),
+                  ];
+                })
+            );
+            for (let i = 0; i < count; i++) {
+              promises.push(DataStore.delete(resourcesCategoryRecords[i]));
+            }
+          });
+          categoriesToLinkMap.forEach((count, id) => {
+            for (let i = count; i > 0; i--) {
+              promises.push(
+                DataStore.save(
+                  new ResourcesCategory({
+                    resources: resourcesRecord,
+                    category: categoryRecords.find((r) =>
+                      Object.entries(JSON.parse(id)).every(
+                        ([key, value]) => r[key] === value
+                      )
+                    ),
+                  })
+                )
+              );
+            }
+          });
+          const tagsToLinkMap = new Map();
+          const tagsToUnLinkMap = new Map();
+          const tagsMap = new Map();
+          const linkedTagsMap = new Map();
+          Tags.forEach((r) => {
+            const count = tagsMap.get(getIDValue.Tags?.(r));
+            const newCount = count ? count + 1 : 1;
+            tagsMap.set(getIDValue.Tags?.(r), newCount);
+          });
+          linkedTags.forEach((r) => {
+            const count = linkedTagsMap.get(getIDValue.Tags?.(r));
+            const newCount = count ? count + 1 : 1;
+            linkedTagsMap.set(getIDValue.Tags?.(r), newCount);
+          });
+          linkedTagsMap.forEach((count, id) => {
+            const newCount = tagsMap.get(id);
+            if (newCount) {
+              const diffCount = count - newCount;
+              if (diffCount > 0) {
+                tagsToUnLinkMap.set(id, diffCount);
+              }
+            } else {
+              tagsToUnLinkMap.set(id, count);
+            }
+          });
+          tagsMap.forEach((count, id) => {
+            const originalCount = linkedTagsMap.get(id);
+            if (originalCount) {
+              const diffCount = count - originalCount;
+              if (diffCount > 0) {
+                tagsToLinkMap.set(id, diffCount);
+              }
+            } else {
+              tagsToLinkMap.set(id, count);
+            }
+          });
+          tagsToUnLinkMap.forEach(async (count, id) => {
+            const tagsResourcesRecords = await DataStore.query(
+              TagsResources,
+              (r) =>
+                r.and((r) => {
+                  const recordKeys = JSON.parse(id);
+                  return [
+                    r.tagsId.eq(recordKeys.id),
+                    r.resourcesId.eq(resourcesRecord.id),
+                  ];
+                })
+            );
+            for (let i = 0; i < count; i++) {
+              promises.push(DataStore.delete(tagsResourcesRecords[i]));
+            }
+          });
+          tagsToLinkMap.forEach((count, id) => {
+            for (let i = count; i > 0; i--) {
+              promises.push(
+                DataStore.save(
+                  new TagsResources({
+                    resources: resourcesRecord,
+                    tags: tagsRecords.find((r) =>
+                      Object.entries(JSON.parse(id)).every(
+                        ([key, value]) => r[key] === value
+                      )
+                    ),
+                  })
+                )
+              );
+            }
+          });
+          const modelFieldsToSave = {
+            title: modelFields.title,
+            description: modelFields.description,
+            files: modelFields.files,
+            cover: modelFields.cover,
+            autor: modelFields.autor,
+            rating: modelFields.rating,
+            short: modelFields.short,
+          };
+          promises.push(
+            DataStore.save(
+              Resources.copyOf(resourcesRecord, (updated) => {
+                Object.assign(updated, modelFieldsToSave);
+              })
+            )
           );
+          await Promise.all(promises);
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -176,8 +590,10 @@ export default function ResourcesUpdateForm(props) {
               title: value,
               description,
               files,
+              Categories,
               cover,
               autor,
+              Tags,
               rating,
               short,
             };
@@ -206,8 +622,10 @@ export default function ResourcesUpdateForm(props) {
               title,
               description: value,
               files,
+              Categories,
               cover,
               autor,
+              Tags,
               rating,
               short,
             };
@@ -236,8 +654,10 @@ export default function ResourcesUpdateForm(props) {
               title,
               description,
               files: value,
+              Categories,
               cover,
               autor,
+              Tags,
               rating,
               short,
             };
@@ -254,6 +674,87 @@ export default function ResourcesUpdateForm(props) {
         hasError={errors.files?.hasError}
         {...getOverrideProps(overrides, "files")}
       ></TextAreaField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              files,
+              Categories: values,
+              cover,
+              autor,
+              Tags,
+              rating,
+              short,
+            };
+            const result = onChange(modelFields);
+            values = result?.Categories ?? values;
+          }
+          setCategories(values);
+          setCurrentCategoriesValue(undefined);
+          setCurrentCategoriesDisplayValue("");
+        }}
+        currentFieldValue={currentCategoriesValue}
+        label={"Categories"}
+        items={Categories}
+        hasError={errors?.Categories?.hasError}
+        errorMessage={errors?.Categories?.errorMessage}
+        getBadgeText={getDisplayValue.Categories}
+        setFieldValue={(model) => {
+          setCurrentCategoriesDisplayValue(
+            model ? getDisplayValue.Categories(model) : ""
+          );
+          setCurrentCategoriesValue(model);
+        }}
+        inputFieldRef={CategoriesRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Categories"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search Category"
+          value={currentCategoriesDisplayValue}
+          options={categoryRecords
+            .filter((r) => !CategoriesIdSet.has(getIDValue.Categories?.(r)))
+            .map((r) => ({
+              id: getIDValue.Categories?.(r),
+              label: getDisplayValue.Categories?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentCategoriesValue(
+              categoryRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentCategoriesDisplayValue(label);
+            runValidationTasks("Categories", label);
+          }}
+          onClear={() => {
+            setCurrentCategoriesDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.Categories?.hasError) {
+              runValidationTasks("Categories", value);
+            }
+            setCurrentCategoriesDisplayValue(value);
+            setCurrentCategoriesValue(undefined);
+          }}
+          onBlur={() =>
+            runValidationTasks("Categories", currentCategoriesDisplayValue)
+          }
+          errorMessage={errors.Categories?.errorMessage}
+          hasError={errors.Categories?.hasError}
+          ref={CategoriesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "Categories")}
+        ></Autocomplete>
+      </ArrayField>
       <TextField
         label="Cover"
         isRequired={false}
@@ -266,8 +767,10 @@ export default function ResourcesUpdateForm(props) {
               title,
               description,
               files,
+              Categories,
               cover: value,
               autor,
+              Tags,
               rating,
               short,
             };
@@ -296,8 +799,10 @@ export default function ResourcesUpdateForm(props) {
               title,
               description,
               files,
+              Categories,
               cover,
               autor: value,
+              Tags,
               rating,
               short,
             };
@@ -314,6 +819,83 @@ export default function ResourcesUpdateForm(props) {
         hasError={errors.autor?.hasError}
         {...getOverrideProps(overrides, "autor")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              files,
+              Categories,
+              cover,
+              autor,
+              Tags: values,
+              rating,
+              short,
+            };
+            const result = onChange(modelFields);
+            values = result?.Tags ?? values;
+          }
+          setTags(values);
+          setCurrentTagsValue(undefined);
+          setCurrentTagsDisplayValue("");
+        }}
+        currentFieldValue={currentTagsValue}
+        label={"Tags"}
+        items={Tags}
+        hasError={errors?.Tags?.hasError}
+        errorMessage={errors?.Tags?.errorMessage}
+        getBadgeText={getDisplayValue.Tags}
+        setFieldValue={(model) => {
+          setCurrentTagsDisplayValue(model ? getDisplayValue.Tags(model) : "");
+          setCurrentTagsValue(model);
+        }}
+        inputFieldRef={TagsRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Tags"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search Tags"
+          value={currentTagsDisplayValue}
+          options={tagsRecords
+            .filter((r) => !TagsIdSet.has(getIDValue.Tags?.(r)))
+            .map((r) => ({
+              id: getIDValue.Tags?.(r),
+              label: getDisplayValue.Tags?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentTagsValue(
+              tagsRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentTagsDisplayValue(label);
+            runValidationTasks("Tags", label);
+          }}
+          onClear={() => {
+            setCurrentTagsDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.Tags?.hasError) {
+              runValidationTasks("Tags", value);
+            }
+            setCurrentTagsDisplayValue(value);
+            setCurrentTagsValue(undefined);
+          }}
+          onBlur={() => runValidationTasks("Tags", currentTagsDisplayValue)}
+          errorMessage={errors.Tags?.errorMessage}
+          hasError={errors.Tags?.hasError}
+          ref={TagsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "Tags")}
+        ></Autocomplete>
+      </ArrayField>
       <TextField
         label="Rating"
         isRequired={false}
@@ -330,8 +912,10 @@ export default function ResourcesUpdateForm(props) {
               title,
               description,
               files,
+              Categories,
               cover,
               autor,
+              Tags,
               rating: value,
               short,
             };
@@ -360,8 +944,10 @@ export default function ResourcesUpdateForm(props) {
               title,
               description,
               files,
+              Categories,
               cover,
               autor,
+              Tags,
               rating,
               short: value,
             };
@@ -389,7 +975,7 @@ export default function ResourcesUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || resources)}
+          isDisabled={!(idProp || resourcesModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -401,7 +987,7 @@ export default function ResourcesUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || resources) ||
+              !(idProp || resourcesModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

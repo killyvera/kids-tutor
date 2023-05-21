@@ -17,16 +17,16 @@ export default function MyCollege(props) {
   const { colleges, overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
-      overrides: { image: {}, name: {}, MyCollege: {} },
       variantValues: { breakpoint: "large" },
+      overrides: { image: {}, name: {}, MyCollege: {} },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         image: { width: "75px", height: "75px", borderRadius: "5px" },
         name: { fontSize: "10px", lineHeight: "15px" },
         MyCollege: { gap: "5px", width: "81px", height: "119px" },
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({
@@ -43,9 +43,9 @@ export default function MyCollege(props) {
     overridesProp || {}
   );
   const nameOnClick = useNavigateAction({
-    target: "_blank",
     type: "url",
     url: colleges?.link,
+    target: "_blank",
   });
   return (
     <Flex

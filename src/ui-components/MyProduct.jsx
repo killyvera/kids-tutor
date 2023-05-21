@@ -30,6 +30,7 @@ export default function MyProduct(props) {
   } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         "4": {},
         carousel39222906: {},
@@ -53,9 +54,9 @@ export default function MyProduct(props) {
         "Frame 422": {},
         MyProduct: {},
       },
-      variantValues: { breakpoint: "large" },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         "4": {},
         carousel39222906: { width: "300px" },
@@ -86,7 +87,6 @@ export default function MyProduct(props) {
         "Frame 422": { direction: "column", height: "855px" },
         MyProduct: { direction: "column", width: "300px", height: "1112px" },
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({

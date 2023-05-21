@@ -22,6 +22,7 @@ export default function HeroResponsive(props) {
   const { overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         logo: {},
         p1: {},
@@ -34,9 +35,9 @@ export default function HeroResponsive(props) {
         "Frame 420": {},
         HeroResponsive: {},
       },
-      variantValues: { breakpoint: "large" },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         logo: {},
         p1: { width: "unset", alignSelf: "stretch" },
@@ -55,7 +56,6 @@ export default function HeroResponsive(props) {
         "Frame 420": { gap: "29px", width: "300px", height: "974px" },
         HeroResponsive: { width: "320px", height: "1075px" },
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({

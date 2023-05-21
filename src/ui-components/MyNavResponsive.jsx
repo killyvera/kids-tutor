@@ -22,6 +22,7 @@ export default function MyNavResponsive(props) {
   const { overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         image: {},
         hamburgerContainer: {},
@@ -40,9 +41,9 @@ export default function MyNavResponsive(props) {
         components: {},
         MyNavResponsive: {},
       },
-      variantValues: { breakpoint: "large" },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         image: {},
         hamburgerContainer: { display: "flex" },
@@ -61,7 +62,6 @@ export default function MyNavResponsive(props) {
         components: {},
         MyNavResponsive: {},
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({

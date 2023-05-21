@@ -24,7 +24,7 @@ const product = {
   stock: 20,
   dimensions: "22x22x12",
   weight: 0.42,
-  cover: "https://m.media-amazon.com/images/I/91SShkxYS6L._AC_SX425_.jpg",
+  cover: "https://i.ibb.co/VSf5pBW/MATH-01.webp",
   categories: ["fisica", "juego de mesa"],
 };
 
@@ -170,7 +170,7 @@ export default function MyProductFeatures() {
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
           <img
-            src="https://i.ibb.co/sVFLLb3/featureimage003.png"
+            src={product.cover}
             alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
             className="rounded-lg bg-gray-100"
           />

@@ -23,6 +23,7 @@ export default function Testimonial(props) {
   const { testimonials, overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         image: {},
         Rating: {},
@@ -33,9 +34,9 @@ export default function Testimonial(props) {
         group: {},
         Testimonial: {},
       },
-      variantValues: { breakpoint: "large" },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         image: {},
         Rating: {},
@@ -52,7 +53,6 @@ export default function Testimonial(props) {
         },
         Testimonial: { width: "268px", height: "207px" },
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({

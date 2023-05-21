@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { AutocompleteProps, GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { Product } from "../models";
+import { Product, Category, Tags } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -23,12 +23,14 @@ export declare type ProductUpdateFormInputValues = {
     weight?: number;
     rating?: number;
     cover?: string;
+    categories?: Category[];
     top?: string;
     bottom?: string;
     front?: string;
     back?: string;
     marketplaces?: string;
     images?: string;
+    tags?: Tags[];
     type?: string;
 };
 export declare type ProductUpdateFormValidationValues = {
@@ -41,12 +43,14 @@ export declare type ProductUpdateFormValidationValues = {
     weight?: ValidationFunction<number>;
     rating?: ValidationFunction<number>;
     cover?: ValidationFunction<string>;
+    categories?: ValidationFunction<Category>;
     top?: ValidationFunction<string>;
     bottom?: ValidationFunction<string>;
     front?: ValidationFunction<string>;
     back?: ValidationFunction<string>;
     marketplaces?: ValidationFunction<string>;
     images?: ValidationFunction<string>;
+    tags?: ValidationFunction<Tags>;
     type?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -61,12 +65,14 @@ export declare type ProductUpdateFormOverridesProps = {
     weight?: PrimitiveOverrideProps<TextFieldProps>;
     rating?: PrimitiveOverrideProps<TextFieldProps>;
     cover?: PrimitiveOverrideProps<TextFieldProps>;
+    categories?: PrimitiveOverrideProps<AutocompleteProps>;
     top?: PrimitiveOverrideProps<TextFieldProps>;
     bottom?: PrimitiveOverrideProps<TextFieldProps>;
     front?: PrimitiveOverrideProps<TextFieldProps>;
     back?: PrimitiveOverrideProps<TextFieldProps>;
     marketplaces?: PrimitiveOverrideProps<TextAreaFieldProps>;
     images?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    tags?: PrimitiveOverrideProps<AutocompleteProps>;
     type?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type ProductUpdateFormProps = React.PropsWithChildren<{
