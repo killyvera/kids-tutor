@@ -7,6 +7,7 @@ import MyProductCard from "./MyProductCard";
 import MyProduct from "./MyProduct";
 
 function MyProductList({ list, categories, productCategories }) {
+  const [filter, setFilter]= useState('')
   const [firstPost, ...postList] = list;
   const [filteredProducts, setFilteredProducts] = useState(list);
 
@@ -14,8 +15,10 @@ function MyProductList({ list, categories, productCategories }) {
     let filteredList = [];
     if (filter === "todos") {
       filteredList = list;
+      setFilter('todos')
     } else {
       filteredList = list.filter((product) => product.type[filter]);
+      setFilter(filter)
     }
     setFilteredProducts(filteredList);
   };
@@ -83,27 +86,27 @@ function MyProductList({ list, categories, productCategories }) {
           </div>
         </div> */}
         <div className="space-x-1 flex flex-row justify-center">
-          <div className="bg-white-500 border border-gray-400 py-2 px-1 rounded text-gray-400">
+          {/* <div className="bg-white-500 border border-gray-400 py-2 px-1 rounded text-gray-400">
             Filtrar productos por:
-          </div>
+          </div> */}
           <button
-            className="bg-blue-500 py-2 px-1 rounded text-white"
+            className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === 'todos' ? 'bg-blue-900 text-white' : ''} transition hover:scale-110`}
             onClick={() => handleFilterClick("todos")}
           >
             Todos
           </button>
-          <button className="bg-blue-500 py-2 px-1 rounded text-white"
+          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "physical" ? 'bg-blue-900 text-white' : ''} transition hover:scale-110`}
           onClick={() => handleFilterClick("physical")}
           >
             Fisicos{" "}
           </button>
-          <button className="bg-blue-500 py-2 px-1 rounded text-white"
+          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "downloadable" ? 'bg-blue-900 text-white' : ''} transition hover:scale-110`}
           onClick={() => handleFilterClick("downloadable")}
           >
             Descargables
           </button>
         </div>
-        <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
+        <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16 active:bg-blue-900">
           {filteredProducts.map((element) => (
             <MyProductCard
               categories={categories}

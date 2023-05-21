@@ -57,6 +57,7 @@ export default function Home({
                 "Alto Nivel Academico, gracias a la labor conjunta basada en resultados con nuestro equipo de expertos."
               }
             /> */}
+            
             <MyProductFeatures />
           <H1>
             ¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros
