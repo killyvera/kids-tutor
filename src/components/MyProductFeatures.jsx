@@ -1,3 +1,6 @@
+import { Storage } from "@aws-amplify/storage";
+import { useEffect, useState } from "react";
+
 const features = [
   { name: "Origin", description: "Designed by Good Goods, Inc." },
   {
@@ -29,6 +32,23 @@ const product = {
 };
 
 export default function MyProductFeatures() {
+  const [image, setImage] = useState("");
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const file = await Storage.get("images/MATH-01.webp", {
+          level: "public",
+        });
+        setImage(file);
+      } catch (error) {
+        console.log("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+  console.log(image && image);
+
   return (
     <div className="bg-white">
       <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
@@ -170,7 +190,7 @@ export default function MyProductFeatures() {
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
           <img
-            src={product.cover}
+            src={image && image}
             alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
             className="rounded-lg bg-gray-100"
           />
