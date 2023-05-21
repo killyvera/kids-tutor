@@ -153,7 +153,7 @@ export default function MyProduct(props) {
             top="0px"
             left="0px"
             padding="0px 0px 0px 0px"
-            backgroundColor="rgba(188,236,245,1)"
+            backgroundColor="rgba(147,162,200,1)"
             children={carousel}
             {...getOverrideProps(overrides, "carousel39222906")}
           ></View>
@@ -354,7 +354,7 @@ export default function MyProduct(props) {
             alignSelf="stretch"
             position="relative"
             padding="0px 0px 0px 0px"
-            backgroundColor="rgba(188,236,245,1)"
+            backgroundColor="rgba(147,162,200,1)"
             {...getOverrideProps(overrides, "Categories")}
           ></View>
           <View
@@ -370,7 +370,7 @@ export default function MyProduct(props) {
             alignSelf="stretch"
             position="relative"
             padding="0px 0px 0px 0px"
-            backgroundColor="rgba(188,236,245,1)"
+            backgroundColor="rgba(147,162,200,1)"
             {...getOverrideProps(overrides, "marketplaces")}
           ></View>
           <Flex

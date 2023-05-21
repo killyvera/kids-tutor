@@ -36,7 +36,7 @@ function Blog({ list, signOut, user, allProducts, total }) {
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
         <Layout allProducts={allProducts} total={total} >
-        <H1>Conoce la opinion de nuestros expertos.</H1>
+        <H1>Artículos de interés sobre educación y tu hijo.</H1>
         <MyPosts list={list} />
         </Layout>
       </main>
