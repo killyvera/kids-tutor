@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { AutocompleteProps, GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { Resources } from "../models";
+import { Resources, Category, Tags as Tags0 } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -17,8 +17,10 @@ export declare type ResourcesUpdateFormInputValues = {
     title?: string;
     description?: string;
     files?: string;
+    Categories?: Category[];
     cover?: string;
     autor?: string;
+    Tags?: Tags0[];
     rating?: number;
     short?: string;
 };
@@ -26,8 +28,10 @@ export declare type ResourcesUpdateFormValidationValues = {
     title?: ValidationFunction<string>;
     description?: ValidationFunction<string>;
     files?: ValidationFunction<string>;
+    Categories?: ValidationFunction<Category>;
     cover?: ValidationFunction<string>;
     autor?: ValidationFunction<string>;
+    Tags?: ValidationFunction<Tags0>;
     rating?: ValidationFunction<number>;
     short?: ValidationFunction<string>;
 };
@@ -37,8 +41,10 @@ export declare type ResourcesUpdateFormOverridesProps = {
     title?: PrimitiveOverrideProps<TextFieldProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
     files?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    Categories?: PrimitiveOverrideProps<AutocompleteProps>;
     cover?: PrimitiveOverrideProps<TextFieldProps>;
     autor?: PrimitiveOverrideProps<TextFieldProps>;
+    Tags?: PrimitiveOverrideProps<AutocompleteProps>;
     rating?: PrimitiveOverrideProps<TextFieldProps>;
     short?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

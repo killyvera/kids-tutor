@@ -16,6 +16,7 @@ export default function MyPost(props) {
   const { blogPost, overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         cover: {},
         "New Amplify Studio gives designers the ability to export UI to React code":
@@ -30,9 +31,9 @@ export default function MyPost(props) {
         Body: {},
         MyPost: {},
       },
-      variantValues: { breakpoint: "large" },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         cover: { width: "251px", height: "236px" },
         "New Amplify Studio gives designers the ability to export UI to React code":
@@ -53,7 +54,6 @@ export default function MyPost(props) {
         Body: { width: "251px", justifyContent: "center" },
         MyPost: { height: "880px", padding: "9px 24px 9px 24px" },
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({

@@ -16,22 +16,22 @@ export default function StatusOrder(props) {
   const { overrides: overridesProp, ...rest } = props;
   const variants = [
     {
-      overrides: { status: {}, StatusOrder: {} },
       variantValues: { status: "pending" },
+      overrides: { status: {}, StatusOrder: {} },
     },
     {
+      variantValues: { status: "dispatch" },
       overrides: {
         status: { left: "calc(50% - 26.5px - -1px)", children: "Dispatch" },
         StatusOrder: { backgroundColor: "rgba(10,207,131,1)" },
       },
-      variantValues: { status: "dispatch" },
     },
     {
+      variantValues: { status: "completed" },
       overrides: {
         status: { left: "calc(50% - 32.5px - 0px)", children: "Completed" },
         StatusOrder: { backgroundColor: "rgba(104,112,120,1)" },
       },
-      variantValues: { status: "completed" },
     },
   ];
   const overrides = mergeVariantsAndOverrides(

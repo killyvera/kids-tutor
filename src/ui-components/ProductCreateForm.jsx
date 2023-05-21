@@ -7,16 +7,190 @@
 /* eslint-disable */
 import * as React from "react";
 import {
+  Autocomplete,
+  Badge,
   Button,
+  Divider,
   Flex,
   Grid,
+  Icon,
+  ScrollView,
+  Text,
   TextAreaField,
   TextField,
+  useTheme,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Product } from "../models";
+import {
+  getOverrideProps,
+  useDataStoreBinding,
+} from "@aws-amplify/ui-react/internal";
+import {
+  Product,
+  Category,
+  Tags,
+  ProductCategory,
+  ProductTags,
+} from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function ProductCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -38,12 +212,14 @@ export default function ProductCreateForm(props) {
     weight: "",
     rating: "",
     cover: "",
+    categories: [],
     top: "",
     bottom: "",
     front: "",
     back: "",
     marketplaces: "",
     images: "",
+    tags: [],
     type: "",
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -57,6 +233,7 @@ export default function ProductCreateForm(props) {
   const [weight, setWeight] = React.useState(initialValues.weight);
   const [rating, setRating] = React.useState(initialValues.rating);
   const [cover, setCover] = React.useState(initialValues.cover);
+  const [categories, setCategories] = React.useState(initialValues.categories);
   const [top, setTop] = React.useState(initialValues.top);
   const [bottom, setBottom] = React.useState(initialValues.bottom);
   const [front, setFront] = React.useState(initialValues.front);
@@ -65,6 +242,7 @@ export default function ProductCreateForm(props) {
     initialValues.marketplaces
   );
   const [images, setImages] = React.useState(initialValues.images);
+  const [tags, setTags] = React.useState(initialValues.tags);
   const [type, setType] = React.useState(initialValues.type);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -77,14 +255,55 @@ export default function ProductCreateForm(props) {
     setWeight(initialValues.weight);
     setRating(initialValues.rating);
     setCover(initialValues.cover);
+    setCategories(initialValues.categories);
+    setCurrentCategoriesValue(undefined);
+    setCurrentCategoriesDisplayValue("");
     setTop(initialValues.top);
     setBottom(initialValues.bottom);
     setFront(initialValues.front);
     setBack(initialValues.back);
     setMarketplaces(initialValues.marketplaces);
     setImages(initialValues.images);
+    setTags(initialValues.tags);
+    setCurrentTagsValue(undefined);
+    setCurrentTagsDisplayValue("");
     setType(initialValues.type);
     setErrors({});
+  };
+  const [currentCategoriesDisplayValue, setCurrentCategoriesDisplayValue] =
+    React.useState("");
+  const [currentCategoriesValue, setCurrentCategoriesValue] =
+    React.useState(undefined);
+  const categoriesRef = React.createRef();
+  const [currentTagsDisplayValue, setCurrentTagsDisplayValue] =
+    React.useState("");
+  const [currentTagsValue, setCurrentTagsValue] = React.useState(undefined);
+  const tagsRef = React.createRef();
+  const getIDValue = {
+    categories: (r) => JSON.stringify({ id: r?.id }),
+    tags: (r) => JSON.stringify({ id: r?.id }),
+  };
+  const categoriesIdSet = new Set(
+    Array.isArray(categories)
+      ? categories.map((r) => getIDValue.categories?.(r))
+      : getIDValue.categories?.(categories)
+  );
+  const tagsIdSet = new Set(
+    Array.isArray(tags)
+      ? tags.map((r) => getIDValue.tags?.(r))
+      : getIDValue.tags?.(tags)
+  );
+  const categoryRecords = useDataStoreBinding({
+    type: "collection",
+    model: Category,
+  }).items;
+  const tagsRecords = useDataStoreBinding({
+    type: "collection",
+    model: Tags,
+  }).items;
+  const getDisplayValue = {
+    categories: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
+    tags: (r) => `${r?.tag_name ? r?.tag_name + " - " : ""}${r?.id}`,
   };
   const validations = {
     name: [],
@@ -96,12 +315,14 @@ export default function ProductCreateForm(props) {
     weight: [],
     rating: [],
     cover: [],
+    categories: [],
     top: [],
     bottom: [],
     front: [],
     back: [],
     marketplaces: [{ type: "JSON" }],
     images: [{ type: "JSON" }],
+    tags: [],
     type: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
@@ -139,12 +360,14 @@ export default function ProductCreateForm(props) {
           weight,
           rating,
           cover,
+          categories,
           top,
           bottom,
           front,
           back,
           marketplaces,
           images,
+          tags,
           type,
         };
         const validationResponses = await Promise.all(
@@ -152,13 +375,21 @@ export default function ProductCreateForm(props) {
             if (Array.isArray(modelFields[fieldName])) {
               promises.push(
                 ...modelFields[fieldName].map((item) =>
-                  runValidationTasks(fieldName, item)
+                  runValidationTasks(
+                    fieldName,
+                    item,
+                    getDisplayValue[fieldName]
+                  )
                 )
               );
               return promises;
             }
             promises.push(
-              runValidationTasks(fieldName, modelFields[fieldName])
+              runValidationTasks(
+                fieldName,
+                modelFields[fieldName],
+                getDisplayValue[fieldName]
+              )
             );
             return promises;
           }, [])
@@ -175,7 +406,53 @@ export default function ProductCreateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(new Product(modelFields));
+          const modelFieldsToSave = {
+            name: modelFields.name,
+            description: modelFields.description,
+            sku: modelFields.sku,
+            price: modelFields.price,
+            stock: modelFields.stock,
+            dimensions: modelFields.dimensions,
+            weight: modelFields.weight,
+            rating: modelFields.rating,
+            cover: modelFields.cover,
+            top: modelFields.top,
+            bottom: modelFields.bottom,
+            front: modelFields.front,
+            back: modelFields.back,
+            marketplaces: modelFields.marketplaces,
+            images: modelFields.images,
+            type: modelFields.type,
+          };
+          const product = await DataStore.save(new Product(modelFieldsToSave));
+          const promises = [];
+          promises.push(
+            ...categories.reduce((promises, category) => {
+              promises.push(
+                DataStore.save(
+                  new ProductCategory({
+                    product,
+                    category,
+                  })
+                )
+              );
+              return promises;
+            }, [])
+          );
+          promises.push(
+            ...tags.reduce((promises, tags) => {
+              promises.push(
+                DataStore.save(
+                  new ProductTags({
+                    product,
+                    tags,
+                  })
+                )
+              );
+              return promises;
+            }, [])
+          );
+          await Promise.all(promises);
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -209,12 +486,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -248,12 +527,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -287,12 +568,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -330,12 +613,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -373,12 +658,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -412,12 +699,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -455,12 +744,14 @@ export default function ProductCreateForm(props) {
               weight: value,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -498,12 +789,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating: value,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -537,12 +830,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover: value,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -558,6 +853,96 @@ export default function ProductCreateForm(props) {
         hasError={errors.cover?.hasError}
         {...getOverrideProps(overrides, "cover")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              categories: values,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces,
+              images,
+              tags,
+              type,
+            };
+            const result = onChange(modelFields);
+            values = result?.categories ?? values;
+          }
+          setCategories(values);
+          setCurrentCategoriesValue(undefined);
+          setCurrentCategoriesDisplayValue("");
+        }}
+        currentFieldValue={currentCategoriesValue}
+        label={"Categories"}
+        items={categories}
+        hasError={errors?.categories?.hasError}
+        errorMessage={errors?.categories?.errorMessage}
+        getBadgeText={getDisplayValue.categories}
+        setFieldValue={(model) => {
+          setCurrentCategoriesDisplayValue(
+            model ? getDisplayValue.categories(model) : ""
+          );
+          setCurrentCategoriesValue(model);
+        }}
+        inputFieldRef={categoriesRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Categories"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search Category"
+          value={currentCategoriesDisplayValue}
+          options={categoryRecords
+            .filter((r) => !categoriesIdSet.has(getIDValue.categories?.(r)))
+            .map((r) => ({
+              id: getIDValue.categories?.(r),
+              label: getDisplayValue.categories?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentCategoriesValue(
+              categoryRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentCategoriesDisplayValue(label);
+            runValidationTasks("categories", label);
+          }}
+          onClear={() => {
+            setCurrentCategoriesDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.categories?.hasError) {
+              runValidationTasks("categories", value);
+            }
+            setCurrentCategoriesDisplayValue(value);
+            setCurrentCategoriesValue(undefined);
+          }}
+          onBlur={() =>
+            runValidationTasks("categories", currentCategoriesDisplayValue)
+          }
+          errorMessage={errors.categories?.errorMessage}
+          hasError={errors.categories?.hasError}
+          ref={categoriesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "categories")}
+        ></Autocomplete>
+      </ArrayField>
       <TextField
         label="Top"
         isRequired={false}
@@ -576,12 +961,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top: value,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -615,12 +1002,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom: value,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -654,12 +1043,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front: value,
               back,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -693,12 +1084,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back: value,
               marketplaces,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -731,12 +1124,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces: value,
               images,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -769,12 +1164,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images: value,
+              tags,
               type,
             };
             const result = onChange(modelFields);
@@ -790,6 +1187,92 @@ export default function ProductCreateForm(props) {
         hasError={errors.images?.hasError}
         {...getOverrideProps(overrides, "images")}
       ></TextAreaField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              categories,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces,
+              images,
+              tags: values,
+              type,
+            };
+            const result = onChange(modelFields);
+            values = result?.tags ?? values;
+          }
+          setTags(values);
+          setCurrentTagsValue(undefined);
+          setCurrentTagsDisplayValue("");
+        }}
+        currentFieldValue={currentTagsValue}
+        label={"Tags"}
+        items={tags}
+        hasError={errors?.tags?.hasError}
+        errorMessage={errors?.tags?.errorMessage}
+        getBadgeText={getDisplayValue.tags}
+        setFieldValue={(model) => {
+          setCurrentTagsDisplayValue(model ? getDisplayValue.tags(model) : "");
+          setCurrentTagsValue(model);
+        }}
+        inputFieldRef={tagsRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Tags"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search Tags"
+          value={currentTagsDisplayValue}
+          options={tagsRecords
+            .filter((r) => !tagsIdSet.has(getIDValue.tags?.(r)))
+            .map((r) => ({
+              id: getIDValue.tags?.(r),
+              label: getDisplayValue.tags?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentTagsValue(
+              tagsRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentTagsDisplayValue(label);
+            runValidationTasks("tags", label);
+          }}
+          onClear={() => {
+            setCurrentTagsDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.tags?.hasError) {
+              runValidationTasks("tags", value);
+            }
+            setCurrentTagsDisplayValue(value);
+            setCurrentTagsValue(undefined);
+          }}
+          onBlur={() => runValidationTasks("tags", currentTagsDisplayValue)}
+          errorMessage={errors.tags?.errorMessage}
+          hasError={errors.tags?.hasError}
+          ref={tagsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "tags")}
+        ></Autocomplete>
+      </ArrayField>
       <TextAreaField
         label="Type"
         isRequired={false}
@@ -807,12 +1290,14 @@ export default function ProductCreateForm(props) {
               weight,
               rating,
               cover,
+              categories,
               top,
               bottom,
               front,
               back,
               marketplaces,
               images,
+              tags,
               type: value,
             };
             const result = onChange(modelFields);

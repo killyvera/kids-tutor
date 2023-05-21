@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3mystorectstorageaabd6fd7",
+  "bucketName": "my-store-ct-storage-aabd6fd7",
+  "policyUUID": "d1b2bad8",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

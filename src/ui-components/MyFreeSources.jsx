@@ -17,6 +17,7 @@ export default function MyFreeSources(props) {
   const { overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         MySources39353415: {},
         MySources39353416: {},
@@ -25,7 +26,6 @@ export default function MyFreeSources(props) {
         container: {},
         MyFreeSources: {},
       },
-      variantValues: { breakpoint: "large" },
     },
   ];
   const breakpointHook = useBreakpointValue({

@@ -1,5 +1,6 @@
 /* styles/globals.css */
 @import "~@aws-amplify/ui-react/styles.css";
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,14 +11,17 @@
 }
 
 .amplify-button--primary {
-  background-color: #1f5ff5;
+  background-color: #5197ff;
 }
 .amplify-button--primary:hover {
-  background-color: #2c54d7;
+  background-color: #63a2ff;
   scale: 1.1;
 }
-
-.amplify-tabs-item[data-state=active] {
+.amplify-button--primary:focus {
+  background-color: #80B3FF;
+  scale: 1.1;
+}
+.amplify-tabs-item[data-state="active"] {
   color: white;
   border-color: rgb(136, 62, 62);
   background-color: #e55959;
@@ -31,6 +35,6 @@
   border-style: none;
 }
 
-.amplify-tabs-item{
+.amplify-tabs-item {
   border-color: pink;
 }

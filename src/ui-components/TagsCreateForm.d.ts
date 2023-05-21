@@ -5,8 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { BlogPost, Product, Resources } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -14,17 +15,26 @@ export declare type ValidationResponse = {
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type TagsCreateFormInputValues = {
     tag_name?: string;
+    blogposts?: BlogPost[];
     color?: string;
+    products?: Product[];
+    resources?: Resources[];
 };
 export declare type TagsCreateFormValidationValues = {
     tag_name?: ValidationFunction<string>;
+    blogposts?: ValidationFunction<BlogPost>;
     color?: ValidationFunction<string>;
+    products?: ValidationFunction<Product>;
+    resources?: ValidationFunction<Resources>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TagsCreateFormOverridesProps = {
     TagsCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     tag_name?: PrimitiveOverrideProps<TextFieldProps>;
+    blogposts?: PrimitiveOverrideProps<AutocompleteProps>;
     color?: PrimitiveOverrideProps<TextFieldProps>;
+    products?: PrimitiveOverrideProps<AutocompleteProps>;
+    resources?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type TagsCreateFormProps = React.PropsWithChildren<{
     overrides?: TagsCreateFormOverridesProps | undefined | null;

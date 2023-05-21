@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { Comments } from "../models";
+import { Comments, Users, BlogPost } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -16,12 +16,16 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type CommentsUpdateFormInputValues = {
     content?: string;
     published_date?: string;
+    author?: Users;
+    post_id?: BlogPost;
     parent_coment?: string;
     replies?: string;
 };
 export declare type CommentsUpdateFormValidationValues = {
     content?: ValidationFunction<string>;
     published_date?: ValidationFunction<string>;
+    author?: ValidationFunction<Users>;
+    post_id?: ValidationFunction<BlogPost>;
     parent_coment?: ValidationFunction<string>;
     replies?: ValidationFunction<string>;
 };
@@ -30,6 +34,8 @@ export declare type CommentsUpdateFormOverridesProps = {
     CommentsUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     content?: PrimitiveOverrideProps<TextFieldProps>;
     published_date?: PrimitiveOverrideProps<TextFieldProps>;
+    author?: PrimitiveOverrideProps<AutocompleteProps>;
+    post_id?: PrimitiveOverrideProps<AutocompleteProps>;
     parent_coment?: PrimitiveOverrideProps<TextFieldProps>;
     replies?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

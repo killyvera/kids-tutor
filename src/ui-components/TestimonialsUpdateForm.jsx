@@ -14,7 +14,7 @@ import { DataStore } from "aws-amplify";
 export default function TestimonialsUpdateForm(props) {
   const {
     id: idProp,
-    testimonials,
+    testimonials: testimonialsModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -47,17 +47,18 @@ export default function TestimonialsUpdateForm(props) {
     setRating(cleanValues.rating);
     setErrors({});
   };
-  const [testimonialsRecord, setTestimonialsRecord] =
-    React.useState(testimonials);
+  const [testimonialsRecord, setTestimonialsRecord] = React.useState(
+    testimonialsModelProp
+  );
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? await DataStore.query(Testimonials, idProp)
-        : testimonials;
+        : testimonialsModelProp;
       setTestimonialsRecord(record);
     };
     queryData();
-  }, [idProp, testimonials]);
+  }, [idProp, testimonialsModelProp]);
   React.useEffect(resetStateValues, [testimonialsRecord]);
   const validations = {
     content: [],
@@ -298,7 +299,7 @@ export default function TestimonialsUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || testimonials)}
+          isDisabled={!(idProp || testimonialsModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -310,7 +311,7 @@ export default function TestimonialsUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || testimonials) ||
+              !(idProp || testimonialsModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

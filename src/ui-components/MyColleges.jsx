@@ -22,6 +22,7 @@ export default function MyColleges(props) {
   const { sliderFrame, overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         "Colegios que usan nuestros m\u00E9todos y productos de aprendizaje.":
           {},
@@ -29,7 +30,6 @@ export default function MyColleges(props) {
         Button: {},
         MyColleges: {},
       },
-      variantValues: { breakpoint: "large" },
     },
   ];
   const breakpointHook = useBreakpointValue({

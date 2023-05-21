@@ -14,7 +14,7 @@ import { DataStore } from "aws-amplify";
 export default function CollegesUpdateForm(props) {
   const {
     id: idProp,
-    colleges,
+    colleges: collegesModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -41,16 +41,16 @@ export default function CollegesUpdateForm(props) {
     setLink(cleanValues.link);
     setErrors({});
   };
-  const [collegesRecord, setCollegesRecord] = React.useState(colleges);
+  const [collegesRecord, setCollegesRecord] = React.useState(collegesModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? await DataStore.query(Colleges, idProp)
-        : colleges;
+        : collegesModelProp;
       setCollegesRecord(record);
     };
     queryData();
-  }, [idProp, colleges]);
+  }, [idProp, collegesModelProp]);
   React.useEffect(resetStateValues, [collegesRecord]);
   const validations = {
     name: [],
@@ -221,7 +221,7 @@ export default function CollegesUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || colleges)}
+          isDisabled={!(idProp || collegesModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -233,7 +233,7 @@ export default function CollegesUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || colleges) ||
+              !(idProp || collegesModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

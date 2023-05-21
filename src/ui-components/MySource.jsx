@@ -23,6 +23,7 @@ export default function MySource(props) {
   const { overrides: overridesProp, ...restProp } = props;
   const variants = [
     {
+      variantValues: { breakpoint: "large" },
       overrides: {
         background39323079: {},
         text39323080: {},
@@ -39,9 +40,9 @@ export default function MySource(props) {
         card: {},
         MySource: {},
       },
-      variantValues: { breakpoint: "large" },
     },
     {
+      variantValues: { breakpoint: "small" },
       overrides: {
         background39323079: {},
         text39323080: {},
@@ -58,7 +59,6 @@ export default function MySource(props) {
         card: { height: "323px" },
         MySource: { height: "323px" },
       },
-      variantValues: { breakpoint: "small" },
     },
   ];
   const breakpointHook = useBreakpointValue({

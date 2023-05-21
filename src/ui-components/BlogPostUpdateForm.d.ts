@@ -5,9 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { BlogPost } from "../models";
+import { BlogPost, Tags } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -18,12 +18,14 @@ export declare type BlogPostUpdateFormInputValues = {
     cover?: string;
     content?: string;
     author?: string;
+    tags?: Tags[];
 };
 export declare type BlogPostUpdateFormValidationValues = {
     title?: ValidationFunction<string>;
     cover?: ValidationFunction<string>;
     content?: ValidationFunction<string>;
     author?: ValidationFunction<string>;
+    tags?: ValidationFunction<Tags>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BlogPostUpdateFormOverridesProps = {
@@ -32,6 +34,7 @@ export declare type BlogPostUpdateFormOverridesProps = {
     cover?: PrimitiveOverrideProps<TextFieldProps>;
     content?: PrimitiveOverrideProps<TextFieldProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
+    tags?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type BlogPostUpdateFormProps = React.PropsWithChildren<{
     overrides?: BlogPostUpdateFormOverridesProps | undefined | null;
