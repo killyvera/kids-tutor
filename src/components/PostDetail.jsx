@@ -8,7 +8,7 @@ export default function PostDetail({
   categories,
   postCategories,
 }) {
-  console.log(element, element.tags, categories, postCategories);
+  // console.log(element, element.tags, categories, postCategories);
   return (
     // <!-- component -->
     <div className=" bg-slate-50">
