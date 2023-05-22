@@ -4,6 +4,7 @@ import MyBadgeList from "./MyBadgeList";
 import { Rating } from "@aws-amplify/ui-react";
 import StripeTest from "./StripeTest";
 import PrintableDownload from "./PrintableDownloand";
+import MyTagList from "./MyTagList";
 
 // https://tailwindcomponents.com/component/product-detail
 
@@ -95,7 +96,8 @@ const ProductDetail = ({ element, type, categories, productCategories }) => {
                 }
               />
             </div>
-            <div className="flex flex-row justify-center" >
+            <MyTagList tagList={element?.tags} />
+            <div className="flex flex-row justify-center pt-4" >
             <PrintableDownload a4Url={element?.files.a4} cartaUrl={element?.files.letter}/>
             <button className="rounded-full w-10 h-10 bg-gray-200 p-2 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
