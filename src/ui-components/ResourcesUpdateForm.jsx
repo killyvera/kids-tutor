@@ -238,11 +238,7 @@ export default function ResourcesUpdateForm(props) {
     setAutor(cleanValues.autor);
     setRating(cleanValues.rating);
     setShort(cleanValues.short);
-    setTags(
-      typeof cleanValues.tags === "string"
-        ? cleanValues.tags
-        : JSON.stringify(cleanValues.tags)
-    );
+    setTags(cleanValues.tags);
     setErrors({});
   };
   const [resourcesRecord, setResourcesRecord] =
@@ -298,7 +294,7 @@ export default function ResourcesUpdateForm(props) {
     autor: [],
     rating: [],
     short: [],
-    tags: [{ type: "JSON" }],
+    tags: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -780,7 +776,7 @@ export default function ResourcesUpdateForm(props) {
         hasError={errors.short?.hasError}
         {...getOverrideProps(overrides, "short")}
       ></TextField>
-      <TextAreaField
+      <TextField
         label="Tags"
         isRequired={false}
         isReadOnly={false}
@@ -811,7 +807,7 @@ export default function ResourcesUpdateForm(props) {
         errorMessage={errors.tags?.errorMessage}
         hasError={errors.tags?.hasError}
         {...getOverrideProps(overrides, "tags")}
-      ></TextAreaField>
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

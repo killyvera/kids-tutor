@@ -275,11 +275,7 @@ export default function ProductUpdateForm(props) {
         ? cleanValues.type
         : JSON.stringify(cleanValues.type)
     );
-    setTags(
-      typeof cleanValues.tags === "string"
-        ? cleanValues.tags
-        : JSON.stringify(cleanValues.tags)
-    );
+    setTags(cleanValues.tags);
     setErrors({});
   };
   const [productRecord, setProductRecord] = React.useState(productModelProp);
@@ -343,7 +339,7 @@ export default function ProductUpdateForm(props) {
     marketplaces: [{ type: "JSON" }],
     images: [{ type: "JSON" }],
     type: [{ type: "JSON" }],
-    tags: [{ type: "JSON" }],
+    tags: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -1296,7 +1292,7 @@ export default function ProductUpdateForm(props) {
         hasError={errors.type?.hasError}
         {...getOverrideProps(overrides, "type")}
       ></TextAreaField>
-      <TextAreaField
+      <TextField
         label="Tags"
         isRequired={false}
         isReadOnly={false}
@@ -1336,7 +1332,7 @@ export default function ProductUpdateForm(props) {
         errorMessage={errors.tags?.errorMessage}
         hasError={errors.tags?.hasError}
         {...getOverrideProps(overrides, "tags")}
-      ></TextAreaField>
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

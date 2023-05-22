@@ -3,6 +3,7 @@ import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
 import titleToLink from "@/helpers/titleToLink";
 import Marketplaces from "./Marketplaces";
+import MyTagList from "./MyTagList";
 
 const MyProductCard = ({ element, type, categories, productCategories }) => {
   // console.log(element, type, categories, productCategories);
@@ -47,6 +48,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
         <Marketplaces marketplaces={element?.marketplaces} />
 
       </div>
+      <MyTagList tagList={element?.tags} />
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import MyTag from "./MyTag";
 const MyTagList = ({ tagList }) => {
     console.log(tagList)
-    const tagString = tagList.split(', ')
+    const tagString = tagList?.split(', ')
   
     const removeSpacesAndCommas = (tagString) => {
       return tagString?.replace(/[\s,]+/g, '');
     };
   
-    const tags = tagString.map((tag, index) => (
+    const tags = tagString?.map((tag, index) => (
       <MyTag key={index} tagName={tag} />
     ));
   

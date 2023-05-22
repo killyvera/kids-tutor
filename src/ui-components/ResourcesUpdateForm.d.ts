@@ -46,7 +46,7 @@ export declare type ResourcesUpdateFormOverridesProps = {
     autor?: PrimitiveOverrideProps<TextFieldProps>;
     rating?: PrimitiveOverrideProps<TextFieldProps>;
     short?: PrimitiveOverrideProps<TextFieldProps>;
-    tags?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    tags?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ResourcesUpdateFormProps = React.PropsWithChildren<{
     overrides?: ResourcesUpdateFormOverridesProps | undefined | null;

@@ -151,7 +151,7 @@ export const schema = {
                 "tags": {
                     "name": "tags",
                     "isArray": false,
-                    "type": "AWSJSON",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1089,7 +1089,7 @@ export const schema = {
                 "tags": {
                     "name": "tags",
                     "isArray": false,
-                    "type": "AWSJSON",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1433,5 +1433,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "698a7035ac69e29913513cf0c852f5a7"
+    "version": "987a9ae6aac600dda548cf7817ff5175"
 };
