@@ -262,7 +262,7 @@ export default function ResourcesCreateForm(props) {
     autor: [],
     rating: [],
     short: [],
-    tags: [{ type: "JSON" }],
+    tags: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -687,10 +687,11 @@ export default function ResourcesCreateForm(props) {
         hasError={errors.short?.hasError}
         {...getOverrideProps(overrides, "short")}
       ></TextField>
-      <TextAreaField
+      <TextField
         label="Tags"
         isRequired={false}
         isReadOnly={false}
+        value={tags}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -717,7 +718,7 @@ export default function ResourcesCreateForm(props) {
         errorMessage={errors.tags?.errorMessage}
         hasError={errors.tags?.hasError}
         {...getOverrideProps(overrides, "tags")}
-      ></TextAreaField>
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

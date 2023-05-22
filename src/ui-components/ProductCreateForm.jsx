@@ -300,7 +300,7 @@ export default function ProductCreateForm(props) {
     marketplaces: [{ type: "JSON" }],
     images: [{ type: "JSON" }],
     type: [{ type: "JSON" }],
-    tags: [{ type: "JSON" }],
+    tags: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -1192,10 +1192,11 @@ export default function ProductCreateForm(props) {
         hasError={errors.type?.hasError}
         {...getOverrideProps(overrides, "type")}
       ></TextAreaField>
-      <TextAreaField
+      <TextField
         label="Tags"
         isRequired={false}
         isReadOnly={false}
+        value={tags}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -1231,7 +1232,7 @@ export default function ProductCreateForm(props) {
         errorMessage={errors.tags?.errorMessage}
         hasError={errors.tags?.hasError}
         {...getOverrideProps(overrides, "tags")}
-      ></TextAreaField>
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

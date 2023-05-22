@@ -7,6 +7,7 @@ import Marketplaces from "./Marketplaces";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import MyTagList from "./MyTagList";
 // https://tailwindcomponents.com/component/product-detail
 
 const ProductDetail = ({ element, categories}) => {
@@ -109,6 +110,7 @@ const ProductDetail = ({ element, categories}) => {
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
               <MyBadgeList resourceId={element?.id} categories={categories} />
             </div>
+            <MyTagList tagList={element?.tags} />
             <Marketplaces marketplaces={element?.marketplaces} />
             {/* <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">

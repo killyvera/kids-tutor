@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
+import MyTagList from "./MyTagList";
 
 const MyCardResource = ({ element, type, categories, resourceCategories }) => {
   console.log(element, type, categories, resourceCategories);
@@ -42,6 +43,7 @@ const MyCardResource = ({ element, type, categories, resourceCategories }) => {
       <p className="text-sm text-black">
         {element?.short.slice(0, 150)}
       </p>
+        <MyTagList   tagList={element?.tags}/>
     </div>
   );
 };

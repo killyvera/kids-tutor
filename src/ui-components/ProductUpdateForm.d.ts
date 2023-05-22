@@ -73,7 +73,7 @@ export declare type ProductUpdateFormOverridesProps = {
     marketplaces?: PrimitiveOverrideProps<TextAreaFieldProps>;
     images?: PrimitiveOverrideProps<TextAreaFieldProps>;
     type?: PrimitiveOverrideProps<TextAreaFieldProps>;
-    tags?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    tags?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ProductUpdateFormProps = React.PropsWithChildren<{
     overrides?: ProductUpdateFormOverridesProps | undefined | null;
