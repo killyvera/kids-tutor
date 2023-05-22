@@ -7,7 +7,7 @@
 import * as React from "react";
 import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { BlogPost, Product, Resources } from "../models";
+import { BlogPost, Product } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -18,14 +18,12 @@ export declare type TagsCreateFormInputValues = {
     blogposts?: BlogPost[];
     color?: string;
     products?: Product[];
-    resources?: Resources[];
 };
 export declare type TagsCreateFormValidationValues = {
     tag_name?: ValidationFunction<string>;
     blogposts?: ValidationFunction<BlogPost>;
     color?: ValidationFunction<string>;
     products?: ValidationFunction<Product>;
-    resources?: ValidationFunction<Resources>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TagsCreateFormOverridesProps = {
@@ -34,7 +32,6 @@ export declare type TagsCreateFormOverridesProps = {
     blogposts?: PrimitiveOverrideProps<AutocompleteProps>;
     color?: PrimitiveOverrideProps<TextFieldProps>;
     products?: PrimitiveOverrideProps<AutocompleteProps>;
-    resources?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type TagsCreateFormProps = React.PropsWithChildren<{
     overrides?: TagsCreateFormOverridesProps | undefined | null;

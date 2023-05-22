@@ -6,6 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import MyCollege from './MyCollege';
 import Testimonial from '@/components/Testimonial';
+import Link from 'next/link';
 
 const MyTestimonials = ({testimonialList}) => {
     const [testimonials, setTestimonials] = useState(testimonialList);
@@ -54,6 +55,9 @@ const MyTestimonials = ({testimonialList}) => {
                     </div>
                 ))}
             </Slider>
+            <Link href={'/testimonial-form'} >
+            <p className='pt-5 text-xs text-right text-gray-100'>Comparte tu Experiencia</p>
+            </Link>
         </div>
     );
 };

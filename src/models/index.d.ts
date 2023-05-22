@@ -50,9 +50,9 @@ type EagerResources = {
   readonly Categories?: (ResourcesCategory | null)[] | null;
   readonly cover?: string | null;
   readonly autor?: string | null;
-  readonly Tags?: (TagsResources | null)[] | null;
   readonly rating?: number | null;
   readonly short?: string | null;
+  readonly tags?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -69,9 +69,9 @@ type LazyResources = {
   readonly Categories: AsyncCollection<ResourcesCategory>;
   readonly cover?: string | null;
   readonly autor?: string | null;
-  readonly Tags: AsyncCollection<TagsResources>;
   readonly rating?: number | null;
   readonly short?: string | null;
+  readonly tags?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -93,6 +93,7 @@ type EagerTestimonials = {
   readonly image?: string | null;
   readonly location?: string | null;
   readonly rating?: number | null;
+  readonly email?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -108,6 +109,7 @@ type LazyTestimonials = {
   readonly image?: string | null;
   readonly location?: string | null;
   readonly rating?: number | null;
+  readonly email?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -162,6 +164,7 @@ type EagerComments = {
   readonly post_id?: BlogPost | null;
   readonly parent_coment?: string | null;
   readonly replies?: string | null;
+  readonly parent_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly commentsAuthorId?: string | null;
@@ -180,6 +183,7 @@ type LazyComments = {
   readonly post_id: AsyncItem<BlogPost | undefined>;
   readonly parent_coment?: string | null;
   readonly replies?: string | null;
+  readonly parent_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly commentsAuthorId?: string | null;
@@ -192,42 +196,6 @@ export declare const Comments: (new (init: ModelInit<Comments>) => Comments) & {
   copyOf(source: Comments, mutator: (draft: MutableModel<Comments>) => MutableModel<Comments> | void): Comments;
 }
 
-type EagerTags = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Tags, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly tag_name?: string | null;
-  readonly blogposts?: (BlogPostTags | null)[] | null;
-  readonly color?: string | null;
-  readonly products?: (ProductTags | null)[] | null;
-  readonly resources?: (TagsResources | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyTags = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Tags, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly tag_name?: string | null;
-  readonly blogposts: AsyncCollection<BlogPostTags>;
-  readonly color?: string | null;
-  readonly products: AsyncCollection<ProductTags>;
-  readonly resources: AsyncCollection<TagsResources>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Tags = LazyLoading extends LazyLoadingDisabled ? EagerTags : LazyTags
-
-export declare const Tags: (new (init: ModelInit<Tags>) => Tags) & {
-  copyOf(source: Tags, mutator: (draft: MutableModel<Tags>) => MutableModel<Tags> | void): Tags;
-}
-
 type EagerBlogPost = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<BlogPost, 'id'>;
@@ -238,7 +206,8 @@ type EagerBlogPost = {
   readonly cover?: string | null;
   readonly content?: string | null;
   readonly author?: string | null;
-  readonly tags?: (BlogPostTags | null)[] | null;
+  readonly tags?: string | null;
+  readonly categories?: (BlogPostCategory | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -253,7 +222,8 @@ type LazyBlogPost = {
   readonly cover?: string | null;
   readonly content?: string | null;
   readonly author?: string | null;
-  readonly tags: AsyncCollection<BlogPostTags>;
+  readonly tags?: string | null;
+  readonly categories: AsyncCollection<BlogPostCategory>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -362,6 +332,7 @@ type EagerCategory = {
   readonly products?: (ProductCategory | null)[] | null;
   readonly resources?: (ResourcesCategory | null)[] | null;
   readonly color?: string | null;
+  readonly blogposts?: (BlogPostCategory | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -376,6 +347,7 @@ type LazyCategory = {
   readonly products: AsyncCollection<ProductCategory>;
   readonly resources: AsyncCollection<ResourcesCategory>;
   readonly color?: string | null;
+  readonly blogposts: AsyncCollection<BlogPostCategory>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -408,8 +380,8 @@ type EagerProduct = {
   readonly back?: string | null;
   readonly marketplaces?: string | null;
   readonly images?: string | null;
-  readonly tags?: (ProductTags | null)[] | null;
   readonly type?: string | null;
+  readonly tags?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -436,8 +408,8 @@ type LazyProduct = {
   readonly back?: string | null;
   readonly marketplaces?: string | null;
   readonly images?: string | null;
-  readonly tags: AsyncCollection<ProductTags>;
   readonly type?: string | null;
+  readonly tags?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -482,106 +454,38 @@ export declare const ResourcesCategory: (new (init: ModelInit<ResourcesCategory>
   copyOf(source: ResourcesCategory, mutator: (draft: MutableModel<ResourcesCategory>) => MutableModel<ResourcesCategory> | void): ResourcesCategory;
 }
 
-type EagerTagsResources = {
+type EagerBlogPostCategory = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<TagsResources, 'id'>;
+    identifier: ManagedIdentifier<BlogPostCategory, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly resourcesId?: string | null;
-  readonly tagsId?: string | null;
-  readonly resources: Resources;
-  readonly tags: Tags;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyTagsResources = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<TagsResources, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly resourcesId?: string | null;
-  readonly tagsId?: string | null;
-  readonly resources: AsyncItem<Resources>;
-  readonly tags: AsyncItem<Tags>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type TagsResources = LazyLoading extends LazyLoadingDisabled ? EagerTagsResources : LazyTagsResources
-
-export declare const TagsResources: (new (init: ModelInit<TagsResources>) => TagsResources) & {
-  copyOf(source: TagsResources, mutator: (draft: MutableModel<TagsResources>) => MutableModel<TagsResources> | void): TagsResources;
-}
-
-type EagerBlogPostTags = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<BlogPostTags, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly tagsId?: string | null;
   readonly blogPostId?: string | null;
-  readonly tags: Tags;
+  readonly categoryId?: string | null;
   readonly blogPost: BlogPost;
+  readonly category: Category;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyBlogPostTags = {
+type LazyBlogPostCategory = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<BlogPostTags, 'id'>;
+    identifier: ManagedIdentifier<BlogPostCategory, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly tagsId?: string | null;
   readonly blogPostId?: string | null;
-  readonly tags: AsyncItem<Tags>;
+  readonly categoryId?: string | null;
   readonly blogPost: AsyncItem<BlogPost>;
+  readonly category: AsyncItem<Category>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type BlogPostTags = LazyLoading extends LazyLoadingDisabled ? EagerBlogPostTags : LazyBlogPostTags
+export declare type BlogPostCategory = LazyLoading extends LazyLoadingDisabled ? EagerBlogPostCategory : LazyBlogPostCategory
 
-export declare const BlogPostTags: (new (init: ModelInit<BlogPostTags>) => BlogPostTags) & {
-  copyOf(source: BlogPostTags, mutator: (draft: MutableModel<BlogPostTags>) => MutableModel<BlogPostTags> | void): BlogPostTags;
-}
-
-type EagerProductTags = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ProductTags, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly tagsId?: string | null;
-  readonly productId?: string | null;
-  readonly tags: Tags;
-  readonly product: Product;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyProductTags = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ProductTags, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly tagsId?: string | null;
-  readonly productId?: string | null;
-  readonly tags: AsyncItem<Tags>;
-  readonly product: AsyncItem<Product>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type ProductTags = LazyLoading extends LazyLoadingDisabled ? EagerProductTags : LazyProductTags
-
-export declare const ProductTags: (new (init: ModelInit<ProductTags>) => ProductTags) & {
-  copyOf(source: ProductTags, mutator: (draft: MutableModel<ProductTags>) => MutableModel<ProductTags> | void): ProductTags;
+export declare const BlogPostCategory: (new (init: ModelInit<BlogPostCategory>) => BlogPostCategory) & {
+  copyOf(source: BlogPostCategory, mutator: (draft: MutableModel<BlogPostCategory>) => MutableModel<BlogPostCategory> | void): BlogPostCategory;
 }
 
 type EagerProductCategory = {

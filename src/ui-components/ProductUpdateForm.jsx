@@ -24,13 +24,7 @@ import {
   getOverrideProps,
   useDataStoreBinding,
 } from "@aws-amplify/ui-react/internal";
-import {
-  Product,
-  Category,
-  Tags,
-  ProductCategory,
-  ProductTags,
-} from "../models";
+import { Product, Category, ProductCategory } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
@@ -220,8 +214,8 @@ export default function ProductUpdateForm(props) {
     back: "",
     marketplaces: "",
     images: "",
-    tags: [],
     type: "",
+    tags: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -243,17 +237,12 @@ export default function ProductUpdateForm(props) {
     initialValues.marketplaces
   );
   const [images, setImages] = React.useState(initialValues.images);
-  const [tags, setTags] = React.useState(initialValues.tags);
   const [type, setType] = React.useState(initialValues.type);
+  const [tags, setTags] = React.useState(initialValues.tags);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = productRecord
-      ? {
-          ...initialValues,
-          ...productRecord,
-          categories: linkedCategories,
-          tags: linkedTags,
-        }
+      ? { ...initialValues, ...productRecord, categories: linkedCategories }
       : initialValues;
     setName(cleanValues.name);
     setDescription(cleanValues.description);
@@ -281,21 +270,21 @@ export default function ProductUpdateForm(props) {
         ? cleanValues.images
         : JSON.stringify(cleanValues.images)
     );
-    setTags(cleanValues.tags ?? []);
-    setCurrentTagsValue(undefined);
-    setCurrentTagsDisplayValue("");
     setType(
       typeof cleanValues.type === "string"
         ? cleanValues.type
         : JSON.stringify(cleanValues.type)
+    );
+    setTags(
+      typeof cleanValues.tags === "string"
+        ? cleanValues.tags
+        : JSON.stringify(cleanValues.tags)
     );
     setErrors({});
   };
   const [productRecord, setProductRecord] = React.useState(productModelProp);
   const [linkedCategories, setLinkedCategories] = React.useState([]);
   const canUnlinkCategories = false;
-  const [linkedTags, setLinkedTags] = React.useState([]);
-  const canUnlinkTags = false;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
@@ -312,58 +301,29 @@ export default function ProductUpdateForm(props) {
           )
         : [];
       setLinkedCategories(linkedCategories);
-      const linkedTags = record
-        ? await Promise.all(
-            (
-              await record.tags.toArray()
-            ).map((r) => {
-              return r.tags;
-            })
-          )
-        : [];
-      setLinkedTags(linkedTags);
     };
     queryData();
   }, [idProp, productModelProp]);
-  React.useEffect(resetStateValues, [
-    productRecord,
-    linkedCategories,
-    linkedTags,
-  ]);
+  React.useEffect(resetStateValues, [productRecord, linkedCategories]);
   const [currentCategoriesDisplayValue, setCurrentCategoriesDisplayValue] =
     React.useState("");
   const [currentCategoriesValue, setCurrentCategoriesValue] =
     React.useState(undefined);
   const categoriesRef = React.createRef();
-  const [currentTagsDisplayValue, setCurrentTagsDisplayValue] =
-    React.useState("");
-  const [currentTagsValue, setCurrentTagsValue] = React.useState(undefined);
-  const tagsRef = React.createRef();
   const getIDValue = {
     categories: (r) => JSON.stringify({ id: r?.id }),
-    tags: (r) => JSON.stringify({ id: r?.id }),
   };
   const categoriesIdSet = new Set(
     Array.isArray(categories)
       ? categories.map((r) => getIDValue.categories?.(r))
       : getIDValue.categories?.(categories)
   );
-  const tagsIdSet = new Set(
-    Array.isArray(tags)
-      ? tags.map((r) => getIDValue.tags?.(r))
-      : getIDValue.tags?.(tags)
-  );
   const categoryRecords = useDataStoreBinding({
     type: "collection",
     model: Category,
   }).items;
-  const tagsRecords = useDataStoreBinding({
-    type: "collection",
-    model: Tags,
-  }).items;
   const getDisplayValue = {
     categories: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
-    tags: (r) => `${r?.tag_name ? r?.tag_name + " - " : ""}${r?.id}`,
   };
   const validations = {
     name: [],
@@ -382,8 +342,8 @@ export default function ProductUpdateForm(props) {
     back: [],
     marketplaces: [{ type: "JSON" }],
     images: [{ type: "JSON" }],
-    tags: [],
     type: [{ type: "JSON" }],
+    tags: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -427,8 +387,8 @@ export default function ProductUpdateForm(props) {
           back,
           marketplaces,
           images,
-          tags,
           type,
+          tags,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -535,72 +495,6 @@ export default function ProductUpdateForm(props) {
               );
             }
           });
-          const tagsToLinkMap = new Map();
-          const tagsToUnLinkMap = new Map();
-          const tagsMap = new Map();
-          const linkedTagsMap = new Map();
-          tags.forEach((r) => {
-            const count = tagsMap.get(getIDValue.tags?.(r));
-            const newCount = count ? count + 1 : 1;
-            tagsMap.set(getIDValue.tags?.(r), newCount);
-          });
-          linkedTags.forEach((r) => {
-            const count = linkedTagsMap.get(getIDValue.tags?.(r));
-            const newCount = count ? count + 1 : 1;
-            linkedTagsMap.set(getIDValue.tags?.(r), newCount);
-          });
-          linkedTagsMap.forEach((count, id) => {
-            const newCount = tagsMap.get(id);
-            if (newCount) {
-              const diffCount = count - newCount;
-              if (diffCount > 0) {
-                tagsToUnLinkMap.set(id, diffCount);
-              }
-            } else {
-              tagsToUnLinkMap.set(id, count);
-            }
-          });
-          tagsMap.forEach((count, id) => {
-            const originalCount = linkedTagsMap.get(id);
-            if (originalCount) {
-              const diffCount = count - originalCount;
-              if (diffCount > 0) {
-                tagsToLinkMap.set(id, diffCount);
-              }
-            } else {
-              tagsToLinkMap.set(id, count);
-            }
-          });
-          tagsToUnLinkMap.forEach(async (count, id) => {
-            const productTagsRecords = await DataStore.query(ProductTags, (r) =>
-              r.and((r) => {
-                const recordKeys = JSON.parse(id);
-                return [
-                  r.tagsId.eq(recordKeys.id),
-                  r.productId.eq(productRecord.id),
-                ];
-              })
-            );
-            for (let i = 0; i < count; i++) {
-              promises.push(DataStore.delete(productTagsRecords[i]));
-            }
-          });
-          tagsToLinkMap.forEach((count, id) => {
-            for (let i = count; i > 0; i--) {
-              promises.push(
-                DataStore.save(
-                  new ProductTags({
-                    product: productRecord,
-                    tags: tagsRecords.find((r) =>
-                      Object.entries(JSON.parse(id)).every(
-                        ([key, value]) => r[key] === value
-                      )
-                    ),
-                  })
-                )
-              );
-            }
-          });
           const modelFieldsToSave = {
             name: modelFields.name,
             description: modelFields.description,
@@ -618,6 +512,7 @@ export default function ProductUpdateForm(props) {
             marketplaces: modelFields.marketplaces,
             images: modelFields.images,
             type: modelFields.type,
+            tags: modelFields.tags,
           };
           promises.push(
             DataStore.save(
@@ -664,8 +559,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -705,8 +600,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -746,8 +641,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.sku ?? value;
@@ -791,8 +686,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -836,8 +731,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.stock ?? value;
@@ -877,8 +772,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.dimensions ?? value;
@@ -922,8 +817,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.weight ?? value;
@@ -967,8 +862,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -1008,8 +903,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -1045,8 +940,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             values = result?.categories ?? values;
@@ -1139,8 +1034,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.top ?? value;
@@ -1180,8 +1075,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.bottom ?? value;
@@ -1221,8 +1116,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.front ?? value;
@@ -1262,8 +1157,8 @@ export default function ProductUpdateForm(props) {
               back: value,
               marketplaces,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.back ?? value;
@@ -1303,8 +1198,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces: value,
               images,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.marketplaces ?? value;
@@ -1344,8 +1239,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images: value,
-              tags,
               type,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -1360,92 +1255,6 @@ export default function ProductUpdateForm(props) {
         hasError={errors.images?.hasError}
         {...getOverrideProps(overrides, "images")}
       ></TextAreaField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              name,
-              description,
-              sku,
-              price,
-              stock,
-              dimensions,
-              weight,
-              rating,
-              cover,
-              categories,
-              top,
-              bottom,
-              front,
-              back,
-              marketplaces,
-              images,
-              tags: values,
-              type,
-            };
-            const result = onChange(modelFields);
-            values = result?.tags ?? values;
-          }
-          setTags(values);
-          setCurrentTagsValue(undefined);
-          setCurrentTagsDisplayValue("");
-        }}
-        currentFieldValue={currentTagsValue}
-        label={"Tags"}
-        items={tags}
-        hasError={errors?.tags?.hasError}
-        errorMessage={errors?.tags?.errorMessage}
-        getBadgeText={getDisplayValue.tags}
-        setFieldValue={(model) => {
-          setCurrentTagsDisplayValue(model ? getDisplayValue.tags(model) : "");
-          setCurrentTagsValue(model);
-        }}
-        inputFieldRef={tagsRef}
-        defaultFieldValue={""}
-      >
-        <Autocomplete
-          label="Tags"
-          isRequired={false}
-          isReadOnly={false}
-          placeholder="Search Tags"
-          value={currentTagsDisplayValue}
-          options={tagsRecords
-            .filter((r) => !tagsIdSet.has(getIDValue.tags?.(r)))
-            .map((r) => ({
-              id: getIDValue.tags?.(r),
-              label: getDisplayValue.tags?.(r),
-            }))}
-          onSelect={({ id, label }) => {
-            setCurrentTagsValue(
-              tagsRecords.find((r) =>
-                Object.entries(JSON.parse(id)).every(
-                  ([key, value]) => r[key] === value
-                )
-              )
-            );
-            setCurrentTagsDisplayValue(label);
-            runValidationTasks("tags", label);
-          }}
-          onClear={() => {
-            setCurrentTagsDisplayValue("");
-          }}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.tags?.hasError) {
-              runValidationTasks("tags", value);
-            }
-            setCurrentTagsDisplayValue(value);
-            setCurrentTagsValue(undefined);
-          }}
-          onBlur={() => runValidationTasks("tags", currentTagsDisplayValue)}
-          errorMessage={errors.tags?.errorMessage}
-          hasError={errors.tags?.hasError}
-          ref={tagsRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "tags")}
-        ></Autocomplete>
-      </ArrayField>
       <TextAreaField
         label="Type"
         isRequired={false}
@@ -1471,8 +1280,8 @@ export default function ProductUpdateForm(props) {
               back,
               marketplaces,
               images,
-              tags,
               type: value,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -1486,6 +1295,47 @@ export default function ProductUpdateForm(props) {
         errorMessage={errors.type?.errorMessage}
         hasError={errors.type?.hasError}
         {...getOverrideProps(overrides, "type")}
+      ></TextAreaField>
+      <TextAreaField
+        label="Tags"
+        isRequired={false}
+        isReadOnly={false}
+        value={tags}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              categories,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces,
+              images,
+              type,
+              tags: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.tags ?? value;
+          }
+          if (errors.tags?.hasError) {
+            runValidationTasks("tags", value);
+          }
+          setTags(value);
+        }}
+        onBlur={() => runValidationTasks("tags", tags)}
+        errorMessage={errors.tags?.errorMessage}
+        hasError={errors.tags?.hasError}
+        {...getOverrideProps(overrides, "tags")}
       ></TextAreaField>
       <Flex
         justifyContent="space-between"

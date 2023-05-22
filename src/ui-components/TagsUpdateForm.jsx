@@ -23,15 +23,7 @@ import {
   getOverrideProps,
   useDataStoreBinding,
 } from "@aws-amplify/ui-react/internal";
-import {
-  Tags,
-  BlogPost,
-  Product,
-  Resources,
-  BlogPostTags,
-  ProductTags,
-  TagsResources,
-} from "../models";
+import { Tags, BlogPost, Product, BlogPostTags, ProductTags } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
@@ -209,13 +201,11 @@ export default function TagsUpdateForm(props) {
     blogposts: [],
     color: "",
     products: [],
-    resources: [],
   };
   const [tag_name, setTag_name] = React.useState(initialValues.tag_name);
   const [blogposts, setBlogposts] = React.useState(initialValues.blogposts);
   const [color, setColor] = React.useState(initialValues.color);
   const [products, setProducts] = React.useState(initialValues.products);
-  const [resources, setResources] = React.useState(initialValues.resources);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = tagsRecord
@@ -224,7 +214,6 @@ export default function TagsUpdateForm(props) {
           ...tagsRecord,
           blogposts: linkedBlogposts,
           products: linkedProducts,
-          resources: linkedResources,
         }
       : initialValues;
     setTag_name(cleanValues.tag_name);
@@ -235,9 +224,6 @@ export default function TagsUpdateForm(props) {
     setProducts(cleanValues.products ?? []);
     setCurrentProductsValue(undefined);
     setCurrentProductsDisplayValue("");
-    setResources(cleanValues.resources ?? []);
-    setCurrentResourcesValue(undefined);
-    setCurrentResourcesDisplayValue("");
     setErrors({});
   };
   const [tagsRecord, setTagsRecord] = React.useState(tagsModelProp);
@@ -245,8 +231,6 @@ export default function TagsUpdateForm(props) {
   const canUnlinkBlogposts = false;
   const [linkedProducts, setLinkedProducts] = React.useState([]);
   const canUnlinkProducts = false;
-  const [linkedResources, setLinkedResources] = React.useState([]);
-  const canUnlinkResources = false;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
@@ -273,16 +257,6 @@ export default function TagsUpdateForm(props) {
           )
         : [];
       setLinkedProducts(linkedProducts);
-      const linkedResources = record
-        ? await Promise.all(
-            (
-              await record.resources.toArray()
-            ).map((r) => {
-              return r.resources;
-            })
-          )
-        : [];
-      setLinkedResources(linkedResources);
     };
     queryData();
   }, [idProp, tagsModelProp]);
@@ -290,7 +264,6 @@ export default function TagsUpdateForm(props) {
     tagsRecord,
     linkedBlogposts,
     linkedProducts,
-    linkedResources,
   ]);
   const [currentBlogpostsDisplayValue, setCurrentBlogpostsDisplayValue] =
     React.useState("");
@@ -302,15 +275,9 @@ export default function TagsUpdateForm(props) {
   const [currentProductsValue, setCurrentProductsValue] =
     React.useState(undefined);
   const productsRef = React.createRef();
-  const [currentResourcesDisplayValue, setCurrentResourcesDisplayValue] =
-    React.useState("");
-  const [currentResourcesValue, setCurrentResourcesValue] =
-    React.useState(undefined);
-  const resourcesRef = React.createRef();
   const getIDValue = {
     blogposts: (r) => JSON.stringify({ id: r?.id }),
     products: (r) => JSON.stringify({ id: r?.id }),
-    resources: (r) => JSON.stringify({ id: r?.id }),
   };
   const blogpostsIdSet = new Set(
     Array.isArray(blogposts)
@@ -322,11 +289,6 @@ export default function TagsUpdateForm(props) {
       ? products.map((r) => getIDValue.products?.(r))
       : getIDValue.products?.(products)
   );
-  const resourcesIdSet = new Set(
-    Array.isArray(resources)
-      ? resources.map((r) => getIDValue.resources?.(r))
-      : getIDValue.resources?.(resources)
-  );
   const blogPostRecords = useDataStoreBinding({
     type: "collection",
     model: BlogPost,
@@ -335,21 +297,15 @@ export default function TagsUpdateForm(props) {
     type: "collection",
     model: Product,
   }).items;
-  const resourcesRecords = useDataStoreBinding({
-    type: "collection",
-    model: Resources,
-  }).items;
   const getDisplayValue = {
     blogposts: (r) => `${r?.title ? r?.title + " - " : ""}${r?.id}`,
     products: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
-    resources: (r) => `${r?.title ? r?.title + " - " : ""}${r?.id}`,
   };
   const validations = {
     tag_name: [],
     blogposts: [],
     color: [],
     products: [],
-    resources: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -381,7 +337,6 @@ export default function TagsUpdateForm(props) {
           blogposts,
           color,
           products,
-          resources,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -554,74 +509,6 @@ export default function TagsUpdateForm(props) {
               );
             }
           });
-          const resourcesToLinkMap = new Map();
-          const resourcesToUnLinkMap = new Map();
-          const resourcesMap = new Map();
-          const linkedResourcesMap = new Map();
-          resources.forEach((r) => {
-            const count = resourcesMap.get(getIDValue.resources?.(r));
-            const newCount = count ? count + 1 : 1;
-            resourcesMap.set(getIDValue.resources?.(r), newCount);
-          });
-          linkedResources.forEach((r) => {
-            const count = linkedResourcesMap.get(getIDValue.resources?.(r));
-            const newCount = count ? count + 1 : 1;
-            linkedResourcesMap.set(getIDValue.resources?.(r), newCount);
-          });
-          linkedResourcesMap.forEach((count, id) => {
-            const newCount = resourcesMap.get(id);
-            if (newCount) {
-              const diffCount = count - newCount;
-              if (diffCount > 0) {
-                resourcesToUnLinkMap.set(id, diffCount);
-              }
-            } else {
-              resourcesToUnLinkMap.set(id, count);
-            }
-          });
-          resourcesMap.forEach((count, id) => {
-            const originalCount = linkedResourcesMap.get(id);
-            if (originalCount) {
-              const diffCount = count - originalCount;
-              if (diffCount > 0) {
-                resourcesToLinkMap.set(id, diffCount);
-              }
-            } else {
-              resourcesToLinkMap.set(id, count);
-            }
-          });
-          resourcesToUnLinkMap.forEach(async (count, id) => {
-            const tagsResourcesRecords = await DataStore.query(
-              TagsResources,
-              (r) =>
-                r.and((r) => {
-                  const recordKeys = JSON.parse(id);
-                  return [
-                    r.resourcesId.eq(recordKeys.id),
-                    r.tagsId.eq(tagsRecord.id),
-                  ];
-                })
-            );
-            for (let i = 0; i < count; i++) {
-              promises.push(DataStore.delete(tagsResourcesRecords[i]));
-            }
-          });
-          resourcesToLinkMap.forEach((count, id) => {
-            for (let i = count; i > 0; i--) {
-              promises.push(
-                DataStore.save(
-                  new TagsResources({
-                    tags: tagsRecord,
-                    resources: resourcesRecords.find((r) =>
-                      Object.entries(JSON.parse(id)).every(
-                        ([key, value]) => r[key] === value
-                      )
-                    ),
-                  })
-                )
-              );
-            }
-          });
           const modelFieldsToSave = {
             tag_name: modelFields.tag_name,
             color: modelFields.color,
@@ -659,7 +546,6 @@ export default function TagsUpdateForm(props) {
               blogposts,
               color,
               products,
-              resources,
             };
             const result = onChange(modelFields);
             value = result?.tag_name ?? value;
@@ -683,7 +569,6 @@ export default function TagsUpdateForm(props) {
               blogposts: values,
               color,
               products,
-              resources,
             };
             const result = onChange(modelFields);
             values = result?.blogposts ?? values;
@@ -764,7 +649,6 @@ export default function TagsUpdateForm(props) {
               blogposts,
               color: value,
               products,
-              resources,
             };
             const result = onChange(modelFields);
             value = result?.color ?? value;
@@ -788,7 +672,6 @@ export default function TagsUpdateForm(props) {
               blogposts,
               color,
               products: values,
-              resources,
             };
             const result = onChange(modelFields);
             values = result?.products ?? values;
@@ -854,83 +737,6 @@ export default function TagsUpdateForm(props) {
           ref={productsRef}
           labelHidden={true}
           {...getOverrideProps(overrides, "products")}
-        ></Autocomplete>
-      </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              tag_name,
-              blogposts,
-              color,
-              products,
-              resources: values,
-            };
-            const result = onChange(modelFields);
-            values = result?.resources ?? values;
-          }
-          setResources(values);
-          setCurrentResourcesValue(undefined);
-          setCurrentResourcesDisplayValue("");
-        }}
-        currentFieldValue={currentResourcesValue}
-        label={"Resources"}
-        items={resources}
-        hasError={errors?.resources?.hasError}
-        errorMessage={errors?.resources?.errorMessage}
-        getBadgeText={getDisplayValue.resources}
-        setFieldValue={(model) => {
-          setCurrentResourcesDisplayValue(
-            model ? getDisplayValue.resources(model) : ""
-          );
-          setCurrentResourcesValue(model);
-        }}
-        inputFieldRef={resourcesRef}
-        defaultFieldValue={""}
-      >
-        <Autocomplete
-          label="Resources"
-          isRequired={false}
-          isReadOnly={false}
-          placeholder="Search Resources"
-          value={currentResourcesDisplayValue}
-          options={resourcesRecords
-            .filter((r) => !resourcesIdSet.has(getIDValue.resources?.(r)))
-            .map((r) => ({
-              id: getIDValue.resources?.(r),
-              label: getDisplayValue.resources?.(r),
-            }))}
-          onSelect={({ id, label }) => {
-            setCurrentResourcesValue(
-              resourcesRecords.find((r) =>
-                Object.entries(JSON.parse(id)).every(
-                  ([key, value]) => r[key] === value
-                )
-              )
-            );
-            setCurrentResourcesDisplayValue(label);
-            runValidationTasks("resources", label);
-          }}
-          onClear={() => {
-            setCurrentResourcesDisplayValue("");
-          }}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.resources?.hasError) {
-              runValidationTasks("resources", value);
-            }
-            setCurrentResourcesDisplayValue(value);
-            setCurrentResourcesValue(undefined);
-          }}
-          onBlur={() =>
-            runValidationTasks("resources", currentResourcesDisplayValue)
-          }
-          errorMessage={errors.resources?.errorMessage}
-          hasError={errors.resources?.hasError}
-          ref={resourcesRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "resources")}
         ></Autocomplete>
       </ArrayField>
       <Flex

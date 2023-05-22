@@ -139,7 +139,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               </div>
             ) : (
               <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-                <Link href={"/login"}>Acceder / Registrate </Link>{" "}
+                <Link href={"/login"}>Acceder / Regístrarse </Link>{" "}
               </p>
             )}
           </div>

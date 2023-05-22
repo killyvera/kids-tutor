@@ -7,7 +7,7 @@
 import * as React from "react";
 import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { Product, Resources } from "../models";
+import { Product, Resources, BlogPost } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -18,12 +18,14 @@ export declare type CategoryCreateFormInputValues = {
     products?: Product[];
     resources?: Resources[];
     color?: string;
+    blogposts?: BlogPost[];
 };
 export declare type CategoryCreateFormValidationValues = {
     name?: ValidationFunction<string>;
     products?: ValidationFunction<Product>;
     resources?: ValidationFunction<Resources>;
     color?: ValidationFunction<string>;
+    blogposts?: ValidationFunction<BlogPost>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CategoryCreateFormOverridesProps = {
@@ -32,6 +34,7 @@ export declare type CategoryCreateFormOverridesProps = {
     products?: PrimitiveOverrideProps<AutocompleteProps>;
     resources?: PrimitiveOverrideProps<AutocompleteProps>;
     color?: PrimitiveOverrideProps<TextFieldProps>;
+    blogposts?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type CategoryCreateFormProps = React.PropsWithChildren<{
     overrides?: CategoryCreateFormOverridesProps | undefined | null;
