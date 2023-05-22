@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import MyBadgeList from "./MyBadgeList";
+import MyTagList from "./MyTagList";
 
 const MyPostCard = ({ element, type, categories, postCategories }) => {
   console.log(element, type, categories, postCategories)
@@ -37,6 +38,7 @@ const MyPostCard = ({ element, type, categories, postCategories }) => {
           ? element?.description?.slice(0, 150) + "..."
           : element?.content.slice(0, 150) + "..."}
       </p>
+      <MyTagList tagList={element?.tags} />
     </div>
   );
 };

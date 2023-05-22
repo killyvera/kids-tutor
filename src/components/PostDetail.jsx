@@ -1,7 +1,14 @@
 import React from "react";
+import MyBadgeList from "./MyBadgeList";
+import MyTagList from "./MyTagList";
 
-export default function PostDetail({ element, type }) {
-  console.log(element);
+export default function PostDetail({
+  element,
+  type,
+  categories,
+  postCategories,
+}) {
+  console.log(element, element.tags, categories, postCategories);
   return (
     // <!-- component -->
     <div className=" bg-slate-50">
@@ -18,6 +25,16 @@ export default function PostDetail({ element, type }) {
             className="w-full object-cover lg:rounded"
             style={{ height: "28em" }}
           />
+          <div style={{textAlignLast: 'left'}} className="pt-4">
+            <MyBadgeList
+              resourceId={element?.id}
+              categories={
+                postCategories
+                  ? getPostCategories(postCategories, categories, element.id)
+                  : categories
+              }
+            />
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row lg:space-x-12">
@@ -150,9 +167,22 @@ export default function PostDetail({ element, type }) {
                 <i className="bx bx-user-plus ml-2"></i>
               </button>
             </div>
+            <MyTagList tagList={element?.tags} />
           </div>
         </div>
       </main>
     </div>
   );
+}
+
+function getPostCategories(postCategories, categories, blogPostId) {
+  const categoryIds = postCategories
+    .filter((pc) => pc.blogPostId === blogPostId)
+    .map((pc) => pc.categoryId);
+
+  const categoriesList = categories.filter((category) =>
+    categoryIds.includes(category.id)
+  );
+
+  return categoriesList;
 }
