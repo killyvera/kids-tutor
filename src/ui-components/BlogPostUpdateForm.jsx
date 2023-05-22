@@ -23,7 +23,7 @@ import {
   getOverrideProps,
   useDataStoreBinding,
 } from "@aws-amplify/ui-react/internal";
-import { BlogPost, Tags, BlogPostTags } from "../models";
+import { BlogPost, Category, BlogPostCategory } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
@@ -201,68 +201,72 @@ export default function BlogPostUpdateForm(props) {
     cover: "",
     content: "",
     author: "",
-    tags: [],
+    tags: "",
+    categories: [],
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [cover, setCover] = React.useState(initialValues.cover);
   const [content, setContent] = React.useState(initialValues.content);
   const [author, setAuthor] = React.useState(initialValues.author);
   const [tags, setTags] = React.useState(initialValues.tags);
+  const [categories, setCategories] = React.useState(initialValues.categories);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = blogPostRecord
-      ? { ...initialValues, ...blogPostRecord, tags: linkedTags }
+      ? { ...initialValues, ...blogPostRecord, categories: linkedCategories }
       : initialValues;
     setTitle(cleanValues.title);
     setCover(cleanValues.cover);
     setContent(cleanValues.content);
     setAuthor(cleanValues.author);
-    setTags(cleanValues.tags ?? []);
-    setCurrentTagsValue(undefined);
-    setCurrentTagsDisplayValue("");
+    setTags(cleanValues.tags);
+    setCategories(cleanValues.categories ?? []);
+    setCurrentCategoriesValue(undefined);
+    setCurrentCategoriesDisplayValue("");
     setErrors({});
   };
   const [blogPostRecord, setBlogPostRecord] = React.useState(blogPostModelProp);
-  const [linkedTags, setLinkedTags] = React.useState([]);
-  const canUnlinkTags = false;
+  const [linkedCategories, setLinkedCategories] = React.useState([]);
+  const canUnlinkCategories = false;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? await DataStore.query(BlogPost, idProp)
         : blogPostModelProp;
       setBlogPostRecord(record);
-      const linkedTags = record
+      const linkedCategories = record
         ? await Promise.all(
             (
-              await record.tags.toArray()
+              await record.categories.toArray()
             ).map((r) => {
-              return r.tags;
+              return r.category;
             })
           )
         : [];
-      setLinkedTags(linkedTags);
+      setLinkedCategories(linkedCategories);
     };
     queryData();
   }, [idProp, blogPostModelProp]);
-  React.useEffect(resetStateValues, [blogPostRecord, linkedTags]);
-  const [currentTagsDisplayValue, setCurrentTagsDisplayValue] =
+  React.useEffect(resetStateValues, [blogPostRecord, linkedCategories]);
+  const [currentCategoriesDisplayValue, setCurrentCategoriesDisplayValue] =
     React.useState("");
-  const [currentTagsValue, setCurrentTagsValue] = React.useState(undefined);
-  const tagsRef = React.createRef();
+  const [currentCategoriesValue, setCurrentCategoriesValue] =
+    React.useState(undefined);
+  const categoriesRef = React.createRef();
   const getIDValue = {
-    tags: (r) => JSON.stringify({ id: r?.id }),
+    categories: (r) => JSON.stringify({ id: r?.id }),
   };
-  const tagsIdSet = new Set(
-    Array.isArray(tags)
-      ? tags.map((r) => getIDValue.tags?.(r))
-      : getIDValue.tags?.(tags)
+  const categoriesIdSet = new Set(
+    Array.isArray(categories)
+      ? categories.map((r) => getIDValue.categories?.(r))
+      : getIDValue.categories?.(categories)
   );
-  const tagsRecords = useDataStoreBinding({
+  const categoryRecords = useDataStoreBinding({
     type: "collection",
-    model: Tags,
+    model: Category,
   }).items;
   const getDisplayValue = {
-    tags: (r) => `${r?.tag_name ? r?.tag_name + " - " : ""}${r?.id}`,
+    categories: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
   };
   const validations = {
     title: [],
@@ -270,6 +274,7 @@ export default function BlogPostUpdateForm(props) {
     content: [],
     author: [],
     tags: [],
+    categories: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -302,6 +307,7 @@ export default function BlogPostUpdateForm(props) {
           content,
           author,
           tags,
+          categories,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -340,65 +346,65 @@ export default function BlogPostUpdateForm(props) {
             }
           });
           const promises = [];
-          const tagsToLinkMap = new Map();
-          const tagsToUnLinkMap = new Map();
-          const tagsMap = new Map();
-          const linkedTagsMap = new Map();
-          tags.forEach((r) => {
-            const count = tagsMap.get(getIDValue.tags?.(r));
+          const categoriesToLinkMap = new Map();
+          const categoriesToUnLinkMap = new Map();
+          const categoriesMap = new Map();
+          const linkedCategoriesMap = new Map();
+          categories.forEach((r) => {
+            const count = categoriesMap.get(getIDValue.categories?.(r));
             const newCount = count ? count + 1 : 1;
-            tagsMap.set(getIDValue.tags?.(r), newCount);
+            categoriesMap.set(getIDValue.categories?.(r), newCount);
           });
-          linkedTags.forEach((r) => {
-            const count = linkedTagsMap.get(getIDValue.tags?.(r));
+          linkedCategories.forEach((r) => {
+            const count = linkedCategoriesMap.get(getIDValue.categories?.(r));
             const newCount = count ? count + 1 : 1;
-            linkedTagsMap.set(getIDValue.tags?.(r), newCount);
+            linkedCategoriesMap.set(getIDValue.categories?.(r), newCount);
           });
-          linkedTagsMap.forEach((count, id) => {
-            const newCount = tagsMap.get(id);
+          linkedCategoriesMap.forEach((count, id) => {
+            const newCount = categoriesMap.get(id);
             if (newCount) {
               const diffCount = count - newCount;
               if (diffCount > 0) {
-                tagsToUnLinkMap.set(id, diffCount);
+                categoriesToUnLinkMap.set(id, diffCount);
               }
             } else {
-              tagsToUnLinkMap.set(id, count);
+              categoriesToUnLinkMap.set(id, count);
             }
           });
-          tagsMap.forEach((count, id) => {
-            const originalCount = linkedTagsMap.get(id);
+          categoriesMap.forEach((count, id) => {
+            const originalCount = linkedCategoriesMap.get(id);
             if (originalCount) {
               const diffCount = count - originalCount;
               if (diffCount > 0) {
-                tagsToLinkMap.set(id, diffCount);
+                categoriesToLinkMap.set(id, diffCount);
               }
             } else {
-              tagsToLinkMap.set(id, count);
+              categoriesToLinkMap.set(id, count);
             }
           });
-          tagsToUnLinkMap.forEach(async (count, id) => {
-            const blogPostTagsRecords = await DataStore.query(
-              BlogPostTags,
+          categoriesToUnLinkMap.forEach(async (count, id) => {
+            const blogPostCategoryRecords = await DataStore.query(
+              BlogPostCategory,
               (r) =>
                 r.and((r) => {
                   const recordKeys = JSON.parse(id);
                   return [
-                    r.tagsId.eq(recordKeys.id),
+                    r.categoryId.eq(recordKeys.id),
                     r.blogPostId.eq(blogPostRecord.id),
                   ];
                 })
             );
             for (let i = 0; i < count; i++) {
-              promises.push(DataStore.delete(blogPostTagsRecords[i]));
+              promises.push(DataStore.delete(blogPostCategoryRecords[i]));
             }
           });
-          tagsToLinkMap.forEach((count, id) => {
+          categoriesToLinkMap.forEach((count, id) => {
             for (let i = count; i > 0; i--) {
               promises.push(
                 DataStore.save(
-                  new BlogPostTags({
+                  new BlogPostCategory({
                     blogPost: blogPostRecord,
-                    tags: tagsRecords.find((r) =>
+                    category: categoryRecords.find((r) =>
                       Object.entries(JSON.parse(id)).every(
                         ([key, value]) => r[key] === value
                       )
@@ -413,6 +419,7 @@ export default function BlogPostUpdateForm(props) {
             cover: modelFields.cover,
             content: modelFields.content,
             author: modelFields.author,
+            tags: modelFields.tags,
           };
           promises.push(
             DataStore.save(
@@ -448,6 +455,7 @@ export default function BlogPostUpdateForm(props) {
               content,
               author,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -476,6 +484,7 @@ export default function BlogPostUpdateForm(props) {
               content,
               author,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -504,6 +513,7 @@ export default function BlogPostUpdateForm(props) {
               content: value,
               author,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.content ?? value;
@@ -532,6 +542,7 @@ export default function BlogPostUpdateForm(props) {
               content,
               author: value,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -546,6 +557,35 @@ export default function BlogPostUpdateForm(props) {
         hasError={errors.author?.hasError}
         {...getOverrideProps(overrides, "author")}
       ></TextField>
+      <TextField
+        label="Tags"
+        isRequired={false}
+        isReadOnly={false}
+        value={tags}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              cover,
+              content,
+              author,
+              tags: value,
+              categories,
+            };
+            const result = onChange(modelFields);
+            value = result?.tags ?? value;
+          }
+          if (errors.tags?.hasError) {
+            runValidationTasks("tags", value);
+          }
+          setTags(value);
+        }}
+        onBlur={() => runValidationTasks("tags", tags)}
+        errorMessage={errors.tags?.errorMessage}
+        hasError={errors.tags?.hasError}
+        {...getOverrideProps(overrides, "tags")}
+      ></TextField>
       <ArrayField
         onChange={async (items) => {
           let values = items;
@@ -555,68 +595,73 @@ export default function BlogPostUpdateForm(props) {
               cover,
               content,
               author,
-              tags: values,
+              tags,
+              categories: values,
             };
             const result = onChange(modelFields);
-            values = result?.tags ?? values;
+            values = result?.categories ?? values;
           }
-          setTags(values);
-          setCurrentTagsValue(undefined);
-          setCurrentTagsDisplayValue("");
+          setCategories(values);
+          setCurrentCategoriesValue(undefined);
+          setCurrentCategoriesDisplayValue("");
         }}
-        currentFieldValue={currentTagsValue}
-        label={"Tags"}
-        items={tags}
-        hasError={errors?.tags?.hasError}
-        errorMessage={errors?.tags?.errorMessage}
-        getBadgeText={getDisplayValue.tags}
+        currentFieldValue={currentCategoriesValue}
+        label={"Categories"}
+        items={categories}
+        hasError={errors?.categories?.hasError}
+        errorMessage={errors?.categories?.errorMessage}
+        getBadgeText={getDisplayValue.categories}
         setFieldValue={(model) => {
-          setCurrentTagsDisplayValue(model ? getDisplayValue.tags(model) : "");
-          setCurrentTagsValue(model);
+          setCurrentCategoriesDisplayValue(
+            model ? getDisplayValue.categories(model) : ""
+          );
+          setCurrentCategoriesValue(model);
         }}
-        inputFieldRef={tagsRef}
+        inputFieldRef={categoriesRef}
         defaultFieldValue={""}
       >
         <Autocomplete
-          label="Tags"
+          label="Categories"
           isRequired={false}
           isReadOnly={false}
-          placeholder="Search Tags"
-          value={currentTagsDisplayValue}
-          options={tagsRecords
-            .filter((r) => !tagsIdSet.has(getIDValue.tags?.(r)))
+          placeholder="Search Category"
+          value={currentCategoriesDisplayValue}
+          options={categoryRecords
+            .filter((r) => !categoriesIdSet.has(getIDValue.categories?.(r)))
             .map((r) => ({
-              id: getIDValue.tags?.(r),
-              label: getDisplayValue.tags?.(r),
+              id: getIDValue.categories?.(r),
+              label: getDisplayValue.categories?.(r),
             }))}
           onSelect={({ id, label }) => {
-            setCurrentTagsValue(
-              tagsRecords.find((r) =>
+            setCurrentCategoriesValue(
+              categoryRecords.find((r) =>
                 Object.entries(JSON.parse(id)).every(
                   ([key, value]) => r[key] === value
                 )
               )
             );
-            setCurrentTagsDisplayValue(label);
-            runValidationTasks("tags", label);
+            setCurrentCategoriesDisplayValue(label);
+            runValidationTasks("categories", label);
           }}
           onClear={() => {
-            setCurrentTagsDisplayValue("");
+            setCurrentCategoriesDisplayValue("");
           }}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.tags?.hasError) {
-              runValidationTasks("tags", value);
+            if (errors.categories?.hasError) {
+              runValidationTasks("categories", value);
             }
-            setCurrentTagsDisplayValue(value);
-            setCurrentTagsValue(undefined);
+            setCurrentCategoriesDisplayValue(value);
+            setCurrentCategoriesValue(undefined);
           }}
-          onBlur={() => runValidationTasks("tags", currentTagsDisplayValue)}
-          errorMessage={errors.tags?.errorMessage}
-          hasError={errors.tags?.hasError}
-          ref={tagsRef}
+          onBlur={() =>
+            runValidationTasks("categories", currentCategoriesDisplayValue)
+          }
+          errorMessage={errors.categories?.errorMessage}
+          hasError={errors.categories?.hasError}
+          ref={categoriesRef}
           labelHidden={true}
-          {...getOverrideProps(overrides, "tags")}
+          {...getOverrideProps(overrides, "categories")}
         ></Autocomplete>
       </ArrayField>
       <Flex

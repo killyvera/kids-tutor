@@ -7,7 +7,7 @@
 import * as React from "react";
 import { AutocompleteProps, GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { Category, Tags } from "../models";
+import { Category } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -30,8 +30,8 @@ export declare type ProductCreateFormInputValues = {
     back?: string;
     marketplaces?: string;
     images?: string;
-    tags?: Tags[];
     type?: string;
+    tags?: string;
 };
 export declare type ProductCreateFormValidationValues = {
     name?: ValidationFunction<string>;
@@ -50,8 +50,8 @@ export declare type ProductCreateFormValidationValues = {
     back?: ValidationFunction<string>;
     marketplaces?: ValidationFunction<string>;
     images?: ValidationFunction<string>;
-    tags?: ValidationFunction<Tags>;
     type?: ValidationFunction<string>;
+    tags?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ProductCreateFormOverridesProps = {
@@ -72,8 +72,8 @@ export declare type ProductCreateFormOverridesProps = {
     back?: PrimitiveOverrideProps<TextFieldProps>;
     marketplaces?: PrimitiveOverrideProps<TextAreaFieldProps>;
     images?: PrimitiveOverrideProps<TextAreaFieldProps>;
-    tags?: PrimitiveOverrideProps<AutocompleteProps>;
     type?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    tags?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type ProductCreateFormProps = React.PropsWithChildren<{
     overrides?: ProductCreateFormOverridesProps | undefined | null;

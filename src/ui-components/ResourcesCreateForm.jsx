@@ -24,13 +24,7 @@ import {
   getOverrideProps,
   useDataStoreBinding,
 } from "@aws-amplify/ui-react/internal";
-import {
-  Resources,
-  Category,
-  Tags as Tags0,
-  ResourcesCategory,
-  TagsResources,
-} from "../models";
+import { Resources, Category, ResourcesCategory } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
@@ -209,9 +203,9 @@ export default function ResourcesCreateForm(props) {
     Categories: [],
     cover: "",
     autor: "",
-    Tags: [],
     rating: "",
     short: "",
+    tags: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [description, setDescription] = React.useState(
@@ -221,9 +215,9 @@ export default function ResourcesCreateForm(props) {
   const [Categories, setCategories] = React.useState(initialValues.Categories);
   const [cover, setCover] = React.useState(initialValues.cover);
   const [autor, setAutor] = React.useState(initialValues.autor);
-  const [Tags, setTags] = React.useState(initialValues.Tags);
   const [rating, setRating] = React.useState(initialValues.rating);
   const [short, setShort] = React.useState(initialValues.short);
+  const [tags, setTags] = React.useState(initialValues.tags);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
@@ -234,11 +228,9 @@ export default function ResourcesCreateForm(props) {
     setCurrentCategoriesDisplayValue("");
     setCover(initialValues.cover);
     setAutor(initialValues.autor);
-    setTags(initialValues.Tags);
-    setCurrentTagsValue(undefined);
-    setCurrentTagsDisplayValue("");
     setRating(initialValues.rating);
     setShort(initialValues.short);
+    setTags(initialValues.tags);
     setErrors({});
   };
   const [currentCategoriesDisplayValue, setCurrentCategoriesDisplayValue] =
@@ -246,35 +238,20 @@ export default function ResourcesCreateForm(props) {
   const [currentCategoriesValue, setCurrentCategoriesValue] =
     React.useState(undefined);
   const CategoriesRef = React.createRef();
-  const [currentTagsDisplayValue, setCurrentTagsDisplayValue] =
-    React.useState("");
-  const [currentTagsValue, setCurrentTagsValue] = React.useState(undefined);
-  const TagsRef = React.createRef();
   const getIDValue = {
     Categories: (r) => JSON.stringify({ id: r?.id }),
-    Tags: (r) => JSON.stringify({ id: r?.id }),
   };
   const CategoriesIdSet = new Set(
     Array.isArray(Categories)
       ? Categories.map((r) => getIDValue.Categories?.(r))
       : getIDValue.Categories?.(Categories)
   );
-  const TagsIdSet = new Set(
-    Array.isArray(Tags)
-      ? Tags.map((r) => getIDValue.Tags?.(r))
-      : getIDValue.Tags?.(Tags)
-  );
   const categoryRecords = useDataStoreBinding({
     type: "collection",
     model: Category,
   }).items;
-  const tagsRecords = useDataStoreBinding({
-    type: "collection",
-    model: Tags0,
-  }).items;
   const getDisplayValue = {
     Categories: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
-    Tags: (r) => `${r?.tag_name ? r?.tag_name + " - " : ""}${r?.id}`,
   };
   const validations = {
     title: [],
@@ -283,9 +260,9 @@ export default function ResourcesCreateForm(props) {
     Categories: [],
     cover: [],
     autor: [],
-    Tags: [],
     rating: [],
     short: [],
+    tags: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -319,9 +296,9 @@ export default function ResourcesCreateForm(props) {
           Categories,
           cover,
           autor,
-          Tags,
           rating,
           short,
+          tags,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -367,6 +344,7 @@ export default function ResourcesCreateForm(props) {
             autor: modelFields.autor,
             rating: modelFields.rating,
             short: modelFields.short,
+            tags: modelFields.tags,
           };
           const resources = await DataStore.save(
             new Resources(modelFieldsToSave)
@@ -379,19 +357,6 @@ export default function ResourcesCreateForm(props) {
                   new ResourcesCategory({
                     resources,
                     category,
-                  })
-                )
-              );
-              return promises;
-            }, [])
-          );
-          promises.push(
-            ...Tags.reduce((promises, tags) => {
-              promises.push(
-                DataStore.save(
-                  new TagsResources({
-                    resources,
-                    tags,
                   })
                 )
               );
@@ -429,9 +394,9 @@ export default function ResourcesCreateForm(props) {
               Categories,
               cover,
               autor,
-              Tags,
               rating,
               short,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -461,9 +426,9 @@ export default function ResourcesCreateForm(props) {
               Categories,
               cover,
               autor,
-              Tags,
               rating,
               short,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -492,9 +457,9 @@ export default function ResourcesCreateForm(props) {
               Categories,
               cover,
               autor,
-              Tags,
               rating,
               short,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.files ?? value;
@@ -520,9 +485,9 @@ export default function ResourcesCreateForm(props) {
               Categories: values,
               cover,
               autor,
-              Tags,
               rating,
               short,
+              tags,
             };
             const result = onChange(modelFields);
             values = result?.Categories ?? values;
@@ -605,9 +570,9 @@ export default function ResourcesCreateForm(props) {
               Categories,
               cover: value,
               autor,
-              Tags,
               rating,
               short,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -637,9 +602,9 @@ export default function ResourcesCreateForm(props) {
               Categories,
               cover,
               autor: value,
-              Tags,
               rating,
               short,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.autor ?? value;
@@ -654,83 +619,6 @@ export default function ResourcesCreateForm(props) {
         hasError={errors.autor?.hasError}
         {...getOverrideProps(overrides, "autor")}
       ></TextField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              title,
-              description,
-              files,
-              Categories,
-              cover,
-              autor,
-              Tags: values,
-              rating,
-              short,
-            };
-            const result = onChange(modelFields);
-            values = result?.Tags ?? values;
-          }
-          setTags(values);
-          setCurrentTagsValue(undefined);
-          setCurrentTagsDisplayValue("");
-        }}
-        currentFieldValue={currentTagsValue}
-        label={"Tags"}
-        items={Tags}
-        hasError={errors?.Tags?.hasError}
-        errorMessage={errors?.Tags?.errorMessage}
-        getBadgeText={getDisplayValue.Tags}
-        setFieldValue={(model) => {
-          setCurrentTagsDisplayValue(model ? getDisplayValue.Tags(model) : "");
-          setCurrentTagsValue(model);
-        }}
-        inputFieldRef={TagsRef}
-        defaultFieldValue={""}
-      >
-        <Autocomplete
-          label="Tags"
-          isRequired={false}
-          isReadOnly={false}
-          placeholder="Search Tags"
-          value={currentTagsDisplayValue}
-          options={tagsRecords
-            .filter((r) => !TagsIdSet.has(getIDValue.Tags?.(r)))
-            .map((r) => ({
-              id: getIDValue.Tags?.(r),
-              label: getDisplayValue.Tags?.(r),
-            }))}
-          onSelect={({ id, label }) => {
-            setCurrentTagsValue(
-              tagsRecords.find((r) =>
-                Object.entries(JSON.parse(id)).every(
-                  ([key, value]) => r[key] === value
-                )
-              )
-            );
-            setCurrentTagsDisplayValue(label);
-            runValidationTasks("Tags", label);
-          }}
-          onClear={() => {
-            setCurrentTagsDisplayValue("");
-          }}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.Tags?.hasError) {
-              runValidationTasks("Tags", value);
-            }
-            setCurrentTagsDisplayValue(value);
-            setCurrentTagsValue(undefined);
-          }}
-          onBlur={() => runValidationTasks("Tags", currentTagsDisplayValue)}
-          errorMessage={errors.Tags?.errorMessage}
-          hasError={errors.Tags?.hasError}
-          ref={TagsRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "Tags")}
-        ></Autocomplete>
-      </ArrayField>
       <TextField
         label="Rating"
         isRequired={false}
@@ -750,9 +638,9 @@ export default function ResourcesCreateForm(props) {
               Categories,
               cover,
               autor,
-              Tags,
               rating: value,
               short,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -782,9 +670,9 @@ export default function ResourcesCreateForm(props) {
               Categories,
               cover,
               autor,
-              Tags,
               rating,
               short: value,
+              tags,
             };
             const result = onChange(modelFields);
             value = result?.short ?? value;
@@ -799,6 +687,37 @@ export default function ResourcesCreateForm(props) {
         hasError={errors.short?.hasError}
         {...getOverrideProps(overrides, "short")}
       ></TextField>
+      <TextAreaField
+        label="Tags"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              files,
+              Categories,
+              cover,
+              autor,
+              rating,
+              short,
+              tags: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.tags ?? value;
+          }
+          if (errors.tags?.hasError) {
+            runValidationTasks("tags", value);
+          }
+          setTags(value);
+        }}
+        onBlur={() => runValidationTasks("tags", tags)}
+        errorMessage={errors.tags?.errorMessage}
+        hasError={errors.tags?.hasError}
+        {...getOverrideProps(overrides, "tags")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

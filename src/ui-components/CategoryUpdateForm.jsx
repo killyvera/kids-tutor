@@ -27,8 +27,10 @@ import {
   Category,
   Product,
   Resources,
+  BlogPost,
   ProductCategory,
   ResourcesCategory,
+  BlogPostCategory,
 } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
@@ -207,11 +209,13 @@ export default function CategoryUpdateForm(props) {
     products: [],
     resources: [],
     color: "",
+    blogposts: [],
   };
   const [name, setName] = React.useState(initialValues.name);
   const [products, setProducts] = React.useState(initialValues.products);
   const [resources, setResources] = React.useState(initialValues.resources);
   const [color, setColor] = React.useState(initialValues.color);
+  const [blogposts, setBlogposts] = React.useState(initialValues.blogposts);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = categoryRecord
@@ -220,6 +224,7 @@ export default function CategoryUpdateForm(props) {
           ...categoryRecord,
           products: linkedProducts,
           resources: linkedResources,
+          blogposts: linkedBlogposts,
         }
       : initialValues;
     setName(cleanValues.name);
@@ -230,6 +235,9 @@ export default function CategoryUpdateForm(props) {
     setCurrentResourcesValue(undefined);
     setCurrentResourcesDisplayValue("");
     setColor(cleanValues.color);
+    setBlogposts(cleanValues.blogposts ?? []);
+    setCurrentBlogpostsValue(undefined);
+    setCurrentBlogpostsDisplayValue("");
     setErrors({});
   };
   const [categoryRecord, setCategoryRecord] = React.useState(categoryModelProp);
@@ -237,6 +245,8 @@ export default function CategoryUpdateForm(props) {
   const canUnlinkProducts = false;
   const [linkedResources, setLinkedResources] = React.useState([]);
   const canUnlinkResources = false;
+  const [linkedBlogposts, setLinkedBlogposts] = React.useState([]);
+  const canUnlinkBlogposts = false;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
@@ -263,6 +273,16 @@ export default function CategoryUpdateForm(props) {
           )
         : [];
       setLinkedResources(linkedResources);
+      const linkedBlogposts = record
+        ? await Promise.all(
+            (
+              await record.blogposts.toArray()
+            ).map((r) => {
+              return r.blogPost;
+            })
+          )
+        : [];
+      setLinkedBlogposts(linkedBlogposts);
     };
     queryData();
   }, [idProp, categoryModelProp]);
@@ -270,6 +290,7 @@ export default function CategoryUpdateForm(props) {
     categoryRecord,
     linkedProducts,
     linkedResources,
+    linkedBlogposts,
   ]);
   const [currentProductsDisplayValue, setCurrentProductsDisplayValue] =
     React.useState("");
@@ -281,9 +302,15 @@ export default function CategoryUpdateForm(props) {
   const [currentResourcesValue, setCurrentResourcesValue] =
     React.useState(undefined);
   const resourcesRef = React.createRef();
+  const [currentBlogpostsDisplayValue, setCurrentBlogpostsDisplayValue] =
+    React.useState("");
+  const [currentBlogpostsValue, setCurrentBlogpostsValue] =
+    React.useState(undefined);
+  const blogpostsRef = React.createRef();
   const getIDValue = {
     products: (r) => JSON.stringify({ id: r?.id }),
     resources: (r) => JSON.stringify({ id: r?.id }),
+    blogposts: (r) => JSON.stringify({ id: r?.id }),
   };
   const productsIdSet = new Set(
     Array.isArray(products)
@@ -295,6 +322,11 @@ export default function CategoryUpdateForm(props) {
       ? resources.map((r) => getIDValue.resources?.(r))
       : getIDValue.resources?.(resources)
   );
+  const blogpostsIdSet = new Set(
+    Array.isArray(blogposts)
+      ? blogposts.map((r) => getIDValue.blogposts?.(r))
+      : getIDValue.blogposts?.(blogposts)
+  );
   const productRecords = useDataStoreBinding({
     type: "collection",
     model: Product,
@@ -303,15 +335,21 @@ export default function CategoryUpdateForm(props) {
     type: "collection",
     model: Resources,
   }).items;
+  const blogPostRecords = useDataStoreBinding({
+    type: "collection",
+    model: BlogPost,
+  }).items;
   const getDisplayValue = {
     products: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
     resources: (r) => `${r?.title ? r?.title + " - " : ""}${r?.id}`,
+    blogposts: (r) => `${r?.title ? r?.title + " - " : ""}${r?.id}`,
   };
   const validations = {
     name: [],
     products: [],
     resources: [],
     color: [],
+    blogposts: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -343,6 +381,7 @@ export default function CategoryUpdateForm(props) {
           products,
           resources,
           color,
+          blogposts,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -517,6 +556,74 @@ export default function CategoryUpdateForm(props) {
               );
             }
           });
+          const blogpostsToLinkMap = new Map();
+          const blogpostsToUnLinkMap = new Map();
+          const blogpostsMap = new Map();
+          const linkedBlogpostsMap = new Map();
+          blogposts.forEach((r) => {
+            const count = blogpostsMap.get(getIDValue.blogposts?.(r));
+            const newCount = count ? count + 1 : 1;
+            blogpostsMap.set(getIDValue.blogposts?.(r), newCount);
+          });
+          linkedBlogposts.forEach((r) => {
+            const count = linkedBlogpostsMap.get(getIDValue.blogposts?.(r));
+            const newCount = count ? count + 1 : 1;
+            linkedBlogpostsMap.set(getIDValue.blogposts?.(r), newCount);
+          });
+          linkedBlogpostsMap.forEach((count, id) => {
+            const newCount = blogpostsMap.get(id);
+            if (newCount) {
+              const diffCount = count - newCount;
+              if (diffCount > 0) {
+                blogpostsToUnLinkMap.set(id, diffCount);
+              }
+            } else {
+              blogpostsToUnLinkMap.set(id, count);
+            }
+          });
+          blogpostsMap.forEach((count, id) => {
+            const originalCount = linkedBlogpostsMap.get(id);
+            if (originalCount) {
+              const diffCount = count - originalCount;
+              if (diffCount > 0) {
+                blogpostsToLinkMap.set(id, diffCount);
+              }
+            } else {
+              blogpostsToLinkMap.set(id, count);
+            }
+          });
+          blogpostsToUnLinkMap.forEach(async (count, id) => {
+            const blogPostCategoryRecords = await DataStore.query(
+              BlogPostCategory,
+              (r) =>
+                r.and((r) => {
+                  const recordKeys = JSON.parse(id);
+                  return [
+                    r.blogPostId.eq(recordKeys.id),
+                    r.categoryId.eq(categoryRecord.id),
+                  ];
+                })
+            );
+            for (let i = 0; i < count; i++) {
+              promises.push(DataStore.delete(blogPostCategoryRecords[i]));
+            }
+          });
+          blogpostsToLinkMap.forEach((count, id) => {
+            for (let i = count; i > 0; i--) {
+              promises.push(
+                DataStore.save(
+                  new BlogPostCategory({
+                    category: categoryRecord,
+                    blogPost: blogPostRecords.find((r) =>
+                      Object.entries(JSON.parse(id)).every(
+                        ([key, value]) => r[key] === value
+                      )
+                    ),
+                  })
+                )
+              );
+            }
+          });
           const modelFieldsToSave = {
             name: modelFields.name,
             color: modelFields.color,
@@ -554,6 +661,7 @@ export default function CategoryUpdateForm(props) {
               products,
               resources,
               color,
+              blogposts,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -577,6 +685,7 @@ export default function CategoryUpdateForm(props) {
               products: values,
               resources,
               color,
+              blogposts,
             };
             const result = onChange(modelFields);
             values = result?.products ?? values;
@@ -653,6 +762,7 @@ export default function CategoryUpdateForm(props) {
               products,
               resources: values,
               color,
+              blogposts,
             };
             const result = onChange(modelFields);
             values = result?.resources ?? values;
@@ -733,6 +843,7 @@ export default function CategoryUpdateForm(props) {
               products,
               resources,
               color: value,
+              blogposts,
             };
             const result = onChange(modelFields);
             value = result?.color ?? value;
@@ -747,6 +858,83 @@ export default function CategoryUpdateForm(props) {
         hasError={errors.color?.hasError}
         {...getOverrideProps(overrides, "color")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              name,
+              products,
+              resources,
+              color,
+              blogposts: values,
+            };
+            const result = onChange(modelFields);
+            values = result?.blogposts ?? values;
+          }
+          setBlogposts(values);
+          setCurrentBlogpostsValue(undefined);
+          setCurrentBlogpostsDisplayValue("");
+        }}
+        currentFieldValue={currentBlogpostsValue}
+        label={"Blogposts"}
+        items={blogposts}
+        hasError={errors?.blogposts?.hasError}
+        errorMessage={errors?.blogposts?.errorMessage}
+        getBadgeText={getDisplayValue.blogposts}
+        setFieldValue={(model) => {
+          setCurrentBlogpostsDisplayValue(
+            model ? getDisplayValue.blogposts(model) : ""
+          );
+          setCurrentBlogpostsValue(model);
+        }}
+        inputFieldRef={blogpostsRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Blogposts"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search BlogPost"
+          value={currentBlogpostsDisplayValue}
+          options={blogPostRecords
+            .filter((r) => !blogpostsIdSet.has(getIDValue.blogposts?.(r)))
+            .map((r) => ({
+              id: getIDValue.blogposts?.(r),
+              label: getDisplayValue.blogposts?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentBlogpostsValue(
+              blogPostRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentBlogpostsDisplayValue(label);
+            runValidationTasks("blogposts", label);
+          }}
+          onClear={() => {
+            setCurrentBlogpostsDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.blogposts?.hasError) {
+              runValidationTasks("blogposts", value);
+            }
+            setCurrentBlogpostsDisplayValue(value);
+            setCurrentBlogpostsValue(undefined);
+          }}
+          onBlur={() =>
+            runValidationTasks("blogposts", currentBlogpostsDisplayValue)
+          }
+          errorMessage={errors.blogposts?.errorMessage}
+          hasError={errors.blogposts?.hasError}
+          ref={blogpostsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "blogposts")}
+        ></Autocomplete>
+      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

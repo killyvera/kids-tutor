@@ -1,11 +1,11 @@
 import MyResource from "@/ui-components/MyResource";
 import { useState } from "react";
 import MyBadgeList from "./MyBadgeList";
-import MyCard from "./MyCard";
+import MyPostCard from "./MyPostCard";
 import Link from "next/link";
 
-function MyPosts({ list }) {
-  const [firstPost, ...postList] = list;
+function MyPosts({ postList, categories, postCategories }) {
+  // const [firstPost, ...postList] = list;
 
   return (
     <div className="text-gray-900 pt-12 pr-0 pb-14 pl-0 bg-white">
@@ -68,8 +68,14 @@ function MyPosts({ list }) {
           </div>
         </div> */}
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
-          {list.map((element) => (
-            <MyCard key={element.id} element={element} type={"blog"} />
+          {postList.map((element) => (
+            <MyPostCard
+              key={element.id}
+              element={element}
+              type={"blog"}
+              categories={categories}
+              postCategories={postCategories}
+            />
           ))}
         </div>
       </div>

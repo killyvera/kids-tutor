@@ -7,7 +7,7 @@
 import * as React from "react";
 import { AutocompleteProps, GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { BlogPost, Tags } from "../models";
+import { BlogPost, Category } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -18,14 +18,16 @@ export declare type BlogPostUpdateFormInputValues = {
     cover?: string;
     content?: string;
     author?: string;
-    tags?: Tags[];
+    tags?: string;
+    categories?: Category[];
 };
 export declare type BlogPostUpdateFormValidationValues = {
     title?: ValidationFunction<string>;
     cover?: ValidationFunction<string>;
     content?: ValidationFunction<string>;
     author?: ValidationFunction<string>;
-    tags?: ValidationFunction<Tags>;
+    tags?: ValidationFunction<string>;
+    categories?: ValidationFunction<Category>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BlogPostUpdateFormOverridesProps = {
@@ -34,7 +36,8 @@ export declare type BlogPostUpdateFormOverridesProps = {
     cover?: PrimitiveOverrideProps<TextFieldProps>;
     content?: PrimitiveOverrideProps<TextFieldProps>;
     author?: PrimitiveOverrideProps<TextFieldProps>;
-    tags?: PrimitiveOverrideProps<AutocompleteProps>;
+    tags?: PrimitiveOverrideProps<TextFieldProps>;
+    categories?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type BlogPostUpdateFormProps = React.PropsWithChildren<{
     overrides?: BlogPostUpdateFormOverridesProps | undefined | null;

@@ -13,9 +13,9 @@ type Resources @model @auth(rules: [{allow: public}]) {
   Categories: [Category] @manyToMany(relationName: "ResourcesCategory")
   cover: String
   autor: String
-  Tags: [Tags] @manyToMany(relationName: "TagsResources")
   rating: Float
   short: String
+  tags: AWSJSON
 }
 
 type Testimonials @model @auth(rules: [{allow: public}]) {
@@ -25,6 +25,7 @@ type Testimonials @model @auth(rules: [{allow: public}]) {
   image: String
   location: String
   rating: Float
+  email: String
 }
 
 type Colleges @model @auth(rules: [{allow: public}]) {
@@ -42,15 +43,7 @@ type Comments @model @auth(rules: [{allow: public}]) {
   post_id: BlogPost @hasOne
   parent_coment: String
   replies: String
-}
-
-type Tags @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  tag_name: String
-  blogposts: [BlogPost] @manyToMany(relationName: "BlogPostTags")
-  color: String
-  products: [Product] @manyToMany(relationName: "ProductTags")
-  resources: [Resources] @manyToMany(relationName: "TagsResources")
+  parent_id: String
 }
 
 type BlogPost @model @auth(rules: [{allow: public}]) {
@@ -59,7 +52,8 @@ type BlogPost @model @auth(rules: [{allow: public}]) {
   cover: String
   content: String
   author: String
-  tags: [Tags] @manyToMany(relationName: "BlogPostTags")
+  tags: String
+  categories: [Category] @manyToMany(relationName: "BlogPostCategory")
 }
 
 type Users @model @auth(rules: [{allow: public}]) {
@@ -94,6 +88,7 @@ type Category @model @auth(rules: [{allow: public}]) {
   products: [Product] @manyToMany(relationName: "ProductCategory")
   resources: [Resources] @manyToMany(relationName: "ResourcesCategory")
   color: String
+  blogposts: [BlogPost] @manyToMany(relationName: "BlogPostCategory")
 }
 
 type Product @model @auth(rules: [{allow: public}]) {
@@ -114,7 +109,7 @@ type Product @model @auth(rules: [{allow: public}]) {
   back: String
   marketplaces: AWSJSON
   images: AWSJSON
-  tags: [Tags] @manyToMany(relationName: "ProductTags")
   type: AWSJSON
+  tags: AWSJSON
 }
  

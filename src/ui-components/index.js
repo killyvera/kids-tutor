@@ -74,8 +74,6 @@ export { default as CollegesCreateForm } from "./CollegesCreateForm";
 export { default as CollegesUpdateForm } from "./CollegesUpdateForm";
 export { default as CommentsCreateForm } from "./CommentsCreateForm";
 export { default as CommentsUpdateForm } from "./CommentsUpdateForm";
-export { default as TagsCreateForm } from "./TagsCreateForm";
-export { default as TagsUpdateForm } from "./TagsUpdateForm";
 export { default as BlogPostCreateForm } from "./BlogPostCreateForm";
 export { default as BlogPostUpdateForm } from "./BlogPostUpdateForm";
 export { default as UsersCreateForm } from "./UsersCreateForm";

@@ -20,6 +20,7 @@ export declare type CommentsCreateFormInputValues = {
     post_id?: BlogPost;
     parent_coment?: string;
     replies?: string;
+    parent_id?: string;
 };
 export declare type CommentsCreateFormValidationValues = {
     content?: ValidationFunction<string>;
@@ -28,6 +29,7 @@ export declare type CommentsCreateFormValidationValues = {
     post_id?: ValidationFunction<BlogPost>;
     parent_coment?: ValidationFunction<string>;
     replies?: ValidationFunction<string>;
+    parent_id?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CommentsCreateFormOverridesProps = {
@@ -38,6 +40,7 @@ export declare type CommentsCreateFormOverridesProps = {
     post_id?: PrimitiveOverrideProps<AutocompleteProps>;
     parent_coment?: PrimitiveOverrideProps<TextFieldProps>;
     replies?: PrimitiveOverrideProps<TextFieldProps>;
+    parent_id?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CommentsCreateFormProps = React.PropsWithChildren<{
     overrides?: CommentsCreateFormOverridesProps | undefined | null;

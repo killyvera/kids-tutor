@@ -29,12 +29,14 @@ export default function TestimonialsUpdateForm(props) {
     image: "",
     location: "",
     rating: "",
+    email: "",
   };
   const [content, setContent] = React.useState(initialValues.content);
   const [name, setName] = React.useState(initialValues.name);
   const [image, setImage] = React.useState(initialValues.image);
   const [location, setLocation] = React.useState(initialValues.location);
   const [rating, setRating] = React.useState(initialValues.rating);
+  const [email, setEmail] = React.useState(initialValues.email);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = testimonialsRecord
@@ -45,6 +47,7 @@ export default function TestimonialsUpdateForm(props) {
     setImage(cleanValues.image);
     setLocation(cleanValues.location);
     setRating(cleanValues.rating);
+    setEmail(cleanValues.email);
     setErrors({});
   };
   const [testimonialsRecord, setTestimonialsRecord] = React.useState(
@@ -66,6 +69,7 @@ export default function TestimonialsUpdateForm(props) {
     image: [],
     location: [],
     rating: [],
+    email: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -98,6 +102,7 @@ export default function TestimonialsUpdateForm(props) {
           image,
           location,
           rating,
+          email,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -158,6 +163,7 @@ export default function TestimonialsUpdateForm(props) {
               image,
               location,
               rating,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.content ?? value;
@@ -186,6 +192,7 @@ export default function TestimonialsUpdateForm(props) {
               image,
               location,
               rating,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -214,6 +221,7 @@ export default function TestimonialsUpdateForm(props) {
               image: value,
               location,
               rating,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -242,6 +250,7 @@ export default function TestimonialsUpdateForm(props) {
               image,
               location: value,
               rating,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -274,6 +283,7 @@ export default function TestimonialsUpdateForm(props) {
               image,
               location,
               rating: value,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -287,6 +297,35 @@ export default function TestimonialsUpdateForm(props) {
         errorMessage={errors.rating?.errorMessage}
         hasError={errors.rating?.hasError}
         {...getOverrideProps(overrides, "rating")}
+      ></TextField>
+      <TextField
+        label="Email"
+        isRequired={false}
+        isReadOnly={false}
+        value={email}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              content,
+              name,
+              image,
+              location,
+              rating,
+              email: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.email ?? value;
+          }
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
+          }
+          setEmail(value);
+        }}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
       ></TextField>
       <Flex
         justifyContent="space-between"

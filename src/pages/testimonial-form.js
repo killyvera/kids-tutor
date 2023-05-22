@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Testimonials } from "../models";
 import { DataStore, Storage } from "aws-amplify";
 import { Rating } from "@aws-amplify/ui-react";
@@ -43,7 +43,7 @@ export default function TestimonialForm() {
         name: name,
         location: location,
         rating: rating,
-        image: uploadedImage.key, // Save the S3 image key in the Testimonials model
+        image: imageKey, // Save the S3 image key in the Testimonials model
       })
     );
 
@@ -120,6 +120,8 @@ export default function TestimonialForm() {
                   accessLevel="public"
                   maxFileCount={1}
                   // processFile={processFile}
+                  path="images/"
+                  onUploadSuccess={({ key }) => {setImageKey(key)}}
                 />
               </div>
 

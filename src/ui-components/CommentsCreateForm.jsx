@@ -202,6 +202,7 @@ export default function CommentsCreateForm(props) {
     post_id: undefined,
     parent_coment: "",
     replies: "",
+    parent_id: "",
   };
   const [content, setContent] = React.useState(initialValues.content);
   const [published_date, setPublished_date] = React.useState(
@@ -213,6 +214,7 @@ export default function CommentsCreateForm(props) {
     initialValues.parent_coment
   );
   const [replies, setReplies] = React.useState(initialValues.replies);
+  const [parent_id, setParent_id] = React.useState(initialValues.parent_id);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setContent(initialValues.content);
@@ -225,6 +227,7 @@ export default function CommentsCreateForm(props) {
     setCurrentPost_idDisplayValue("");
     setParent_coment(initialValues.parent_coment);
     setReplies(initialValues.replies);
+    setParent_id(initialValues.parent_id);
     setErrors({});
   };
   const [currentAuthorDisplayValue, setCurrentAuthorDisplayValue] =
@@ -269,6 +272,7 @@ export default function CommentsCreateForm(props) {
     post_id: [],
     parent_coment: [],
     replies: [],
+    parent_id: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -302,6 +306,7 @@ export default function CommentsCreateForm(props) {
           post_id,
           parent_coment,
           replies,
+          parent_id,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -370,6 +375,7 @@ export default function CommentsCreateForm(props) {
               post_id,
               parent_coment,
               replies,
+              parent_id,
             };
             const result = onChange(modelFields);
             value = result?.content ?? value;
@@ -400,6 +406,7 @@ export default function CommentsCreateForm(props) {
               post_id,
               parent_coment,
               replies,
+              parent_id,
             };
             const result = onChange(modelFields);
             value = result?.published_date ?? value;
@@ -426,6 +433,7 @@ export default function CommentsCreateForm(props) {
               post_id,
               parent_coment,
               replies,
+              parent_id,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -503,6 +511,7 @@ export default function CommentsCreateForm(props) {
               post_id: value,
               parent_coment,
               replies,
+              parent_id,
             };
             const result = onChange(modelFields);
             value = result?.post_id ?? value;
@@ -585,6 +594,7 @@ export default function CommentsCreateForm(props) {
               post_id,
               parent_coment: value,
               replies,
+              parent_id,
             };
             const result = onChange(modelFields);
             value = result?.parent_coment ?? value;
@@ -614,6 +624,7 @@ export default function CommentsCreateForm(props) {
               post_id,
               parent_coment,
               replies: value,
+              parent_id,
             };
             const result = onChange(modelFields);
             value = result?.replies ?? value;
@@ -627,6 +638,36 @@ export default function CommentsCreateForm(props) {
         errorMessage={errors.replies?.errorMessage}
         hasError={errors.replies?.hasError}
         {...getOverrideProps(overrides, "replies")}
+      ></TextField>
+      <TextField
+        label="Parent id"
+        isRequired={false}
+        isReadOnly={false}
+        value={parent_id}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              content,
+              published_date,
+              author,
+              post_id,
+              parent_coment,
+              replies,
+              parent_id: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.parent_id ?? value;
+          }
+          if (errors.parent_id?.hasError) {
+            runValidationTasks("parent_id", value);
+          }
+          setParent_id(value);
+        }}
+        onBlur={() => runValidationTasks("parent_id", parent_id)}
+        errorMessage={errors.parent_id?.errorMessage}
+        hasError={errors.parent_id?.hasError}
+        {...getOverrideProps(overrides, "parent_id")}
       ></TextField>
       <Flex
         justifyContent="space-between"

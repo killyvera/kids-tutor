@@ -23,7 +23,7 @@ import {
   getOverrideProps,
   useDataStoreBinding,
 } from "@aws-amplify/ui-react/internal";
-import { BlogPost, Tags, BlogPostTags } from "../models";
+import { BlogPost, Category, BlogPostCategory } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
@@ -200,13 +200,15 @@ export default function BlogPostCreateForm(props) {
     cover: "",
     content: "",
     author: "",
-    tags: [],
+    tags: "",
+    categories: [],
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [cover, setCover] = React.useState(initialValues.cover);
   const [content, setContent] = React.useState(initialValues.content);
   const [author, setAuthor] = React.useState(initialValues.author);
   const [tags, setTags] = React.useState(initialValues.tags);
+  const [categories, setCategories] = React.useState(initialValues.categories);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
@@ -214,28 +216,30 @@ export default function BlogPostCreateForm(props) {
     setContent(initialValues.content);
     setAuthor(initialValues.author);
     setTags(initialValues.tags);
-    setCurrentTagsValue(undefined);
-    setCurrentTagsDisplayValue("");
+    setCategories(initialValues.categories);
+    setCurrentCategoriesValue(undefined);
+    setCurrentCategoriesDisplayValue("");
     setErrors({});
   };
-  const [currentTagsDisplayValue, setCurrentTagsDisplayValue] =
+  const [currentCategoriesDisplayValue, setCurrentCategoriesDisplayValue] =
     React.useState("");
-  const [currentTagsValue, setCurrentTagsValue] = React.useState(undefined);
-  const tagsRef = React.createRef();
+  const [currentCategoriesValue, setCurrentCategoriesValue] =
+    React.useState(undefined);
+  const categoriesRef = React.createRef();
   const getIDValue = {
-    tags: (r) => JSON.stringify({ id: r?.id }),
+    categories: (r) => JSON.stringify({ id: r?.id }),
   };
-  const tagsIdSet = new Set(
-    Array.isArray(tags)
-      ? tags.map((r) => getIDValue.tags?.(r))
-      : getIDValue.tags?.(tags)
+  const categoriesIdSet = new Set(
+    Array.isArray(categories)
+      ? categories.map((r) => getIDValue.categories?.(r))
+      : getIDValue.categories?.(categories)
   );
-  const tagsRecords = useDataStoreBinding({
+  const categoryRecords = useDataStoreBinding({
     type: "collection",
-    model: Tags,
+    model: Category,
   }).items;
   const getDisplayValue = {
-    tags: (r) => `${r?.tag_name ? r?.tag_name + " - " : ""}${r?.id}`,
+    categories: (r) => `${r?.name ? r?.name + " - " : ""}${r?.id}`,
   };
   const validations = {
     title: [],
@@ -243,6 +247,7 @@ export default function BlogPostCreateForm(props) {
     content: [],
     author: [],
     tags: [],
+    categories: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -275,6 +280,7 @@ export default function BlogPostCreateForm(props) {
           content,
           author,
           tags,
+          categories,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -317,18 +323,19 @@ export default function BlogPostCreateForm(props) {
             cover: modelFields.cover,
             content: modelFields.content,
             author: modelFields.author,
+            tags: modelFields.tags,
           };
           const blogPost = await DataStore.save(
             new BlogPost(modelFieldsToSave)
           );
           const promises = [];
           promises.push(
-            ...tags.reduce((promises, tags) => {
+            ...categories.reduce((promises, category) => {
               promises.push(
                 DataStore.save(
-                  new BlogPostTags({
+                  new BlogPostCategory({
                     blogPost,
-                    tags,
+                    category,
                   })
                 )
               );
@@ -365,6 +372,7 @@ export default function BlogPostCreateForm(props) {
               content,
               author,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -393,6 +401,7 @@ export default function BlogPostCreateForm(props) {
               content,
               author,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -421,6 +430,7 @@ export default function BlogPostCreateForm(props) {
               content: value,
               author,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.content ?? value;
@@ -449,6 +459,7 @@ export default function BlogPostCreateForm(props) {
               content,
               author: value,
               tags,
+              categories,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -463,6 +474,35 @@ export default function BlogPostCreateForm(props) {
         hasError={errors.author?.hasError}
         {...getOverrideProps(overrides, "author")}
       ></TextField>
+      <TextField
+        label="Tags"
+        isRequired={false}
+        isReadOnly={false}
+        value={tags}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              cover,
+              content,
+              author,
+              tags: value,
+              categories,
+            };
+            const result = onChange(modelFields);
+            value = result?.tags ?? value;
+          }
+          if (errors.tags?.hasError) {
+            runValidationTasks("tags", value);
+          }
+          setTags(value);
+        }}
+        onBlur={() => runValidationTasks("tags", tags)}
+        errorMessage={errors.tags?.errorMessage}
+        hasError={errors.tags?.hasError}
+        {...getOverrideProps(overrides, "tags")}
+      ></TextField>
       <ArrayField
         onChange={async (items) => {
           let values = items;
@@ -472,68 +512,73 @@ export default function BlogPostCreateForm(props) {
               cover,
               content,
               author,
-              tags: values,
+              tags,
+              categories: values,
             };
             const result = onChange(modelFields);
-            values = result?.tags ?? values;
+            values = result?.categories ?? values;
           }
-          setTags(values);
-          setCurrentTagsValue(undefined);
-          setCurrentTagsDisplayValue("");
+          setCategories(values);
+          setCurrentCategoriesValue(undefined);
+          setCurrentCategoriesDisplayValue("");
         }}
-        currentFieldValue={currentTagsValue}
-        label={"Tags"}
-        items={tags}
-        hasError={errors?.tags?.hasError}
-        errorMessage={errors?.tags?.errorMessage}
-        getBadgeText={getDisplayValue.tags}
+        currentFieldValue={currentCategoriesValue}
+        label={"Categories"}
+        items={categories}
+        hasError={errors?.categories?.hasError}
+        errorMessage={errors?.categories?.errorMessage}
+        getBadgeText={getDisplayValue.categories}
         setFieldValue={(model) => {
-          setCurrentTagsDisplayValue(model ? getDisplayValue.tags(model) : "");
-          setCurrentTagsValue(model);
+          setCurrentCategoriesDisplayValue(
+            model ? getDisplayValue.categories(model) : ""
+          );
+          setCurrentCategoriesValue(model);
         }}
-        inputFieldRef={tagsRef}
+        inputFieldRef={categoriesRef}
         defaultFieldValue={""}
       >
         <Autocomplete
-          label="Tags"
+          label="Categories"
           isRequired={false}
           isReadOnly={false}
-          placeholder="Search Tags"
-          value={currentTagsDisplayValue}
-          options={tagsRecords
-            .filter((r) => !tagsIdSet.has(getIDValue.tags?.(r)))
+          placeholder="Search Category"
+          value={currentCategoriesDisplayValue}
+          options={categoryRecords
+            .filter((r) => !categoriesIdSet.has(getIDValue.categories?.(r)))
             .map((r) => ({
-              id: getIDValue.tags?.(r),
-              label: getDisplayValue.tags?.(r),
+              id: getIDValue.categories?.(r),
+              label: getDisplayValue.categories?.(r),
             }))}
           onSelect={({ id, label }) => {
-            setCurrentTagsValue(
-              tagsRecords.find((r) =>
+            setCurrentCategoriesValue(
+              categoryRecords.find((r) =>
                 Object.entries(JSON.parse(id)).every(
                   ([key, value]) => r[key] === value
                 )
               )
             );
-            setCurrentTagsDisplayValue(label);
-            runValidationTasks("tags", label);
+            setCurrentCategoriesDisplayValue(label);
+            runValidationTasks("categories", label);
           }}
           onClear={() => {
-            setCurrentTagsDisplayValue("");
+            setCurrentCategoriesDisplayValue("");
           }}
           onChange={(e) => {
             let { value } = e.target;
-            if (errors.tags?.hasError) {
-              runValidationTasks("tags", value);
+            if (errors.categories?.hasError) {
+              runValidationTasks("categories", value);
             }
-            setCurrentTagsDisplayValue(value);
-            setCurrentTagsValue(undefined);
+            setCurrentCategoriesDisplayValue(value);
+            setCurrentCategoriesValue(undefined);
           }}
-          onBlur={() => runValidationTasks("tags", currentTagsDisplayValue)}
-          errorMessage={errors.tags?.errorMessage}
-          hasError={errors.tags?.hasError}
-          ref={tagsRef}
+          onBlur={() =>
+            runValidationTasks("categories", currentCategoriesDisplayValue)
+          }
+          errorMessage={errors.categories?.errorMessage}
+          hasError={errors.categories?.hasError}
+          ref={categoriesRef}
           labelHidden={true}
-          {...getOverrideProps(overrides, "tags")}
+          {...getOverrideProps(overrides, "categories")}
         ></Autocomplete>
       </ArrayField>
       <Flex
