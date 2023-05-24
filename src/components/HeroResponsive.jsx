@@ -19,9 +19,11 @@ import {
   useBreakpointValue, View
 } from "@aws-amplify/ui-react";
 import {motion} from 'framer-motion'
+import { useRouter } from "next/router";
 
 export default function HeroResponsive(props) {
   const { overrides: overridesProp, ...restProp } = props;
+  const router = useRouter()
   const variants = [
     {
       overrides: {
@@ -241,6 +243,7 @@ export default function HeroResponsive(props) {
           ></Image> */}
           <Button
             // className="rounded p-3 text-gray-100"
+            onClick={()=>{router.push('/products')}}
             width="300px"
             height="unset"
             shrink="0"

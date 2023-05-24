@@ -1,6 +1,7 @@
 import React from "react";
 import MyBadgeList from "./MyBadgeList";
 import MyTagList from "./MyTagList";
+import RenderHTML from "./RenderHTML";
 
 export default function PostDetail({
   element,
@@ -25,7 +26,7 @@ export default function PostDetail({
             className="w-full object-cover lg:rounded"
             style={{ height: "28em" }}
           />
-          <div style={{textAlignLast: 'left'}} className="pt-4">
+          <div style={{ textAlignLast: "left" }} className="pt-4">
             <MyBadgeList
               resourceId={element?.id}
               categories={
@@ -39,96 +40,7 @@ export default function PostDetail({
 
         <div className="flex flex-col lg:flex-row lg:space-x-12">
           <div className="px-4 lg:px-0 mt-12 text-gray-700 text-lg leading-relaxed w-full lg:w-3/4">
-            <p className="pb-6">
-              Advantage old had otherwise sincerity dependent additions. It in
-              adapted natural hastily is justice. Six draw you him full not mean
-              evil. Prepare garrets it expense windows shewing do an. She
-              projection advantages resolution son indulgence. Part sure on no
-              long life am at ever. In songs above he as drawn to. Gay was
-              outlived peculiar rendered led six.
-            </p>
-
-            <p className="pb-6">
-              Difficulty on insensible reasonable in. From as went he they.
-              Preference themselves me as thoroughly partiality considered on in
-              estimating. Middletons acceptance discovered projecting so is so
-              or. In or attachment inquietude remarkably comparison at an. Is
-              surrounded prosperous stimulated am me discretion expression. But
-              truth being state can she china widow. Occasional preference fat
-              remarkably now projecting uncommonly dissimilar. Sentiments
-              projection particular companions interested do at my delightful.
-              Listening newspaper in advantage frankness to concluded unwilling.
-            </p>
-
-            <p className="pb-6">
-              Adieus except say barton put feebly favour him. Entreaties
-              unpleasant sufficient few pianoforte discovered uncommonly ask.
-              Morning cousins amongst in mr weather do neither. Warmth object
-              matter course active law spring six. Pursuit showing tedious
-              unknown winding see had man add. And park eyes too more him.
-              Simple excuse active had son wholly coming number add. Though all
-              excuse ladies rather regard assure yet. If feelings so prospect no
-              as raptures quitting.
-            </p>
-
-            <div className="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
-              Sportsman do offending supported extremity breakfast by listening.
-              Decisively advantages nor expression unpleasing she led met.
-              Estate was tended ten boy nearer seemed. As so seeing latter he
-              should thirty whence. Steepest speaking up attended it as. Made
-              neat an on be gave show snug tore.
-            </div>
-
-            <p className="pb-6">
-              Exquisite cordially mr happiness of neglected distrusts.
-              Boisterous impossible unaffected he me everything. Is fine loud
-              deal an rent open give. Find upon and sent spot song son eyes. Do
-              endeavor he differed carriage is learning my graceful. Feel plan
-              know is he like on pure. See burst found sir met think hopes are
-              marry among. Delightful remarkably new assistance saw literature
-              mrs favourable.
-            </p>
-
-            <h2 className="text-2xl text-gray-800 font-semibold mb-4 mt-4">
-              Uneasy barton seeing remark happen his has
-            </h2>
-
-            <p className="pb-6">
-              Guest it he tears aware as. Make my no cold of need. He been past
-              in by my hard. Warmly thrown oh he common future. Otherwise
-              concealed favourite frankness on be at dashwoods defective at.
-              Sympathize interested simplicity at do projecting increasing
-              terminated. As edward settle limits at in.
-            </p>
-
-            <p className="pb-6">
-              Dashwood contempt on mr unlocked resolved provided of of. Stanhill
-              wondered it it welcomed oh. Hundred no prudent he however smiling
-              at an offence. If earnestly extremity he he propriety something
-              admitting convinced ye. Pleasant in to although as if differed
-              horrible. Mirth his quick its set front enjoy hoped had there. Who
-              connection imprudence middletons too but increasing celebrated
-              principles joy. Herself too improve gay winding ask expense are
-              compact. New all paid few hard pure she.
-            </p>
-
-            <p className="pb-6">
-              Breakfast agreeable incommode departure it an. By ignorant at on
-              wondered relation. Enough at tastes really so cousin am of.
-              Extensive therefore supported by extremity of contented. Is
-              pursuit compact demesne invited elderly be. View him she roof tell
-              her case has sigh. Moreover is possible he admitted sociable
-              concerns. By in cold no less been sent hard hill.
-            </p>
-
-            <p className="pb-6">
-              Detract yet delight written farther his general. If in so bred at
-              dare rose lose good. Feel and make two real miss use easy.
-              Celebrated delightful an especially increasing instrument am.
-              Indulgence contrasted sufficient to unpleasant in in insensible
-              favourable. Latter remark hunted enough vulgar say man. Sitting
-              hearted on it without me.
-            </p>
+            <RenderHTML htmlContent={element?.content} />
             <div className="flex justify-between w-full mb-16">
               <p className="text-sm text-gray-500">{element?.author}</p>
               <p className="text-sm text-gray-500">
@@ -186,3 +98,208 @@ function getPostCategories(postCategories, categories, blogPostId) {
 
   return categoriesList;
 }
+
+<>
+  <p class="pb-6">
+    Las diferencias en los planes de estudio para el primer grado de primaria en
+    matemáticas entre México, Estados Unidos, Japón y España pueden variar según
+    las políticas educativas de cada país.
+  </p>
+  <p>
+    Los temarios son muy similares unos a otros, la principal diferencia es el
+    enfoque que se da al material y la profundidad con la que se ve. A
+    continuación, se presentan algunas diferencias generales que se pueden
+    observar:
+  </p>
+  <br />
+  <h4 class="semi-bold">México:</h4>
+  <br />
+  <div class="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
+    Se busca que los estudiantes adquieran una comprensión numérica básica , se
+    familiaricen con los conceptos de adición y sustracción, y desarrollen
+    habilidades de resolución de problemas sencillos
+  </div>
+  <div class="pb-6 flex flex-col">
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        En México, el plan de estudios para el primer grado de primaria en
+        matemáticas se basa en el Marco Curricular Común, el cual establece los
+        con tenidos y competencias a desarrollar.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        Se enfatiza el desarrollo de habilidades matemáticas básicas, como el
+        reconocimiento y escritura de números, contar, identificar formas
+        geométricas y resolver problemas sencillos.
+      </div>
+    </div>
+  </div>
+  <h4 class="semi-bold">Estados Unidos:</h4> <br />
+  <div class="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
+    Se busca que los estud iantes desarrollen habilidades de razonamiento lógico
+    , comunicación matemática y comprensión básica de las operaciones
+    matemáticas.
+  </div>
+  <div class="pb-6 flex flex-col">
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        En Estados Unidos, los planes de estudio para el primer grado de
+        primaria en matemáticas varían según los estados y los dist ritos
+        escolares.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        Los temas cubiertos suelen incluir el reconocimiento y escritura de
+        números, contar y agrupar objetos, patrones numéricos y geométricos
+        básicos, así como la resolución de problemas simples.
+      </div>
+    </div>
+  </div>
+  <h4 class="semi-bold">Japón:</h4> <br />
+  <div class="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
+    Se busca que los estudiantes adquieran una comprensión profunda de los
+    números y desarrollen habilidades de razonamiento matemático mediante
+    actividades prácticas y de resolución de problemas.
+  </div>
+  <div class="pb-6 flex flex-col">
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        En Japón, el plan de estudios para el primer grado de primaria en
+        matemáticas se basa en el Gakushū Shidō Yōryō, que establece los
+        objetivos y contenidos a desarrollar.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        Se enfatiza el desarrollo de habilidades de cálculo mental,
+        reconocimiento de números, contar, identificar formas geométricas
+        simples y resolver problemas básicos.
+      </div>
+    </div>
+  </div>
+  <h4 class="semi-bold">España:</h4> <br />
+  <div class="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
+    Se busca que los est udiantes desarrollen habilidades de cálculo ,
+    razonamiento matemático y comprensión básica de los conceptos matemáticos.
+  </div>
+  <div class="pb-6 flex flex-col">
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        En España, los planes de estudio para el primer grado de primaria en
+        matemáticas están regulados por el Ministerio de Educación y se est
+        ablecen los contenidos y objetivos a desarrollar.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        Los temas cubiertos suelen incluir el reconocimiento y escritura de
+        números, contar, operaciones básicas como sumas y restas, patrones
+        numéricos y resolución de problemas sencillos.
+      </div>
+    </div>
+  </div>
+  <p clas="pb-6">
+    Es importante tener en cuenta que estas son generalizaciones y que los
+    planes de estudio para el primer grado de primaria pueden variar según las
+    políticas educativas y las particularidades de cada región o distrito
+    escolar dentro de cada país.
+  </p>
+</>;
+
+<>
+  <p class="pb-6">
+    Saber contar hasta 10 es importante porque es una habilidad básica de
+    numeración que se utiliza en diversas situaciones cotidianas y académicas.
+    Aquí tienes algunas razones por las cuales es importante tener conocimiento
+    de los números hasta 10:
+  </p>
+
+  <div class="pb-6 flex flex-col">
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        Fundamentos matemáticos: aprender a contar hasta 10 es un paso necesario
+        para dominar conceptos matemáticos más difíciles. excelente base para
+        comprender las ideas de suma, resta y multiplicaciones relacionadas con
+        los números.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        Lenguaje y comunicación: con tar hasta 10 facilita la explicación de
+        cantidades y la comunicación de ideas. Puede expresar con mayor
+        precisión la cantidad de artículos, personas o lo que sea que esté
+        contando al poder reconocer y nombrar números.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+      <div>
+        Secuenciación y orden: conocer el orde n de los números es necesario
+        para poder contar hasta 10. Esto fomenta el desarrollo de habilidades de
+        identificación de patrones y secuenciación, que son cruciales para
+        estudiar matemáticas y otras materias.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+
+      <div>
+        Resolución de problemas: puede abordar y resolv er problemas de cantidad
+        sencillos contando hasta 1 0. Contar le permite saber el resultado, por
+        ejemplo, si tiene una cierta cantidad de objetos y desea agregar o
+        quitar alguno.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+
+      <div>
+        Desarrollo cognitivo: Contar hasta 1 0 ayuda en el desarrollo de
+        habilidades co gnitivas como el enfoque, la memoria y el razonamiento
+        lógico. Al contar, se utilizan diferentes partes del cerebro, lo que
+        fortalece las conexiones neuronales y fomenta una forma de pensar más
+        organizada.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+
+      <div>
+        Preparación para la escuela: saber contar hasta 1 0 es necesario para la
+        instrucción escolar formal. Numerosos ejercicios e ideas de matemáticas
+        elementales se basan en el sentido numérico hasta el 1 0. Los ejemplos
+        incluyen contar en orden, contrastar cantidades y resolver problemas
+        sencillos.
+      </div>
+    </div>
+    <div class="flex flex-row">
+      <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
+
+      <div>
+        Vida cotidia na: contar hasta 10 es útil para muchas tareas de la vida
+        cotidiana, incluida la organización de eventos, la programación del
+        tiempo, el seguimiento de instrucciones numéricas y el conteo de
+        artículos en una tienda.
+      </div>
+    </div>
+    <p class="pb-6">
+      En conclusión, la capacidad de contar ha sta 10 es una habilidad
+      fundamental que sienta una base sólida para el desarrollo del pensamiento
+      matemático, la comunicación, la resolución de problemas y el razonamiento
+      lógico. También es necesario realizar tareas cotidianas y prepararse
+      académicamente.
+    </p>
+  </div>
+</>;
