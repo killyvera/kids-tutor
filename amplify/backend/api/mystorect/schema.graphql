@@ -54,6 +54,7 @@ type BlogPost @model @auth(rules: [{allow: public}]) {
   author: String
   tags: String
   categories: [Category] @manyToMany(relationName: "BlogPostCategory")
+  short: String
 }
 
 type Users @model @auth(rules: [{allow: public}]) {

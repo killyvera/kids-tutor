@@ -203,6 +203,7 @@ export default function BlogPostUpdateForm(props) {
     author: "",
     tags: "",
     categories: [],
+    short: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [cover, setCover] = React.useState(initialValues.cover);
@@ -210,6 +211,7 @@ export default function BlogPostUpdateForm(props) {
   const [author, setAuthor] = React.useState(initialValues.author);
   const [tags, setTags] = React.useState(initialValues.tags);
   const [categories, setCategories] = React.useState(initialValues.categories);
+  const [short, setShort] = React.useState(initialValues.short);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = blogPostRecord
@@ -223,6 +225,7 @@ export default function BlogPostUpdateForm(props) {
     setCategories(cleanValues.categories ?? []);
     setCurrentCategoriesValue(undefined);
     setCurrentCategoriesDisplayValue("");
+    setShort(cleanValues.short);
     setErrors({});
   };
   const [blogPostRecord, setBlogPostRecord] = React.useState(blogPostModelProp);
@@ -275,6 +278,7 @@ export default function BlogPostUpdateForm(props) {
     author: [],
     tags: [],
     categories: [],
+    short: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -308,6 +312,7 @@ export default function BlogPostUpdateForm(props) {
           author,
           tags,
           categories,
+          short,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -420,6 +425,7 @@ export default function BlogPostUpdateForm(props) {
             content: modelFields.content,
             author: modelFields.author,
             tags: modelFields.tags,
+            short: modelFields.short,
           };
           promises.push(
             DataStore.save(
@@ -456,6 +462,7 @@ export default function BlogPostUpdateForm(props) {
               author,
               tags,
               categories,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -485,6 +492,7 @@ export default function BlogPostUpdateForm(props) {
               author,
               tags,
               categories,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -514,6 +522,7 @@ export default function BlogPostUpdateForm(props) {
               author,
               tags,
               categories,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.content ?? value;
@@ -543,6 +552,7 @@ export default function BlogPostUpdateForm(props) {
               author: value,
               tags,
               categories,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.author ?? value;
@@ -572,6 +582,7 @@ export default function BlogPostUpdateForm(props) {
               author,
               tags: value,
               categories,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.tags ?? value;
@@ -597,6 +608,7 @@ export default function BlogPostUpdateForm(props) {
               author,
               tags,
               categories: values,
+              short,
             };
             const result = onChange(modelFields);
             values = result?.categories ?? values;
@@ -664,6 +676,36 @@ export default function BlogPostUpdateForm(props) {
           {...getOverrideProps(overrides, "categories")}
         ></Autocomplete>
       </ArrayField>
+      <TextField
+        label="Short"
+        isRequired={false}
+        isReadOnly={false}
+        value={short}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              cover,
+              content,
+              author,
+              tags,
+              categories,
+              short: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.short ?? value;
+          }
+          if (errors.short?.hasError) {
+            runValidationTasks("short", value);
+          }
+          setShort(value);
+        }}
+        onBlur={() => runValidationTasks("short", short)}
+        errorMessage={errors.short?.errorMessage}
+        hasError={errors.short?.hasError}
+        {...getOverrideProps(overrides, "short")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

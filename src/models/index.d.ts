@@ -208,6 +208,7 @@ type EagerBlogPost = {
   readonly author?: string | null;
   readonly tags?: string | null;
   readonly categories?: (BlogPostCategory | null)[] | null;
+  readonly short?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -224,6 +225,7 @@ type LazyBlogPost = {
   readonly author?: string | null;
   readonly tags?: string | null;
   readonly categories: AsyncCollection<BlogPostCategory>;
+  readonly short?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

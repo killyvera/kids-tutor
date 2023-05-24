@@ -34,9 +34,7 @@ const MyPostCard = ({ element, type, categories, postCategories }) => {
         {element?.title}
       </Link>
       <p className="text-sm text-black">
-        {element?.description
-          ? element?.description?.slice(0, 150) + "..."
-          : element?.content.slice(0, 150) + "..."}
+        {element?.short} 
       </p>
       <MyTagList tagList={element?.tags} />
     </div>

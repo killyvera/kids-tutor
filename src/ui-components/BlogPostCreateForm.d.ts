@@ -20,6 +20,7 @@ export declare type BlogPostCreateFormInputValues = {
     author?: string;
     tags?: string;
     categories?: Category[];
+    short?: string;
 };
 export declare type BlogPostCreateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -28,6 +29,7 @@ export declare type BlogPostCreateFormValidationValues = {
     author?: ValidationFunction<string>;
     tags?: ValidationFunction<string>;
     categories?: ValidationFunction<Category>;
+    short?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BlogPostCreateFormOverridesProps = {
@@ -38,6 +40,7 @@ export declare type BlogPostCreateFormOverridesProps = {
     author?: PrimitiveOverrideProps<TextFieldProps>;
     tags?: PrimitiveOverrideProps<TextFieldProps>;
     categories?: PrimitiveOverrideProps<AutocompleteProps>;
+    short?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type BlogPostCreateFormProps = React.PropsWithChildren<{
     overrides?: BlogPostCreateFormOverridesProps | undefined | null;
