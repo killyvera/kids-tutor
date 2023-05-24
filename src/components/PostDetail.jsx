@@ -139,9 +139,8 @@ function getPostCategories(postCategories, categories, blogPostId) {
   </div>
   <h4 class="semi-bold">Estados Unidos:</h4> <br />
   <div class="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
-    Se busca que los estud iantes desarrollen habilidades de razonamiento lógico
-    , comunicación matemática y comprensión básica de las operaciones
-    matemáticas.
+    Se busca que los estudiantes desarrollen habilidades de razonamiento lógico,
+    comunicación matemática y comprensión básica de las operaciones matemáticas.
   </div>
   <div class="pb-6 flex flex-col">
     <div class="flex flex-row">
@@ -187,7 +186,7 @@ function getPostCategories(postCategories, categories, blogPostId) {
   </div>
   <h4 class="semi-bold">España:</h4> <br />
   <div class="border-l-4 border-gray-500 pl-4 mb-6 italic rounded">
-    Se busca que los est udiantes desarrollen habilidades de cálculo ,
+    Se busca que los estudiantes desarrollen habilidades de cálculo ,
     razonamiento matemático y comprensión básica de los conceptos matemáticos.
   </div>
   <div class="pb-6 flex flex-col">
@@ -208,7 +207,7 @@ function getPostCategories(postCategories, categories, blogPostId) {
       </div>
     </div>
   </div>
-  <p clas="pb-6">
+  <p class="pb-6">
     Es importante tener en cuenta que estas son generalizaciones y que los
     planes de estudio para el primer grado de primaria pueden variar según las
     políticas educativas y las particularidades de cada región o distrito
@@ -225,7 +224,7 @@ function getPostCategories(postCategories, categories, blogPostId) {
   </p>
 
   <div class="pb-6 flex flex-col">
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-6">
       <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
       <div>
         Fundamentos matemáticos: aprender a contar hasta 10 es un paso necesario
@@ -234,61 +233,61 @@ function getPostCategories(postCategories, categories, blogPostId) {
         los números.
       </div>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-6">
       <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
       <div>
-        Lenguaje y comunicación: con tar hasta 10 facilita la explicación de
+        Lenguaje y comunicación: contar hasta 10 facilita la explicación de
         cantidades y la comunicación de ideas. Puede expresar con mayor
         precisión la cantidad de artículos, personas o lo que sea que esté
         contando al poder reconocer y nombrar números.
       </div>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-6">
       <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
       <div>
-        Secuenciación y orden: conocer el orde n de los números es necesario
-        para poder contar hasta 10. Esto fomenta el desarrollo de habilidades de
+        Secuenciación y orden: conocer el orden de los números es necesario para
+        poder contar hasta 10. Esto fomenta el desarrollo de habilidades de
         identificación de patrones y secuenciación, que son cruciales para
         estudiar matemáticas y otras materias.
       </div>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-6">
       <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
 
       <div>
-        Resolución de problemas: puede abordar y resolv er problemas de cantidad
-        sencillos contando hasta 1 0. Contar le permite saber el resultado, por
+        Resolución de problemas: puede abordar y resolver problemas de cantidad
+        sencillos contando hasta 10. Contar le permite saber el resultado, por
         ejemplo, si tiene una cierta cantidad de objetos y desea agregar o
         quitar alguno.
       </div>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-6">
       <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
 
       <div>
-        Desarrollo cognitivo: Contar hasta 1 0 ayuda en el desarrollo de
-        habilidades co gnitivas como el enfoque, la memoria y el razonamiento
+        Desarrollo cognitivo: Contar hasta 10 ayuda en el desarrollo de
+        habilidades cognitivas como el enfoque, la memoria y el razonamiento
         lógico. Al contar, se utilizan diferentes partes del cerebro, lo que
         fortalece las conexiones neuronales y fomenta una forma de pensar más
         organizada.
       </div>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-6">
       <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
 
       <div>
-        Preparación para la escuela: saber contar hasta 1 0 es necesario para la
+        Preparación para la escuela: saber contar hasta 10 es necesario para la
         instrucción escolar formal. Numerosos ejercicios e ideas de matemáticas
-        elementales se basan en el sentido numérico hasta el 1 0. Los ejemplos
+        elementales se basan en el sentido numérico hasta el 10. Los ejemplos
         incluyen contar en orden, contrastar cantidades y resolver problemas
         sencillos.
       </div>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row pb-6">
       <div class="w-3 h-3 rounded-full bg-gray-500 mr-2 min-h-[12px] min-w-[12px] self-center"></div>
 
       <div>
-        Vida cotidia na: contar hasta 10 es útil para muchas tareas de la vida
+        Vida cotidiana: contar hasta 10 es útil para muchas tareas de la vida
         cotidiana, incluida la organización de eventos, la programación del
         tiempo, el seguimiento de instrucciones numéricas y el conteo de
         artículos en una tienda.
