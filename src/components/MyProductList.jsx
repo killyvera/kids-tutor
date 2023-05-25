@@ -7,7 +7,7 @@ import MyProductCard from "./MyProductCard";
 import MyProduct from "./MyProduct";
 
 function MyProductList({ list, categories, productCategories }) {
-  const [filter, setFilter]= useState('')
+  const [filter, setFilter]= useState('todos')
   const [firstPost, ...postList] = list;
   const [filteredProducts, setFilteredProducts] = useState(list);
 

@@ -48,7 +48,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
         <Marketplaces marketplaces={element?.marketplaces} />
 
       </div>
-      <MyTagList tagList={element?.tags} />
+      {/* <MyTagList tagList={element?.tags} /> */}
     </div>
   );
 };

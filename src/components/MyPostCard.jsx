@@ -36,7 +36,7 @@ const MyPostCard = ({ element, type, categories, postCategories }) => {
       <p className="text-sm text-black">
         {element?.short} 
       </p>
-      <MyTagList tagList={element?.tags} />
+      {/* <MyTagList tagList={element?.tags} /> */}
     </div>
   );
 };

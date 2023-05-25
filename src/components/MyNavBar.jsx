@@ -5,11 +5,11 @@ import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import MyAuth from "./MyAuth";
 import { motion } from "framer-motion";
-import { useRouter } from 'next/router';
-
+import { useRouter } from "next/router";
+import { Button } from "@aws-amplify/ui-react";
+import { Alert } from '@aws-amplify/ui-react';
 
 const MyNavBar = ({ allProducts, total, signOut }) => {
-  
   const [showMenu, setShowMenu] = useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const [active, setActive] = useState(false);
@@ -19,9 +19,9 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
     try {
       await Auth.signOut();
       // Redirigir al usuario a la página principal
-      router.push('/');
+      router.push("/");
     } catch (error) {
-      console.log('Error al cerrar sesión:', error);
+      console.log("Error al cerrar sesión:", error);
     }
   };
 
@@ -47,13 +47,15 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                         "
       >
         <div className="flex items-center flex-shrink-0 text-white mr-6">
+          <Link href={'/'} >
           <Image
             width={"100"}
-            height={"32"}
+            height={"21"}
             src="/logo.png"
             alt="Logo"
-            className="w-32"
+            className=""
           />
+          </Link>
         </div>
         <div className="block lg:hidden">
           <button
@@ -75,42 +77,28 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
           } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
         >
           <div className="text-sm lg:flex-grow text-center">
-            <Link
-              href="/"
-              className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl"
-            >
+            <Link href="/" className={styleButton}>
               Home
             </Link>
-            <Link
-              href="/free-resources"
-              className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl"
-            >
+
+            <Link href="/free-resources" className={styleButton}>
               Recursos Gratuitos
             </Link>
-            <Link
-              href="/products"
-              className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl"
-            >
+            <Link href="/products" className={styleButton}>
               Productos
             </Link>
             <Link
               href="https://www.youtube.com/@kidstutorstem"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl"
+              className={styleButton}
             >
               Youtube
             </Link>
-            <Link
-              href="/blog"
-              className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl"
-            >
+            <Link href="/blog" className={styleButton}>
               Blog
             </Link>
-            <Link
-              href="/contact"
-              className="text-lg block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-500 hover:px-2 rounded-xl"
-            >
+            <Link href="/contact" className={styleButton}>
               Contactanos
             </Link>
           </div>
@@ -118,28 +106,38 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             {authStatus === "authenticated" ? (
               <div className="flex flex-row">
                 <div className="flex flex-row scale-75">
-                <Image
-                  width={"32"}
-                  height={"32"}
-                  src="/cart.png"
-                  alt="Cart"
-                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
-                  onClick={() => onClose(setVisible, visible)}
-                />
-                <Image
-                  width={"32"}
-                  height={"32"}
-                  maxHeight={"24px"}
-                  src="/user.png"
-                  alt="User"
-                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-                />
+                  <Image
+                    width={"32"}
+                    height={"32"}
+                    src="/cart.png"
+                    alt="Cart"
+                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
+                    onClick={() => onClose(setVisible, visible)}
+                  />
+                  <Image
+                    width={"32"}
+                    height={"32"}
+                    maxHeight={"24px"}
+                    src="/user.png"
+                    alt="User"
+                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                  />
                 </div>
-                <button  className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110" onClick={handleSignOut} >Sign Out</button>
+                <button
+                  className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110"
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </button>
               </div>
             ) : (
               <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-                <Link href={"/login"}>Acceder / Regístrarse </Link>{" "}
+                <Link href={"/login"} className={styleButton}>
+                  Acceder
+                </Link>
+                <Link href={"/login"} className={styleButton}>
+                  Regístrarse
+                </Link>
               </p>
             )}
           </div>
@@ -162,10 +160,13 @@ const Cart = ({ visible }) => {
       transition={{ duration: 0.5 }}
     >
       <div>
-      <h1 className="">Mi Carrito</h1>
+        <h1 className="">Mi Carrito</h1>
       </div>
     </motion.div>
   );
 };
 
 export default MyNavBar;
+
+const styleButton =
+  "block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-[#5197ff] hover:px-2 rounded font-semibold hover:shadow-sm px-2 py-1 text-base";

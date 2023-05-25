@@ -18,7 +18,7 @@ const Marketplaces = ({ marketplaces }) => {
           <img
             src={`/${marketplaceIcons[key]}`}
             alt={key}
-            className="rounded transition hover:scale-105"
+            className="rounded transition hover:scale-125"
           />
         </a>
       )): <p className="bg-red-500 text-white px-4 py-2 rounded">AGOTADO <br/> No Disponible</p>}
