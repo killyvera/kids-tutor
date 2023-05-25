@@ -45,13 +45,7 @@ export async function getServerSideProps() {
   };
 }
 
-function Blog({
-  allProducts,
-  total,
-  postList,
-  categories,
-  postCategories,
-}) {
+function Blog({ allProducts, total, postList, categories, postCategories }) {
   console.log(postList, categories, postCategories);
   return (
     <>
@@ -65,14 +59,12 @@ function Blog({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <Layout allProducts={allProducts} total={total}>
-          <H1>Artículos de interés sobre educación y tu hijo.</H1>
-          <MyPosts
-            postList={postList}
-            categories={categories}
-            postCategories={postCategories}
-          />
-        </Layout>
+        <H1>Artículos de interés sobre educación y tu hijo.</H1>
+        <MyPosts
+          postList={postList}
+          categories={categories}
+          postCategories={postCategories}
+        />
       </main>
     </>
   );

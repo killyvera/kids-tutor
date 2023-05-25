@@ -51,14 +51,12 @@ const FreeResources = ({ resourceList, categories, resourceCategories }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className="text-center">
-          <Layout>
-            <H1>Descarga contenido exclusivo gratis.</H1>
-            <MyResources
-              resourceList={resourceList}
-              categories={categories}
-              resourceCategories={resourceCategories}
-            />
-          </Layout>
+          <H1>Descarga contenido exclusivo gratis.</H1>
+          <MyResources
+            resourceList={resourceList}
+            categories={categories}
+            resourceCategories={resourceCategories}
+          />
         </main>
       </>
     </MyAuth>
