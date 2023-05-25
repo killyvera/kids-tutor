@@ -113,7 +113,7 @@ export default function HeroResponsive(props) {
         {...getOverrideProps(overrides, "Frame 420")}
       >
         <Image
-          className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
+          className="hover:scale-125 transition duration-300"
           src="/logoFull.png"
           width="195px"
           height="182px"

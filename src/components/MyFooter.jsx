@@ -31,7 +31,7 @@ export default function MyFooter() {
               href="/free-resources"
               className="mr-4 hover:underline md:mr-6 "
             >
-              Recursos Gratis
+              Recursos Gratuitos
             </Link>
             <Link href="/contact" className="mr-4 hover:underline md:mr-6 ">
               Contacto
