@@ -13,7 +13,7 @@ const MyCardResource = ({ element, type, categories, resourceCategories }) => {
           height={"1"}
           width={"400"}
           src={element?.cover}
-          className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-105"
+          className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-[1.15]"
         />
       </Link>
       {/* <div className="flex justify-between w-full mb-2">
@@ -43,7 +43,7 @@ const MyCardResource = ({ element, type, categories, resourceCategories }) => {
       <p className="text-sm text-black">
         {element?.short.slice(0, 150)}
       </p>
-        <MyTagList   tagList={element?.tags}/>
+        {/* <MyTagList   tagList={element?.tags}/> */}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MyTagList from "./MyTagList";
+import AddToCart from "./AddToCart";
 // https://tailwindcomponents.com/component/product-detail
 
 const ProductDetail = ({ element, categories}) => {
@@ -112,12 +113,13 @@ const ProductDetail = ({ element, categories}) => {
             </div>
             <MyTagList tagList={element?.tags} />
             <Marketplaces marketplaces={element?.marketplaces} />
-            {/* <div className="flex place-content-between">
+            <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">
                 {"MXN " + element?.price + ".00"}
               </span>
               <span className="flex flex-row">
-                <StripeTest />
+                {/* <StripeTest /> */}
+                {/* <AddToCart element={element && element} /> */}
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
                     fill="currentColor"
@@ -131,7 +133,7 @@ const ProductDetail = ({ element, categories}) => {
                   </svg>
                 </button>
               </span>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>

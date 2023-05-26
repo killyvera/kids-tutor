@@ -5,6 +5,8 @@ import awsexports from "src/aws-exports.js";
 import { Authenticator } from "@aws-amplify/ui-react";
 import { useState } from "react";
 import { ThemeProvider } from "@aws-amplify/ui-react";
+import Layout from "@/components/Layout";
+import { CartProvider } from "@/context/cartContext";
 
 Amplify.configure({ ...awsexports, ssr: true });
 
@@ -16,7 +18,11 @@ export default function App({ Component, pageProps }) {
     <Authenticator.Provider>
       <ThemeProvider>
         {" "}
+        <CartProvider>
+        <Layout>
         <Component {...pageProps} allProducts={allProducts} total={total} />
+        </Layout>
+        </CartProvider>
       </ThemeProvider>
     </Authenticator.Provider>
   );

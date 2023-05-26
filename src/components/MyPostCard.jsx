@@ -13,7 +13,7 @@ const MyPostCard = ({ element, type, categories, postCategories }) => {
         height={"1"}
         width={"400"}
         src={element?.cover}
-        className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 btn-"
+        className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-[1.15]"
       />
       </Link>
       <div className="flex justify-between w-full mb-2">

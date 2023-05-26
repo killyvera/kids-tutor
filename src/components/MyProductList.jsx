@@ -90,23 +90,23 @@ function MyProductList({ list, categories, productCategories }) {
             Filtrar productos por:
           </div> */}
           <button
-            className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === 'todos' ? 'bg-blue-900 text-white' : ''} transition hover:scale-110`}
+            className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === 'todos' ? 'bg-blue-900 text-white' : ''} transition hover:scale-125`}
             onClick={() => handleFilterClick("todos")}
           >
             Todos
           </button>
-          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "physical" ? 'bg-blue-900 text-white' : ''} transition hover:scale-110`}
+          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "physical" ? 'bg-blue-900 text-white' : ''} transition hover:scale-125`}
           onClick={() => handleFilterClick("physical")}
           >
             Fisicos{" "}
           </button>
-          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "downloadable" ? 'bg-blue-900 text-white' : ''} transition hover:scale-110`}
+          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "downloadable" ? 'bg-blue-900 text-white' : ''} transition hover:scale-125`}
           onClick={() => handleFilterClick("downloadable")}
           >
             Descargables
           </button>
         </div>
-        <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16 active:bg-blue-900">
+        <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">
           {filteredProducts.map((element) => (
             <MyProductCard
               categories={categories}

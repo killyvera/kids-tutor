@@ -61,14 +61,12 @@ export default function Products({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <Layout allProducts={allProducts} total={total} >
           <H1>Productos Certificados por expertos a tu alcance.</H1>
           <MyProductList
             list={productList}
             categories={categories}
             productCategories={productCategories}
           />
-        </Layout>
       </main>
     </>
   );

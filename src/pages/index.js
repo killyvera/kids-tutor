@@ -45,26 +45,22 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <Layout allProducts={allProducts} total={total}>
-          <HeroResponsive />
+        <HeroResponsive />
 
-          <H1>
-            Colegios que usan nuestros métodos y productos de aprendizaje.
-          </H1>
-          <MyColleges collegesList={collegesList} />
-          {/* <MyCallToAction
+        <H1>Colegios que usan nuestros métodos y productos de aprendizaje.</H1>
+        <MyColleges collegesList={collegesList} />
+        {/* <MyCallToAction
               mainText={
                 "Alto Nivel Academico, gracias a la labor conjunta basada en resultados con nuestro equipo de expertos."
               }
             /> */}
-            
-            <MyProductFeatures />
-          <H1>
-            ¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros
-            clientes satisfechos tienen historias que compartir.
-          </H1>
-          <MyTestimonials testimonialList={testimonialList} />
-        </Layout>
+
+        <MyProductFeatures />
+        <H1>
+          ¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros
+          clientes satisfechos tienen historias que compartir.
+        </H1>
+        <MyTestimonials testimonialList={testimonialList} />
       </main>
     </>
   );
