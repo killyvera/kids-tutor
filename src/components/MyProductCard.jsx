@@ -16,7 +16,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
           height={"1"}
           width={"400"}
           src={element?.cover}
-          className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-105"
+          className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-[1.15]"
         />
       </Link>
       <MyBadgeList

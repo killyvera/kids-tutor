@@ -56,7 +56,7 @@ export default function TestimonialForm() {
   };
 
   return (
-    <div className="text-gray-900 py-10 pr-0 pl-0 bg-white m-5 rounded">
+    <div className="text-gray-900 py-10 pr-0 pl-0 bg-white m-5 rounded" style={{marginTop: "70px"}}>
       <section className="text-gray-800">
         <div className="flex flex-wrap">
           <div className="grow-0 shrink-0 basis-auto mb-12 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">

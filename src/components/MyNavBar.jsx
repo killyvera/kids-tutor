@@ -7,9 +7,12 @@ import MyAuth from "./MyAuth";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { Button } from "@aws-amplify/ui-react";
-import { Alert } from '@aws-amplify/ui-react';
+import { Alert } from "@aws-amplify/ui-react";
+import { useCartContext } from "@/context/cartContext";
 
 const MyNavBar = ({ allProducts, total, signOut }) => {
+  const { isCartOpen, toggleCart, cartItems } = useCartContext();
+
   const [showMenu, setShowMenu] = useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const [active, setActive] = useState(false);
@@ -26,6 +29,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
   };
 
   const handleMenuClick = () => setShowMenu(!showMenu);
+  console.log(cartItems)
 
   return (
     <>
@@ -47,14 +51,15 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                         "
       >
         <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <Link href={'/'} >
-          <Image
-            width={"100"}
-            height={"21"}
-            src="/logo.png"
-            alt="Logo"
-            className=""
-          />
+          <p>{cartItems?.length}</p>
+          <Link href={"/"}>
+            <Image
+              width={"100"}
+              height={"21"}
+              src="/logo.png"
+              alt="Logo"
+              className="transition hover:scale-110"
+            />
           </Link>
         </div>
         <div className="block lg:hidden">
@@ -103,34 +108,34 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             </Link>
           </div>
           <div className="">
-            {authStatus === "authenticated" ? (
-              <div className="flex flex-row">
-                <div className="flex flex-row scale-75">
-                  <Image
-                    width={"32"}
-                    height={"32"}
-                    src="/cart.png"
-                    alt="Cart"
-                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
-                    onClick={() => onClose(setVisible, visible)}
-                  />
-                  <Image
-                    width={"32"}
-                    height={"32"}
-                    maxHeight={"24px"}
-                    src="/user.png"
-                    alt="User"
-                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-                  />
-                </div>
-                <button
-                  className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110"
-                  onClick={handleSignOut}
-                >
-                  Sign Out
-                </button>
+            {/* {authStatus === "authenticated" ? ( */}
+            <div className="flex flex-row">
+              <div className="flex flex-row scale-75">
+                <Image
+                  width={"32"}
+                  height={"32"}
+                  src="/cart.png"
+                  alt="Cart"
+                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
+                  onClick={() => onClose(setVisible, visible)}
+                />
+                <Image
+                  width={"32"}
+                  height={"32"}
+                  maxHeight={"24px"}
+                  src="/user.png"
+                  alt="User"
+                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                />
               </div>
-            ) : (
+              <button
+                className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110"
+                onClick={handleSignOut}
+              >
+                Sign Out
+              </button>
+            </div>
+            {/* ) : (
               <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                 <Link href={"/login"} className={styleButton}>
                   Acceder
@@ -139,7 +144,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                   Regístrarse
                 </Link>
               </p>
-            )}
+            )} */}
           </div>
         </div>
       </nav>
