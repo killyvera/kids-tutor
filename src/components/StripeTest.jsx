@@ -52,6 +52,7 @@ const Cart = () => {
   };
 
   const addToCart = (product) => {
+    console.log(items)
     const existingItem = items.find((item) => item.id === product.id);
 
     if (existingItem) {

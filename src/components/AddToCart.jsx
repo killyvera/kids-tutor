@@ -1,11 +1,11 @@
-import { useCartContext } from "@/context/cartContext"
+import { useCartContext } from "@/context/CartContext"
 
-const AddToCart = (item) => {
-    console.log(item)
+const AddToCart = ({element}) => {
     const{addToCart} = useCartContext()
+    console.log(element)
   return (
 
-    <button onClick={()=>(addToCart(item))} >Add To Cart</button>
+    <button onClick={()=>(addToCart(element))} >Add To Cart</button>
   )
 }
 

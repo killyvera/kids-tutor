@@ -11,23 +11,23 @@ export const CartProvider = ({ children }) => {
   };
 
   const addToCart = (product) => {
-    const existingItem = items.find((item) => item.id === product.id);
+    const existingItem = cartItems.find((item) => item.id === product.id);
 
     if (existingItem) {
-      const updatedItems = items.map((item) => {
+      const updatedItems = cartItems.map((item) => {
         if (item.id === product.id) {
           return { ...item, quantity: item.quantity + 1 };
         }
         return item;
       });
-      setItems(updatedItems);
+      setCartItems(updatedItems);
     } else {
-      setItems([...items, { ...product, quantity: 1 }]);
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
     }
   };
 
   const removeCartItem = (cartItem) => {
-    setCartItems(prev => prev.filter(item => item._id !== cartItem._id));
+    setCartItems(prev => prev.filter(item => item.id !== cartItem.id));
   };
 
   const cartContextValue = {

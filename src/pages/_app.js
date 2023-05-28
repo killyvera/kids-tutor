@@ -6,7 +6,7 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { useState } from "react";
 import { ThemeProvider } from "@aws-amplify/ui-react";
 import Layout from "@/components/Layout";
-import { CartProvider } from "@/context/cartContext";
+import { CartProvider } from "@/context/CartContext";
 
 Amplify.configure({ ...awsexports, ssr: true });
 
