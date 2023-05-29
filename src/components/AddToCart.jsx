@@ -1,12 +1,14 @@
-import { useCartContext } from "@/context/CartContext"
+import { useCartContext } from "@/context/CartContext";
 
-const AddToCart = ({element}) => {
-    const{addToCart} = useCartContext()
-    console.log(element)
+const AddToCart = ({ element }) => {
+  const { addToCart, removeCartItem } = useCartContext();
+  console.log(element);
   return (
+    <>
+      <button className="bg-red-400 rounded p-1 text-white transition hover:scale-125 hover:bg-red-300" onClick={() => addToCart(element)}>Add To Cart</button>
+      {/* <button onClick={() => removeCartItem(element)}>Remove</button> */}
+    </>
+  );
+};
 
-    <button onClick={()=>(addToCart(element))} >Add To Cart</button>
-  )
-}
-
-export default AddToCart
+export default AddToCart;

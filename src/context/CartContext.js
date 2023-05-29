@@ -26,8 +26,27 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const removeCartItem = (cartItem) => {
-    setCartItems(prev => prev.filter(item => item.id !== cartItem.id));
+  const removeCartItem = (product) => {
+    const existingItem = cartItems.find((item) => item.id === product.id);
+
+    if (existingItem) {
+      if (existingItem.quantity === 1) {
+        const updatedItems = cartItems.filter((item) => item.id !== product.id);
+        setCartItems(updatedItems);
+      } else {
+        const updatedItems = cartItems.map((item) => {
+          if (item.id === product.id) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
+          return item;
+        });
+        setCartItems(updatedItems);
+      }
+    }
+  };
+
+  const getTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   const cartContextValue = {
@@ -36,6 +55,7 @@ export const CartProvider = ({ children }) => {
     isCartOpen,
     addToCart,
     removeCartItem,
+    getTotalPrice
   };
 
   return <CartContext.Provider value={cartContextValue}>{children}</CartContext.Provider>;

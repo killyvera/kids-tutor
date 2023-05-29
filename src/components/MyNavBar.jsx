@@ -10,6 +10,8 @@ import { Button } from "@aws-amplify/ui-react";
 import { Alert } from "@aws-amplify/ui-react";
 import { useCartContext } from "@/context/CartContext";
 
+import MyCart from "./MyCart";
+
 const MyNavBar = ({ allProducts, total, signOut }) => {
   const { isCartOpen, toggleCart, cartItems } = useCartContext();
 
@@ -33,7 +35,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
   
   return (
     <>
-      <Cart visible={visible} />
+      <MyCart visible={visible} />
       <nav
         className="
                      bg-red-400
