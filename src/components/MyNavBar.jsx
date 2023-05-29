@@ -8,7 +8,9 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { Button } from "@aws-amplify/ui-react";
 import { Alert } from "@aws-amplify/ui-react";
-import { useCartContext } from "@/context/cartContext";
+import { useCartContext } from "@/context/CartContext";
+
+import MyCart from "./MyCart";
 
 const MyNavBar = ({ allProducts, total, signOut }) => {
   const { isCartOpen, toggleCart, cartItems } = useCartContext();
@@ -30,10 +32,10 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
 
   const handleMenuClick = () => setShowMenu(!showMenu);
   console.log(cartItems)
-
+  
   return (
     <>
-      <Cart visible={visible} />
+      <MyCart visible={visible} />
       <nav
         className="
                      bg-red-400
@@ -122,7 +124,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                 <Image
                   width={"32"}
                   height={"32"}
-                  maxHeight={"24px"}
+                  // maxHeight={"24px"}
                   src="/user.png"
                   alt="User"
                   // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"

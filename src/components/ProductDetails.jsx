@@ -119,7 +119,7 @@ const ProductDetail = ({ element, categories}) => {
               </span>
               <span className="flex flex-row">
                 {/* <StripeTest /> */}
-                {/* <AddToCart element={element && element} /> */}
+                <AddToCart element={element} />
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
                     fill="currentColor"
