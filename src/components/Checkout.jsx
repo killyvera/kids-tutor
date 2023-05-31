@@ -9,8 +9,9 @@ const Checkout = async (cartItems) => {
       currency: "mxn",
       product_data: {
         name: item.name,
+        description: item.short,
         // description: item.description,
-        images: [item.cover],
+        images: [item.images.cover],
       },
       unit_amount: item.price * 100,
     },
@@ -34,7 +35,7 @@ const Checkout = async (cartItems) => {
 const CheckoutButton=()=>{
     const { cartItems, addToCart, removeCartItem, getTotalPrice } = useCartContext();
     return(
-        <button className="bg-red-400 rounded p-1 text-white transition hover:scale-125 hover:bg-red-300 text-sm" onClick={()=>Checkout(cartItems)}>Pagar</button>
+        <button className="primary-button rounded p-1 text-white transition hover:scale-110 text-sm w-full" onClick={()=>Checkout(cartItems)}>Pagar</button>
     )
 }
 export default CheckoutButton;

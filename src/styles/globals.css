@@ -13,6 +13,20 @@
 .amplify-button--primary {
   background-color: #5197ff;
 }
+
+.primary-button {
+  background-color: #5197ff;
+}
+
+.primary-button {
+  background-color: #5197ff;
+}
+
+.primary-button:hover {
+  background-color: #63a2ff;
+}
+
+
 .amplify-button--primary:hover {
   background-color: #63a2ff;
   scale: 1.1;

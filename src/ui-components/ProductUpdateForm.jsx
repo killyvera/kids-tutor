@@ -216,6 +216,7 @@ export default function ProductUpdateForm(props) {
     images: "",
     type: "",
     tags: "",
+    short: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -239,6 +240,7 @@ export default function ProductUpdateForm(props) {
   const [images, setImages] = React.useState(initialValues.images);
   const [type, setType] = React.useState(initialValues.type);
   const [tags, setTags] = React.useState(initialValues.tags);
+  const [short, setShort] = React.useState(initialValues.short);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = productRecord
@@ -276,6 +278,7 @@ export default function ProductUpdateForm(props) {
         : JSON.stringify(cleanValues.type)
     );
     setTags(cleanValues.tags);
+    setShort(cleanValues.short);
     setErrors({});
   };
   const [productRecord, setProductRecord] = React.useState(productModelProp);
@@ -340,6 +343,7 @@ export default function ProductUpdateForm(props) {
     images: [{ type: "JSON" }],
     type: [{ type: "JSON" }],
     tags: [],
+    short: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -385,6 +389,7 @@ export default function ProductUpdateForm(props) {
           images,
           type,
           tags,
+          short,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -509,6 +514,7 @@ export default function ProductUpdateForm(props) {
             images: modelFields.images,
             type: modelFields.type,
             tags: modelFields.tags,
+            short: modelFields.short,
           };
           promises.push(
             DataStore.save(
@@ -557,6 +563,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -598,6 +605,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -639,6 +647,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.sku ?? value;
@@ -684,6 +693,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -729,6 +739,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.stock ?? value;
@@ -770,6 +781,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.dimensions ?? value;
@@ -815,6 +827,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.weight ?? value;
@@ -860,6 +873,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -901,6 +915,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -938,6 +953,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             values = result?.categories ?? values;
@@ -1032,6 +1048,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.top ?? value;
@@ -1073,6 +1090,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.bottom ?? value;
@@ -1114,6 +1132,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.front ?? value;
@@ -1155,6 +1174,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.back ?? value;
@@ -1196,6 +1216,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.marketplaces ?? value;
@@ -1237,6 +1258,7 @@ export default function ProductUpdateForm(props) {
               images: value,
               type,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -1278,6 +1300,7 @@ export default function ProductUpdateForm(props) {
               images,
               type: value,
               tags,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -1319,6 +1342,7 @@ export default function ProductUpdateForm(props) {
               images,
               type,
               tags: value,
+              short,
             };
             const result = onChange(modelFields);
             value = result?.tags ?? value;
@@ -1332,6 +1356,48 @@ export default function ProductUpdateForm(props) {
         errorMessage={errors.tags?.errorMessage}
         hasError={errors.tags?.hasError}
         {...getOverrideProps(overrides, "tags")}
+      ></TextField>
+      <TextField
+        label="Short"
+        isRequired={false}
+        isReadOnly={false}
+        value={short}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              categories,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces,
+              images,
+              type,
+              tags,
+              short: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.short ?? value;
+          }
+          if (errors.short?.hasError) {
+            runValidationTasks("short", value);
+          }
+          setShort(value);
+        }}
+        onBlur={() => runValidationTasks("short", short)}
+        errorMessage={errors.short?.errorMessage}
+        hasError={errors.short?.hasError}
+        {...getOverrideProps(overrides, "short")}
       ></TextField>
       <Flex
         justifyContent="space-between"
