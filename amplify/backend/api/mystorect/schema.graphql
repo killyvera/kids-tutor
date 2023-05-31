@@ -112,5 +112,6 @@ type Product @model @auth(rules: [{allow: public}]) {
   images: AWSJSON
   type: AWSJSON
   tags: String
+  short: String
 }
  

@@ -1,32 +1,61 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useCartContext } from "@/context/CartContext";
 import Image from "next/image";
 import CounterItems from "./CounterItems";
 import Checkout from "./Checkout";
 
-const MyCart = ({ visible }) => {
-  const { cartItems, addToCart, removeCartItem, getTotalPrice } =
+const MyCart = () => {
+  const { cartItems, addToCart, removeCartItem, getTotalPrice, isCartOpen, toggleCart } =
     useCartContext();
 
   console.log(getTotalPrice());
   return (
     <motion.div
-      className={`fixed z-50 top-12 right-0 flex flex-col bg-white`}
+      className={`fixed z-50 top-12 right-0 flex flex-col bg-white p-2 rounded shadow`}
       initial={{ x: "100%" }}
-      animate={{ x: visible ? 0 : "200%" }}
+      animate={{ x: cartItems.length >= 1 && isCartOpen ? 0 : "200%" }}
       transition={{ duration: 0.5 }}
     >
-      <div className="flex flex-col p-1">
-        <h1 className="text-sm">My Cart</h1>
+      <div class="flex items-start justify-between">
+        <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">
+          Mi Carrito
+        </h2>
+        <div class="ml-3 flex h-7 items-center">
+          <button
+            onClick={() => toggleCart()}
+            type="button"
+            class="-m-2 p-2 text-gray-400 hover:text-gray-500"
+          >
+            <span class="sr-only">Close panel</span>
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
       <div className="space-y-1">
         {cartItems?.map((item) => (
-          <CartItem key={item?.id} item={item} />
+          <CartItem2 key={item?.id} item={item} />
         ))}
       </div>
-      <div className="flex flex-row items-center justify-between pt-3 m-3">
+      {/* <CartItem2 /> */}
+      <div className="flex flex-col items-center justify-between pt-3 m-3">
+        <div className="font-semibold flex flex-row justify-between" >
+          <p className="" >TOTAL:</p>
         <p>{"MXN " + getTotalPrice()}</p>
+        </div>
         <Checkout />
       </div>
     </motion.div>
@@ -53,10 +82,55 @@ const CartItem = ({ item }) => {
       />
       <div>
         <p className="text-xs">{item?.name}</p>
-        <div className="flex flex-col" >
+        <div className="flex flex-col">
           <CounterItems item={item} />
         </div>
       </div>
     </motion.div>
+  );
+};
+
+const CartItem2 = ({ item }) => {
+  const { cartItems, addToCart, removeCartItem, getTotalPrice, isCartOpen } =
+    useCartContext();
+  return (
+    <div className="flex flex-row">
+      <div class="flex py-6">
+        <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+          <Image
+            src={item?.images.cover}
+            alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
+            class="h-full w-full object-cover object-center"
+            width={96}
+            height={96}
+          />
+        </div>
+
+        <div class="ml-4 flex flex-1 flex-col">
+          <div>
+            <div class="flex justify-between text-base font-medium text-gray-900">
+              <h3>
+                <a href="#">{item?.name}</a>
+              </h3>
+              <p class="ml-4">MXN {item?.price}</p>
+            </div>
+            <p class="mt-1 text-sm text-gray-500">{item?.short}</p>
+          </div>
+          <div class="flex flex-1 items-end justify-between text-sm">
+            <p class="text-gray-500">Qty 1</p>
+
+            <div class="flex">
+              <button
+                onClick={() => removeCartItem(item)}
+                type="button"
+                class="font-medium text-indigo-600 hover:text-indigo-500 text-xs"
+              >
+                Quitar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };

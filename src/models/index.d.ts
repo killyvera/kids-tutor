@@ -384,6 +384,7 @@ type EagerProduct = {
   readonly images?: string | null;
   readonly type?: string | null;
   readonly tags?: string | null;
+  readonly short?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -412,6 +413,7 @@ type LazyProduct = {
   readonly images?: string | null;
   readonly type?: string | null;
   readonly tags?: string | null;
+  readonly short?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

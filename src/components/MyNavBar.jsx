@@ -31,8 +31,8 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
   };
 
   const handleMenuClick = () => setShowMenu(!showMenu);
-  console.log(cartItems)
-  
+  console.log(cartItems);
+
   return (
     <>
       <MyCart visible={visible} />
@@ -53,7 +53,6 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                         "
       >
         <div className="flex items-center flex-shrink-0 text-white mr-6">
-          <p>{cartItems?.length}</p>
           <Link href={"/"}>
             <Image
               width={"100"}
@@ -113,14 +112,22 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             {/* {authStatus === "authenticated" ? ( */}
             <div className="flex flex-row">
               <div className="flex flex-row scale-75">
-                <Image
-                  width={"32"}
-                  height={"32"}
-                  src="/cart.png"
-                  alt="Cart"
-                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
-                  onClick={() => onClose(setVisible, visible)}
-                />
+                <div className="relative transition hover:scale-125">
+                  {cartItems?.length >= 1 && (
+                    <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
+                      {cartItems?.length}
+                    </div>
+                  )}
+                  <Image
+                    className="cursor-pointer"
+                    width={"32"}
+                    height={"32"}
+                    src="/cart.png"
+                    alt="Cart"
+                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
+                    onClick={() => toggleCart()}
+                  />
+                </div>
                 <Image
                   width={"32"}
                   height={"32"}
