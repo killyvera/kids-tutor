@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const socialIcons = [
   {
@@ -24,10 +25,12 @@ const SocialMediaIcons = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
+          <Image
             src={icon.icon}
             alt={icon.name}
-            className="h-50 w-70 object-contain rounded transition hover:scale-125"
+            height={50}
+            width={50}
+            className="scale-75 m-w-object-contain rounded transition hover:scale-100"
           />
         </a>
       ))}

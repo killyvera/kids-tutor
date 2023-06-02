@@ -4,7 +4,7 @@ const PrintableDownload = ({ a4Url, cartaUrl }) => {
   return (
       <div className="flex justify-center space-x-4 pb-5">
         <a href={a4Url} download>
-          <button className=" flex flex-row px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button className=" flex flex-row px-4 py-2 primary-button text-white rounded-md transition hover:scale-[1.15]">
           <Image
               src="/folio.png"
               alt="Icono de formato A4"
@@ -16,7 +16,7 @@ const PrintableDownload = ({ a4Url, cartaUrl }) => {
           </button>
         </a>
         <a href={cartaUrl} download>
-          <button className="flex flex-row px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+          <button className="flex flex-row px-4 py-2 primary-button text-white rounded-md transition hover:scale-[1.15]">
           <Image
               src="/folio.png"
               alt="Icono de formato A4"

@@ -41,8 +41,10 @@ export async function getStaticProps(context) {
 export default function resource({ resource, categories }) {
   console.log(categories, resource);
   return (
-    <Layout>
-      <ResourceDetail element={resource} type={"free-resources"} categories={categories} />
-    </Layout>
+    <ResourceDetail
+      element={resource}
+      type={"free-resources"}
+      categories={categories}
+    />
   );
 }

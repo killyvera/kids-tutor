@@ -44,7 +44,7 @@ export default function HeroResponsive(props) {
       overrides: {
         logo: {},
         p1: { width: "unset", alignSelf: "stretch" },
-        p2: { width: "unset", height: "125px", alignSelf: "stretch" },
+        p2: { width: "unset", height: "", alignSelf: "stretch" },
         acreditationImage1: {},
         acreditationImage2: {},
         acreditationImage3: {},
@@ -145,16 +145,16 @@ export default function HeroResponsive(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Descubre la Educación en diversión con Kids Tutor"
+          children="Haz de la educación una diversión."
           {...getOverrideProps(overrides, "p1")}
         ></Text>
         <div className="bg-red-400 bg-opacity-10 backdrop-blur-[2px]" >
         <Text
         backgroundColor=""
         borderRadius="3px"
-          fontFamily="Lato"
+          fontFamily=""
           fontSize="25px"
-          fontWeight="500"
+          fontWeight="450"
           color="white"
           lineHeight="33.25407028198242px"
           textAlign="center"
@@ -162,15 +162,15 @@ export default function HeroResponsive(props) {
           direction="column"
           justifyContent="unset"
           letterSpacing="-0.75px"
-          width="743px"
-          height="75px"
+          width=""
+          height=""
           gap="unset"
           alignItems="unset"
           shrink="0"
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="¡Haz que el aprendizaje de tus hijos sea divertido y efectivo hoy mismo! Compra nuestros juegos didácticos y juegos de mesa."
+          children="Logra que tus hijos aprendan ciencia y matemáticas jugando."
           {...getOverrideProps(overrides, "p2")}
         ></Text>
         </div>
