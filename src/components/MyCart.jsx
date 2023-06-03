@@ -105,7 +105,7 @@ const CartItem2 = ({ item }) => {
     useEffect(() => {
       const fetchImage = async () => {
         try {
-          const file = await Storage.get("images/MATH-01.webp", {
+          const file = await Storage.get(item.images.cover, {
             level: "public",
           });
           setImage(file);
