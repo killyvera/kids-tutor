@@ -7,6 +7,7 @@ import { Resources, ResourcesCategory, Category } from "@/models";
 import { serializeModel } from "@aws-amplify/datastore/ssr";
 import Layout from "@/components/Layout";
 import MyAuth from "@/components/MyAuth";
+import { Auth } from "aws-amplify";
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
@@ -14,6 +15,14 @@ export async function getServerSideProps() {
   const resourceCategories = await DataStore.query(ResourcesCategory);
   const categoryIdsSet = new Set(resourceCategories.map((pc) => pc.categoryId));
   const categoryIds = [...categoryIdsSet];
+
+  let userId;
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+    userId = user.id;
+  } catch (err) {
+    userId = err.message; // Store the error message in userId
+  }
 
   const cachedCategories = {};
 
@@ -28,7 +37,7 @@ export async function getServerSideProps() {
       }
     })
   );
-
+  console.log(userId);
   return {
     props: {
       resourceList: serializeModel(resourceList),
@@ -42,7 +51,7 @@ const FreeResources = ({ resourceList, categories, resourceCategories }) => {
   console.log(resourceList, categories, resourceCategories);
 
   return (
-    // <MyAuth>
+    <MyAuth>
       <>
         <Head>
           <title>Create Next App</title>
@@ -59,7 +68,7 @@ const FreeResources = ({ resourceList, categories, resourceCategories }) => {
           />
         </main>
       </>
-    // </MyAuth>
+    </MyAuth>
   );
 };
 
