@@ -109,7 +109,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             </Link>
           </div>
           <div className="">
-            {/* {authStatus === "authenticated" ? ( */}
+            {authStatus === "authenticated" ? (
             <div className="flex flex-row">
               <div className="flex flex-row scale-75">
                 <div className="relative transition hover:scale-125">
@@ -144,7 +144,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                 Sign Out
               </button>
             </div>
-            {/* ) : (
+            ) : (
               <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                 <Link href={"/login"} className={styleButton}>
                   Acceder
@@ -153,30 +153,11 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                   Regístrarse
                 </Link>
               </p>
-            )} */}
+            )}
           </div>
         </div>
       </nav>
     </>
-  );
-};
-
-const onClose = (setVisible, visible) => {
-  setVisible(!visible);
-};
-
-const Cart = ({ visible }) => {
-  return (
-    <motion.div
-      className={`fixed z-50 top-12 right-0 flex flex-col`}
-      initial={{ x: "100%" }}
-      animate={{ x: visible ? 0 : "200%" }}
-      transition={{ duration: 0.5 }}
-    >
-      <div>
-        <h1 className="">Mi Carrito</h1>
-      </div>
-    </motion.div>
   );
 };
 
