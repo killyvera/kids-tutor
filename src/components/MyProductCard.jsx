@@ -4,18 +4,38 @@ import MyBadgeList from "./MyBadgeList";
 import titleToLink from "@/helpers/titleToLink";
 import Marketplaces from "./Marketplaces";
 import MyTagList from "./MyTagList";
+import { useState,useEffect} from "react";
+import { Storage } from "aws-amplify";
 
 const MyProductCard = ({ element, type, categories, productCategories }) => {
+  const [image, setImage] = useState("")
   // console.log(element, type, categories, productCategories);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const file = await Storage.get("images/products/KT-NUM-20.cover.webp", {
+          level: "public",
+        });
+        setImage(file);
+      } catch (error) {
+        console.log("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+  console.log(image && image);
+
   console.log(element)
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Link href={"/" + type + "/" + element?.id} className="w-full">
         <Image
           alt=" image description from backend"
-          height={"1"}
-          width={"400"}
-          src={element?.cover}
+          height={400}
+          width={400}
+          src={image}
           className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-[1.15]"
         />
       </Link>
@@ -34,7 +54,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
         {element?.name}
       </Link>
       <p className="text-sm text-black">
-        {element?.description.slice(0, 150) + "..."}
+        {element?.short}
       </p>
       <div className="self-center w-full" >
       {/* <div className="flex flex-row py-10 justify-between items-center">

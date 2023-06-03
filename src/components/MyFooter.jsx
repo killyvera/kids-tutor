@@ -1,6 +1,7 @@
 import React from "react";
 import SocialMediaIcons from "./SocialMediaIcons";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function MyFooter() {
   return (
@@ -8,9 +9,11 @@ export default function MyFooter() {
       <div className="w-full container mx-auto p-4 md:px-6 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <Link href="/" className="flex items-center mb-4 sm:mb-0">
-            <img
+            <Image
+            width={50}
+            height={50}
               src="/logoFull.png"
-              className="h-12 mr-3"
+              className=" mr-3 transition hover:scale-125"
               alt="Kids Tutor Logo"
             />
             <span className="text-white self-center text-2xl font-semibold whitespace-nowrap dark:text-white">

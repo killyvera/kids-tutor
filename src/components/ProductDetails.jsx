@@ -9,32 +9,65 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MyTagList from "./MyTagList";
 import AddToCart from "./AddToCart";
+import { Storage } from "@aws-amplify/storage";
+import { useEffect, useState } from "react";
+
 // https://tailwindcomponents.com/component/product-detail
 
-const ProductDetail = ({ element, categories}) => {
+const ProductDetail = ({ element, categories }) => {
   const settings = {
     dots: true, // Habilitar miniaturas
     // Resto de configuraciones del carousel
   };
   console.log(element?.marketplaces);
+
+  const [image, setImage] = useState("");
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const file = await Storage.get("images/products/KT-NUM-20.cover.webp", {
+          level: "public",
+        });
+        setImage(file);
+      } catch (error) {
+        console.log("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+  console.log(image && image);
+
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <Slider {...settings} className="lg:w-1/2 rounded w-full">
             <div>
-              <img
+              <Image
+                width={640}
+                height={640}
                 className="w-full h-full object-cover"
-                src={element?.cover}
+                src={image}
+                alt="alt product text"
               />
             </div>
             <div>
-              <img className="w-full h-full object-cover" src={element?.top} />
+              <Image
+                width={640}
+                height={640}
+                className="w-full h-full object-cover"
+                src={element?.top}
+                alt=""
+              />
             </div>
             <div>
-              <img
+              <Image
+                width={640}
+                height={640}
                 className="w-full h-full object-cover"
                 src={element?.bottom}
+                alt=""
               />
             </div>
           </Slider>

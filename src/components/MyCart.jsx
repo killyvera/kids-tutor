@@ -1,13 +1,20 @@
-import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useCartContext } from "@/context/CartContext";
 import Image from "next/image";
 import CounterItems from "./CounterItems";
 import Checkout from "./Checkout";
+import { Storage } from "@aws-amplify/storage";
+import { useEffect, useState, useRef } from "react";
 
 const MyCart = () => {
-  const { cartItems, addToCart, removeCartItem, getTotalPrice, isCartOpen, toggleCart } =
-    useCartContext();
+  const {
+    cartItems,
+    addToCart,
+    removeCartItem,
+    getTotalPrice,
+    isCartOpen,
+    toggleCart,
+  } = useCartContext();
 
   console.log(getTotalPrice());
   return (
@@ -52,9 +59,9 @@ const MyCart = () => {
       </div>
       {/* <CartItem2 /> */}
       <div className="flex flex-col items-center justify-between pt-3 m-3">
-        <div className="font-semibold flex flex-row justify-between" >
-          <p className="" >TOTAL:</p>
-        <p>{"MXN " + getTotalPrice()}</p>
+        <div className="font-semibold flex flex-row justify-between">
+          <p className="">TOTAL:</p>
+          <p>{"MXN " + getTotalPrice()}</p>
         </div>
         <Checkout />
       </div>
@@ -91,14 +98,32 @@ const CartItem = ({ item }) => {
 };
 
 const CartItem2 = ({ item }) => {
+  const [image, setImage] = useState("");
   const { cartItems, addToCart, removeCartItem, getTotalPrice, isCartOpen } =
     useCartContext();
+
+    useEffect(() => {
+      const fetchImage = async () => {
+        try {
+          const file = await Storage.get(item.images.cover, {
+            level: "public",
+          });
+          setImage(file);
+        } catch (error) {
+          console.log("Error fetching image:", error);
+        }
+      };
+  
+      fetchImage();
+    }, []);
+    console.log(image && image);
+
   return (
     <div className="flex flex-row">
       <div class="flex py-6">
         <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
           <Image
-            src={item?.images.cover}
+            src={image}
             alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
             class="h-full w-full object-cover object-center"
             width={96}
