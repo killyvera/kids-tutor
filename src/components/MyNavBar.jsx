@@ -13,7 +13,7 @@ import { useCartContext } from "@/context/CartContext";
 import MyCart from "./MyCart";
 
 const MyNavBar = ({ allProducts, total, signOut }) => {
-  const { isCartOpen, toggleCart, cartItems } = useCartContext();
+  const { isCartOpen, toggleCart, cartItems, asset } = useCartContext();
 
   const [showMenu, setShowMenu] = useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
@@ -32,7 +32,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
 
   const handleMenuClick = () => setShowMenu(!showMenu);
   console.log(cartItems);
-
+  console.log(asset)
   return (
     <>
       <MyCart visible={visible} />
@@ -110,40 +110,40 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
           </div>
           <div className="">
             {authStatus === "authenticated" ? (
-            <div className="flex flex-row">
-              <div className="flex flex-row scale-75">
-                <div className="relative transition hover:scale-125">
-                  {cartItems?.length >= 1 && (
-                    <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
-                      {cartItems?.length}
-                    </div>
-                  )}
+              <div className="flex flex-row">
+                <div className="flex flex-row scale-75">
+                  <div className="relative transition hover:scale-125">
+                    {cartItems?.length >= 1 && (
+                      <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
+                        {cartItems?.length}
+                      </div>
+                    )}
+                    <Image
+                      className="cursor-pointer"
+                      width={"32"}
+                      height={"32"}
+                      src="/cart.png"
+                      alt="Cart"
+                      // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
+                      onClick={() => toggleCart()}
+                    />
+                  </div>
                   <Image
-                    className="cursor-pointer"
                     width={"32"}
                     height={"32"}
-                    src="/cart.png"
-                    alt="Cart"
-                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
-                    onClick={() => toggleCart()}
+                    // maxHeight={"24px"}
+                    src="/user.png"
+                    alt="User"
+                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
                   />
                 </div>
-                <Image
-                  width={"32"}
-                  height={"32"}
-                  // maxHeight={"24px"}
-                  src="/user.png"
-                  alt="User"
-                  // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-                />
+                <button
+                  className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110"
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </button>
               </div>
-              <button
-                className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110"
-                onClick={handleSignOut}
-              >
-                Sign Out
-              </button>
-            </div>
             ) : (
               <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                 <Link href={"/login"} className={styleButton}>
