@@ -51,7 +51,7 @@ const FreeResources = ({ resourceList, categories, resourceCategories }) => {
   console.log(resourceList, categories, resourceCategories);
 
   return (
-    <MyAuth>
+    // <MyAuth>
       <>
         <Head>
           <title>Create Next App</title>
@@ -68,7 +68,7 @@ const FreeResources = ({ resourceList, categories, resourceCategories }) => {
           />
         </main>
       </>
-    </MyAuth>
+    // </MyAuth>
   );
 };
 

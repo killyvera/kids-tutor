@@ -6,20 +6,20 @@ const Checkout = async (cartItems) => {
   console.log(cartItems);
   const lineItems = await Promise.all(
     cartItems.map(async (item) => {
-      const imageUrl = await Storage.get(item.images.cover, {
+      const imageUrl = await Storage.get(item?.images.cover, {
         level: "public",
       });
       return {
         price_data: {
           currency: "mxn",
           product_data: {
-            name: item.name,
-            description: item.short,
-            images: [imageUrl],
+            name: item?.name,
+            description: item?.short,
+            // images: [imageUrl],
           },
-          unit_amount: item.price * 100,
+          unit_amount: item?.price * 100,
         },
-        quantity: item.quantity,
+        quantity: item?.quantity,
       };
     })
   );
