@@ -102,10 +102,10 @@ const CartItem2 = ({ item }) => {
   const { cartItems, addToCart, removeCartItem, getTotalPrice, isCartOpen } =
     useCartContext();
 
-    useEffect(() => {
+    useEffect((item) => {
       const fetchImage = async () => {
         try {
-          const file = await Storage.get(item.images.cover, {
+          const file = await Storage.get(item?.images.cover, {
             level: "public",
           });
           setImage(file);
