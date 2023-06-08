@@ -35,7 +35,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
           alt=" image description from backend"
           height={400}
           width={400}
-          src={image}
+          src={image && image}
           className="object-cover w-full mb-2 overflow-hidden rounded-lg shadow-sm max-h-56 transition hover:scale-[1.15]"
         />
       </Link>

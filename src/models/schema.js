@@ -684,10 +684,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "purchase_history": {
-                    "name": "purchase_history",
+                "purchase_products": {
+                    "name": "purchase_products",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSJSON",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1447,5 +1447,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "8326f405b3191e0ecfdb37b259f30a9d"
+    "version": "7fc302e9185a3a6cb1b0598972b2916d"
 };

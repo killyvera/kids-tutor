@@ -47,7 +47,7 @@ export default function TestimonialForm() {
       })
     );
 
-    console.log("New testimonial:", newTestimonial);
+    // console.log("New testimonial:", newTestimonial);
     setContent("");
     setName("");
     setLocation("");

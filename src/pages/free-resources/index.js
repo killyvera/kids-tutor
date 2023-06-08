@@ -37,7 +37,7 @@ export async function getServerSideProps() {
       }
     })
   );
-  console.log(userId);
+  // console.log(userId);
   return {
     props: {
       resourceList: serializeModel(resourceList),
@@ -48,10 +48,10 @@ export async function getServerSideProps() {
 }
 
 const FreeResources = ({ resourceList, categories, resourceCategories }) => {
-  console.log(resourceList, categories, resourceCategories);
+  // console.log(resourceList, categories, resourceCategories);
 
   return (
-    // <MyAuth>
+    <MyAuth>
       <>
         <Head>
           <title>Create Next App</title>
@@ -68,7 +68,7 @@ const FreeResources = ({ resourceList, categories, resourceCategories }) => {
           />
         </main>
       </>
-    // </MyAuth>
+    </MyAuth>
   );
 };
 

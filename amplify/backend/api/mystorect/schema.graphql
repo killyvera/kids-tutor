@@ -68,7 +68,7 @@ type Users @model @auth(rules: [{allow: public}]) {
   state: String
   country: String
   postal_code: String
-  purchase_history: String
+  purchase_products: AWSJSON
   ratings: String
   comments: String
 }

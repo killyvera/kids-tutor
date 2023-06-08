@@ -1,6 +1,7 @@
-// pages/api/stripe-webhook.js
-import { buffer } from 'micro';
-import Stripe from 'stripe';
+import { buffer } from "micro";
+import Stripe from "stripe";
+import { DataStore } from '@aws-amplify/datastore';
+import { Users } from '@/models';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -11,34 +12,36 @@ export const config = {
 };
 
 const webhookHandler = async (req, res) => {
-  if (req.method === 'POST') {
+    
+  if (req.method === "POST") {
     const buf = await buffer(req);
-    const sig = req.headers['stripe-signature'];
+    const sig = req.headers["stripe-signature"];
 
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(buf.toString(), sig, process.env.STRIPE_WEBHOOK_SECRET);
+      event = stripe.webhooks.constructEvent(
+        buf.toString(),
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
     } catch (err) {
-      console.error(err);
-      return res.status(400).send(`Webhook Error: ${err.message}`);
+      console.error(err), "error:E";
+      return res.status(400).send(`Webhook Error E: ${err.message}`);
     }
 
-    if (event.type === 'checkout.session.completed') {
+    if (event.type === "checkout.session.completed") {
       // Handle successful payment
       const session = event.data.object;
-      const { customer_email, display_items } = session;
-      console.log('------------------------------sesioncompleted')
-      console.log(customer_email, display_items)
+      const { customer_email, metadata, display_items } = event.data.object;
+      console.log(session)
 
-      // Retrieve relevant information and generate digital product
-      // Store purchase information in your datastore or database
-
-      res.status(200).json({ received: true });
+      return res.status(200).json({ received: true });
+      //   res.status(200).end();
     }
   } else {
-    res.setHeader('Allow', 'POST');
-    res.status(405).end('Method Not Allowed');
+    res.setHeader("Allow", "POST");
+    res.status(405).end("Method Not Allowed");
   }
 };
 
