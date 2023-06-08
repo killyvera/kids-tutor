@@ -251,7 +251,7 @@ type EagerUsers = {
   readonly state?: string | null;
   readonly country?: string | null;
   readonly postal_code?: string | null;
-  readonly purchase_history?: string | null;
+  readonly purchase_products?: string | null;
   readonly ratings?: string | null;
   readonly comments?: string | null;
   readonly createdAt?: string | null;
@@ -273,7 +273,7 @@ type LazyUsers = {
   readonly state?: string | null;
   readonly country?: string | null;
   readonly postal_code?: string | null;
-  readonly purchase_history?: string | null;
+  readonly purchase_products?: string | null;
   readonly ratings?: string | null;
   readonly comments?: string | null;
   readonly createdAt?: string | null;

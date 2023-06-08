@@ -24,15 +24,15 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
     try {
       await Auth.signOut();
       // Redirigir al usuario a la página principal
-      router.push("/");
+      useRouter.push("/");
     } catch (error) {
       console.log("Error al cerrar sesión:", error);
     }
   };
 
   const handleMenuClick = () => setShowMenu(!showMenu);
-  console.log(cartItems);
-  console.log(asset)
+  // console.log(cartItems);
+  // console.log(asset)
   return (
     <>
       <MyCart visible={visible} />
@@ -109,7 +109,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             </Link>
           </div>
           <div className="">
-            {/* {authStatus === "authenticated" ? ( */}
+            {authStatus === "authenticated" ? (
               <div className="flex flex-row">
                 <div className="flex flex-row scale-75">
                   <div className="relative transition hover:scale-125">
@@ -144,7 +144,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                   Sign Out
                 </button>
               </div>
-            {/* ) : (
+            ) : (
               <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                 <Link href={"/login"} className={styleButton}>
                   Acceder
@@ -153,7 +153,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                   Regístrarse
                 </Link>
               </p>
-            )} */}
+            )}
           </div>
         </div>
       </nav>

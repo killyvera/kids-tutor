@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
@@ -22,7 +22,7 @@ export declare type UsersCreateFormInputValues = {
     state?: string;
     country?: string;
     postal_code?: string;
-    purchase_history?: string;
+    purchase_products?: string;
     ratings?: string;
     comments?: string;
 };
@@ -36,7 +36,7 @@ export declare type UsersCreateFormValidationValues = {
     state?: ValidationFunction<string>;
     country?: ValidationFunction<string>;
     postal_code?: ValidationFunction<string>;
-    purchase_history?: ValidationFunction<string>;
+    purchase_products?: ValidationFunction<string>;
     ratings?: ValidationFunction<string>;
     comments?: ValidationFunction<string>;
 };
@@ -52,7 +52,7 @@ export declare type UsersCreateFormOverridesProps = {
     state?: PrimitiveOverrideProps<TextFieldProps>;
     country?: PrimitiveOverrideProps<TextFieldProps>;
     postal_code?: PrimitiveOverrideProps<TextFieldProps>;
-    purchase_history?: PrimitiveOverrideProps<TextFieldProps>;
+    purchase_products?: PrimitiveOverrideProps<TextAreaFieldProps>;
     ratings?: PrimitiveOverrideProps<TextFieldProps>;
     comments?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

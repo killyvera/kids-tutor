@@ -5,11 +5,15 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [asset, setAsset] = useState([])
+  const [asset, setAsset] = useState(['hi'])
 
   const toggleCart = () => {
     setIsCartOpen(prev => !prev);
   };
+
+  const addAsset=(StripeObject)=>{
+    setAsset(StripeObject)
+  }
 
   const addToCart = (product) => {
     const existingItem = cartItems.find((item) => item.id === product.id);
@@ -58,7 +62,7 @@ export const CartProvider = ({ children }) => {
     removeCartItem,
     getTotalPrice,
     asset,
-    setAsset
+    addAsset
   };
 
   return <CartContext.Provider value={cartContextValue}>{children}</CartContext.Provider>;

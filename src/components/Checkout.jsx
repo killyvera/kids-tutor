@@ -2,7 +2,21 @@ import { useCartContext } from "@/context/CartContext";
 import { Storage } from "aws-amplify";
 import { useEffect, useState } from "react";
 
-const Checkout = async (cartItems) => {
+const CheckoutButton = () => {
+  const { cartItems, addToCart, removeCartItem, getTotalPrice } =
+    useCartContext();
+  const subCognito = "a7c6ea33-c895-41f9-800c-a34cc396b256";
+  return (
+    <button
+      className="primary-button rounded p-1 text-white transition hover:scale-110 text-sm w-full"
+      onClick={() => Checkout(cartItems, subCognito)}
+    >
+      Pagar
+    </button>
+  );
+};
+
+const Checkout = async (cartItems, subCognito) => {
   console.log(cartItems);
   const lineItems = await Promise.all(
     cartItems.map(async (item) => {
@@ -23,31 +37,17 @@ const Checkout = async (cartItems) => {
       };
     })
   );
-  console.log(lineItems);
-
-  // Call your backend API to create a Stripe Checkout Session
+  const sub = await subCognito;
+  console.log(lineItems, sub);
   const response = await fetch("/api/checkout_sessions", {
     method: "POST",
-    body: JSON.stringify({ lineItems }),
+    body: JSON.stringify({ lineItems, sub }),
     headers: {
       "Content-Type": "application/json",
     },
   });
   const body = await response.json();
   window.location.href = body.url;
-};
-
-const CheckoutButton = () => {
-  const { cartItems, addToCart, removeCartItem, getTotalPrice } =
-    useCartContext();
-  return (
-    <button
-      className="primary-button rounded p-1 text-white transition hover:scale-110 text-sm w-full"
-      onClick={() => Checkout(cartItems)}
-    >
-      Pagar
-    </button>
-  );
 };
 
 export default CheckoutButton;

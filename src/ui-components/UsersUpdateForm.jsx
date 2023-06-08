@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Users } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -33,7 +39,7 @@ export default function UsersUpdateForm(props) {
     state: "",
     country: "",
     postal_code: "",
-    purchase_history: "",
+    purchase_products: "",
     ratings: "",
     comments: "",
   };
@@ -52,8 +58,8 @@ export default function UsersUpdateForm(props) {
   const [postal_code, setPostal_code] = React.useState(
     initialValues.postal_code
   );
-  const [purchase_history, setPurchase_history] = React.useState(
-    initialValues.purchase_history
+  const [purchase_products, setPurchase_products] = React.useState(
+    initialValues.purchase_products
   );
   const [ratings, setRatings] = React.useState(initialValues.ratings);
   const [comments, setComments] = React.useState(initialValues.comments);
@@ -71,7 +77,11 @@ export default function UsersUpdateForm(props) {
     setState(cleanValues.state);
     setCountry(cleanValues.country);
     setPostal_code(cleanValues.postal_code);
-    setPurchase_history(cleanValues.purchase_history);
+    setPurchase_products(
+      typeof cleanValues.purchase_products === "string"
+        ? cleanValues.purchase_products
+        : JSON.stringify(cleanValues.purchase_products)
+    );
     setRatings(cleanValues.ratings);
     setComments(cleanValues.comments);
     setErrors({});
@@ -97,7 +107,7 @@ export default function UsersUpdateForm(props) {
     state: [],
     country: [],
     postal_code: [],
-    purchase_history: [],
+    purchase_products: [{ type: "JSON" }],
     ratings: [],
     comments: [],
   };
@@ -136,7 +146,7 @@ export default function UsersUpdateForm(props) {
           state,
           country,
           postal_code,
-          purchase_history,
+          purchase_products,
           ratings,
           comments,
         };
@@ -203,7 +213,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -238,7 +248,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -273,7 +283,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -308,7 +318,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -345,7 +355,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -380,7 +390,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -415,7 +425,7 @@ export default function UsersUpdateForm(props) {
               state: value,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -450,7 +460,7 @@ export default function UsersUpdateForm(props) {
               state,
               country: value,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -485,7 +495,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code: value,
-              purchase_history,
+              purchase_products,
               ratings,
               comments,
             };
@@ -502,11 +512,11 @@ export default function UsersUpdateForm(props) {
         hasError={errors.postal_code?.hasError}
         {...getOverrideProps(overrides, "postal_code")}
       ></TextField>
-      <TextField
-        label="Purchase history"
+      <TextAreaField
+        label="Purchase products"
         isRequired={false}
         isReadOnly={false}
-        value={purchase_history}
+        value={purchase_products}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
@@ -520,23 +530,25 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history: value,
+              purchase_products: value,
               ratings,
               comments,
             };
             const result = onChange(modelFields);
-            value = result?.purchase_history ?? value;
+            value = result?.purchase_products ?? value;
           }
-          if (errors.purchase_history?.hasError) {
-            runValidationTasks("purchase_history", value);
+          if (errors.purchase_products?.hasError) {
+            runValidationTasks("purchase_products", value);
           }
-          setPurchase_history(value);
+          setPurchase_products(value);
         }}
-        onBlur={() => runValidationTasks("purchase_history", purchase_history)}
-        errorMessage={errors.purchase_history?.errorMessage}
-        hasError={errors.purchase_history?.hasError}
-        {...getOverrideProps(overrides, "purchase_history")}
-      ></TextField>
+        onBlur={() =>
+          runValidationTasks("purchase_products", purchase_products)
+        }
+        errorMessage={errors.purchase_products?.errorMessage}
+        hasError={errors.purchase_products?.hasError}
+        {...getOverrideProps(overrides, "purchase_products")}
+      ></TextAreaField>
       <TextField
         label="Ratings"
         isRequired={false}
@@ -555,7 +567,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings: value,
               comments,
             };
@@ -590,7 +602,7 @@ export default function UsersUpdateForm(props) {
               state,
               country,
               postal_code,
-              purchase_history,
+              purchase_products,
               ratings,
               comments: value,
             };
