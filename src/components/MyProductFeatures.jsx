@@ -1,5 +1,6 @@
 import { Storage } from "@aws-amplify/storage";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const features = [
   { name: "Origin", description: "Designed by Good Goods, Inc." },
@@ -189,10 +190,13 @@ export default function MyProductFeatures() {
           </dl>
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
-          <img
+          <Image
             src={image && image}
             alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
+            width={500}
+            height={500}
             className="rounded-lg bg-gray-100"
+            priority={true}
           />
           <img
             src="https://i.ibb.co/ydL2gdS/feature-Image01.png"

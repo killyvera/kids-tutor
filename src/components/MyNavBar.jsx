@@ -109,10 +109,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             </Link>
           </div>
           <div className="">
-            {authStatus === "authenticated" ? (
-              <div className="flex flex-row">
-                <div className="flex flex-row scale-75">
-                  <div className="relative transition hover:scale-125">
+          <div className="relative transition hover:scale-125">
                     {cartItems?.length >= 1 && (
                       <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
                         {cartItems?.length}
@@ -128,6 +125,10 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                       onClick={() => toggleCart()}
                     />
                   </div>
+            {authStatus === "authenticated" ? (
+              <div className="flex flex-row">
+                <div className="flex flex-row scale-75">
+
                   <Image
                     width={"32"}
                     height={"32"}

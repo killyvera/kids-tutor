@@ -1,7 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
-  console.log(req, res)
+  console.log(req, res);
   if (req.method === "POST") {
     // const { items } = req.body;
     try {
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         cancel_url: `${req.headers.origin}/?canceled=true`,
         metadata: {
           sub_cognito: req.body.sub,
-          // purchased_products: { items: [{ productId: "some-id-1234" }] },
+          purchased_products: req.body.purchase.toString(),
         },
       });
       res.json({ url: session.url });
