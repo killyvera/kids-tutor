@@ -5,7 +5,8 @@
   "storageAccess": "authAndGuest",
   "guestAccess": [
     "READ",
-    "CREATE_AND_UPDATE"
+    "CREATE_AND_UPDATE",
+    "DELETE"
   ],
   "authAccess": [
     "READ",
