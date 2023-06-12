@@ -68,8 +68,8 @@ const InvitedCustomerHandler = async (email, name, products) => {
     port: 465,
     secure: true,
     auth: {
-      user: "ventas@kidstutor.co",
-      pass: "v3nt@2k1d2",
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_PASS,
     },
   })
 
