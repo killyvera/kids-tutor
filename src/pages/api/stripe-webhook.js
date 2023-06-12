@@ -48,6 +48,24 @@ const webhookHandler = async (req, res) => {
       );
       return res.status(200).json({ received: true });
       //   res.status(200).end();
+    } else if (event.type === "charge.succeeded") {
+      // Handle charge.succeeded event
+      // ...
+
+      // Return a 200 status code
+      return res.status(200).end();
+    } else if (event.type === "payment_intent.succeeded") {
+      // Handle payment_intent.succeeded event
+      // ...
+
+      // Return a 200 status code
+      return res.status(200).end();
+    } else if (event.type === "payment_intent.created") {
+      // Handle payment_intent.created event
+      // ...
+
+      // Return a 200 status code
+      return res.status(200).end();
     }
   } else {
     res.setHeader("Allow", "POST");
@@ -71,7 +89,7 @@ const InvitedCustomerHandler = async (email, name, products) => {
       user: process.env.NODEMAILER_USER,
       pass: process.env.NODEMAILER_PASS,
     },
-  })
+  });
 
   const mailOptions = {
     from: "ventas@kidstutor.co",
