@@ -6,6 +6,34 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
+type EagerOnlinePurchase = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<OnlinePurchase, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly details?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyOnlinePurchase = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<OnlinePurchase, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly details?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type OnlinePurchase = LazyLoading extends LazyLoadingDisabled ? EagerOnlinePurchase : LazyOnlinePurchase
+
+export declare const OnlinePurchase: (new (init: ModelInit<OnlinePurchase>) => OnlinePurchase) & {
+  copyOf(source: OnlinePurchase, mutator: (draft: MutableModel<OnlinePurchase>) => MutableModel<OnlinePurchase> | void): OnlinePurchase;
+}
+
 type EagerContact = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Contact, 'id'>;
@@ -254,6 +282,7 @@ type EagerUsers = {
   readonly purchase_products?: string | null;
   readonly ratings?: string | null;
   readonly comments?: string | null;
+  readonly email?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -276,6 +305,7 @@ type LazyUsers = {
   readonly purchase_products?: string | null;
   readonly ratings?: string | null;
   readonly comments?: string | null;
+  readonly email?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

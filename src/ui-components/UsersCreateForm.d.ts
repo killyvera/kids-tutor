@@ -25,6 +25,7 @@ export declare type UsersCreateFormInputValues = {
     purchase_products?: string;
     ratings?: string;
     comments?: string;
+    email?: string;
 };
 export declare type UsersCreateFormValidationValues = {
     sub_cognito?: ValidationFunction<string>;
@@ -39,6 +40,7 @@ export declare type UsersCreateFormValidationValues = {
     purchase_products?: ValidationFunction<string>;
     ratings?: ValidationFunction<string>;
     comments?: ValidationFunction<string>;
+    email?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UsersCreateFormOverridesProps = {
@@ -55,6 +57,7 @@ export declare type UsersCreateFormOverridesProps = {
     purchase_products?: PrimitiveOverrideProps<TextAreaFieldProps>;
     ratings?: PrimitiveOverrideProps<TextFieldProps>;
     comments?: PrimitiveOverrideProps<TextFieldProps>;
+    email?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type UsersCreateFormProps = React.PropsWithChildren<{
     overrides?: UsersCreateFormOverridesProps | undefined | null;

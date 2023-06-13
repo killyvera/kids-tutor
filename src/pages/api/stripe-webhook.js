@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { DataStore } from "@aws-amplify/datastore";
 import { Users } from "@/models";
 import nodemailer from "nodemailer";
+import { v4 as uuidv4 } from "uuid";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -21,7 +22,7 @@ const webhookHandler = async (req, res) => {
 
     try {
       event = stripe.webhooks.constructEvent(
-        buf.toString(),
+        buf,
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
@@ -41,7 +42,7 @@ const webhookHandler = async (req, res) => {
         session.customer_details.email,
         session.customer_details.name
       );
-      InvitedCustomerHandler(
+      CustomerHandler(
         session.customer_details.email,
         session.customer_details.name,
         session.metadata.purchased_products
@@ -75,11 +76,18 @@ const webhookHandler = async (req, res) => {
 
 export default webhookHandler;
 
-const InvitedCustomerHandler = async (email, name, products) => {
+const generateDownloadLink = (productId) => {
+  const uuid = uuidv4();
+  const downloadLink = `https://example.com/download/${uuid}/${productId}`;
+  return downloadLink;
+};
+
+const CustomerHandler = async (email, name, products) => {
+  const downloadPageLink = generateDownloadLink()
   const customerEmail = email;
   const customerName = name;
   const customerProducts = products;
-  const testAccount = await nodemailer.createTestAccount();
+  // const testAccount = await nodemailer.createTestAccount();
 
   const transporter = nodemailer.createTransport({
     host: "smtp.titan.email",
@@ -94,7 +102,7 @@ const InvitedCustomerHandler = async (email, name, products) => {
   const mailOptions = {
     from: "ventas@kidstutor.co",
     to: customerEmail,
-    subject: `Hola ${customerName}, Kids Tutor te tiene buenas noticias.`,
+    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para tí..`,
     text: "Este es id de tu producto" + `${customerProducts}`,
   };
 
@@ -103,7 +111,7 @@ const InvitedCustomerHandler = async (email, name, products) => {
   console.log("Correo electrónico enviado:");
   console.log("ID del mensaje:", info.messageId);
   console.log(
-    "URL de visualización del mensaje:",
-    nodemailer.getTestMessageUrl(info)
+    // "URL de visualización del mensaje:",
+    // nodemailer.getTestMessageUrl(info)
   );
 };
