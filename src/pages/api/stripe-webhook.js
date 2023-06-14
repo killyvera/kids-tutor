@@ -81,7 +81,7 @@ const CustomerHandler = async (email, name, products) => {
   const uuid = uuidv4(); // Generate a UUID
   const customerEmail = email;
   const customerName = name;
-  const customerProducts = products;
+  const customerProducts = products.split(',');
   const downloadLink = `https://localhost:3000/download?email=${encodeURIComponent(
     customerEmail
   )}&uuid=${uuid}`;
