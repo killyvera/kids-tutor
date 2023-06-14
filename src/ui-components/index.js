@@ -65,6 +65,8 @@ export { default as MyNavResponsive } from "./MyNavResponsive";
 export { default as SocialPost } from "./SocialPost";
 export { default as studioTheme } from "./studioTheme";
 export { default as ContactCreateForm } from "./ContactCreateForm";
+export { default as OnlinePurchaseCreateForm } from "./OnlinePurchaseCreateForm";
+export { default as OnlinePurchaseUpdateForm } from "./OnlinePurchaseUpdateForm";
 export { default as ContactUpdateForm } from "./ContactUpdateForm";
 export { default as ResourcesCreateForm } from "./ResourcesCreateForm";
 export { default as ResourcesUpdateForm } from "./ResourcesUpdateForm";

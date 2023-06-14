@@ -1,3 +1,11 @@
+type OnlinePurchase @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  customer_name: String
+  customer_email: String
+  details: AWSJSON
+  uuid: String
+}
+
 type Contact @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
@@ -71,6 +79,7 @@ type Users @model @auth(rules: [{allow: public}]) {
   purchase_products: AWSJSON
   ratings: String
   comments: String
+  email: String
 }
 
 type Order @model @auth(rules: [{allow: public}]) {

@@ -41,6 +41,7 @@ export default function UsersCreateForm(props) {
     purchase_products: "",
     ratings: "",
     comments: "",
+    email: "",
   };
   const [sub_cognito, setSub_cognito] = React.useState(
     initialValues.sub_cognito
@@ -62,6 +63,7 @@ export default function UsersCreateForm(props) {
   );
   const [ratings, setRatings] = React.useState(initialValues.ratings);
   const [comments, setComments] = React.useState(initialValues.comments);
+  const [email, setEmail] = React.useState(initialValues.email);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setSub_cognito(initialValues.sub_cognito);
@@ -76,6 +78,7 @@ export default function UsersCreateForm(props) {
     setPurchase_products(initialValues.purchase_products);
     setRatings(initialValues.ratings);
     setComments(initialValues.comments);
+    setEmail(initialValues.email);
     setErrors({});
   };
   const validations = {
@@ -91,6 +94,7 @@ export default function UsersCreateForm(props) {
     purchase_products: [{ type: "JSON" }],
     ratings: [],
     comments: [],
+    email: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -130,6 +134,7 @@ export default function UsersCreateForm(props) {
           purchase_products,
           ratings,
           comments,
+          email,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -196,6 +201,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.sub_cognito ?? value;
@@ -231,6 +237,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -266,6 +273,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.firstname ?? value;
@@ -301,6 +309,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.registration_date ?? value;
@@ -338,6 +347,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.direction ?? value;
@@ -373,6 +383,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.city ?? value;
@@ -408,6 +419,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.state ?? value;
@@ -443,6 +455,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.country ?? value;
@@ -478,6 +491,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.postal_code ?? value;
@@ -512,6 +526,7 @@ export default function UsersCreateForm(props) {
               purchase_products: value,
               ratings,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.purchase_products ?? value;
@@ -549,6 +564,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings: value,
               comments,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.ratings ?? value;
@@ -584,6 +600,7 @@ export default function UsersCreateForm(props) {
               purchase_products,
               ratings,
               comments: value,
+              email,
             };
             const result = onChange(modelFields);
             value = result?.comments ?? value;
@@ -597,6 +614,42 @@ export default function UsersCreateForm(props) {
         errorMessage={errors.comments?.errorMessage}
         hasError={errors.comments?.hasError}
         {...getOverrideProps(overrides, "comments")}
+      ></TextField>
+      <TextField
+        label="Email"
+        isRequired={false}
+        isReadOnly={false}
+        value={email}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              sub_cognito,
+              name,
+              firstname,
+              registration_date,
+              direction,
+              city,
+              state,
+              country,
+              postal_code,
+              purchase_products,
+              ratings,
+              comments,
+              email: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.email ?? value;
+          }
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
+          }
+          setEmail(value);
+        }}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
       ></TextField>
       <Flex
         justifyContent="space-between"
