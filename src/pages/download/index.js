@@ -2,7 +2,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import { OnlinePurchase, Product } from "@/models";
-
+import Head from "next/head";
+import H1 from "@/components/H1";
+import MyResources from "@/components/MyResources";
+import MyDownloandList from "@/components/MyDownloandsList";
 const DownloadPage = () => {
   const router = useRouter();
   const { email, uuid } = router.query;
@@ -37,22 +40,32 @@ const DownloadPage = () => {
     console.log(userPurchases, products);
   }
   return (
-    <div style={{ marginTop: "120px" }}>
-      <h1>Download Page</h1>
-      <p>User Email: {email}</p>
-      {/* Render the download links based on the user's purchases */}
-      {products &&
-        products.map((product) => (
-          <a
-            key={product.id}
-            // href={product.fileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {product.name}
-          </a>
-        ))}
-    </div>
+    <>
+      <Head>
+        <title>Kids Tutor Blog</title>
+        <meta name="description" content="Kids Tutor Downloand Products Page" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main>
+        <H1>Todos tus productos digitales, aquí.</H1>
+        <div className="bg-white">
+          <MyDownloandList list={products} />
+          {/* <p>User Email: {email}</p>
+
+          {products?.map((product) => (
+            <a
+              key={product.id}
+              // href={product.fileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {product.name}
+            </a>
+          ))} */}
+        </div>
+      </main>
+    </>
   );
 };
 
