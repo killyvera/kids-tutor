@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextAreaFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
@@ -13,15 +13,24 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type OnlinePurchaseCreateFormInputValues = {
+    customer_name?: string;
+    customer_email?: string;
     details?: string;
+    uuid?: string;
 };
 export declare type OnlinePurchaseCreateFormValidationValues = {
+    customer_name?: ValidationFunction<string>;
+    customer_email?: ValidationFunction<string>;
     details?: ValidationFunction<string>;
+    uuid?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type OnlinePurchaseCreateFormOverridesProps = {
     OnlinePurchaseCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    customer_name?: PrimitiveOverrideProps<TextFieldProps>;
+    customer_email?: PrimitiveOverrideProps<TextFieldProps>;
     details?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    uuid?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type OnlinePurchaseCreateFormProps = React.PropsWithChildren<{
     overrides?: OnlinePurchaseCreateFormOverridesProps | undefined | null;

@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextAreaField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { OnlinePurchase } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -24,19 +30,32 @@ export default function OnlinePurchaseUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    customer_name: "",
+    customer_email: "",
     details: "",
+    uuid: "",
   };
+  const [customer_name, setCustomer_name] = React.useState(
+    initialValues.customer_name
+  );
+  const [customer_email, setCustomer_email] = React.useState(
+    initialValues.customer_email
+  );
   const [details, setDetails] = React.useState(initialValues.details);
+  const [uuid, setUuid] = React.useState(initialValues.uuid);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = onlinePurchaseRecord
       ? { ...initialValues, ...onlinePurchaseRecord }
       : initialValues;
+    setCustomer_name(cleanValues.customer_name);
+    setCustomer_email(cleanValues.customer_email);
     setDetails(
       typeof cleanValues.details === "string"
         ? cleanValues.details
         : JSON.stringify(cleanValues.details)
     );
+    setUuid(cleanValues.uuid);
     setErrors({});
   };
   const [onlinePurchaseRecord, setOnlinePurchaseRecord] = React.useState(
@@ -53,7 +72,10 @@ export default function OnlinePurchaseUpdateForm(props) {
   }, [idProp, onlinePurchaseModelProp]);
   React.useEffect(resetStateValues, [onlinePurchaseRecord]);
   const validations = {
+    customer_name: [],
+    customer_email: [],
     details: [{ type: "JSON" }],
+    uuid: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -81,7 +103,10 @@ export default function OnlinePurchaseUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          customer_name,
+          customer_email,
           details,
+          uuid,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,6 +153,60 @@ export default function OnlinePurchaseUpdateForm(props) {
       {...getOverrideProps(overrides, "OnlinePurchaseUpdateForm")}
       {...rest}
     >
+      <TextField
+        label="Customer name"
+        isRequired={false}
+        isReadOnly={false}
+        value={customer_name}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              customer_name: value,
+              customer_email,
+              details,
+              uuid,
+            };
+            const result = onChange(modelFields);
+            value = result?.customer_name ?? value;
+          }
+          if (errors.customer_name?.hasError) {
+            runValidationTasks("customer_name", value);
+          }
+          setCustomer_name(value);
+        }}
+        onBlur={() => runValidationTasks("customer_name", customer_name)}
+        errorMessage={errors.customer_name?.errorMessage}
+        hasError={errors.customer_name?.hasError}
+        {...getOverrideProps(overrides, "customer_name")}
+      ></TextField>
+      <TextField
+        label="Customer email"
+        isRequired={false}
+        isReadOnly={false}
+        value={customer_email}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              customer_name,
+              customer_email: value,
+              details,
+              uuid,
+            };
+            const result = onChange(modelFields);
+            value = result?.customer_email ?? value;
+          }
+          if (errors.customer_email?.hasError) {
+            runValidationTasks("customer_email", value);
+          }
+          setCustomer_email(value);
+        }}
+        onBlur={() => runValidationTasks("customer_email", customer_email)}
+        errorMessage={errors.customer_email?.errorMessage}
+        hasError={errors.customer_email?.hasError}
+        {...getOverrideProps(overrides, "customer_email")}
+      ></TextField>
       <TextAreaField
         label="Details"
         isRequired={false}
@@ -137,7 +216,10 @@ export default function OnlinePurchaseUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              customer_name,
+              customer_email,
               details: value,
+              uuid,
             };
             const result = onChange(modelFields);
             value = result?.details ?? value;
@@ -152,6 +234,33 @@ export default function OnlinePurchaseUpdateForm(props) {
         hasError={errors.details?.hasError}
         {...getOverrideProps(overrides, "details")}
       ></TextAreaField>
+      <TextField
+        label="Uuid"
+        isRequired={false}
+        isReadOnly={false}
+        value={uuid}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              customer_name,
+              customer_email,
+              details,
+              uuid: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.uuid ?? value;
+          }
+          if (errors.uuid?.hasError) {
+            runValidationTasks("uuid", value);
+          }
+          setUuid(value);
+        }}
+        onBlur={() => runValidationTasks("uuid", uuid)}
+        errorMessage={errors.uuid?.errorMessage}
+        hasError={errors.uuid?.hasError}
+        {...getOverrideProps(overrides, "uuid")}
+      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

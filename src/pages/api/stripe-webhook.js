@@ -1,7 +1,8 @@
 import { buffer } from "micro";
 import Stripe from "stripe";
 import { DataStore } from "@aws-amplify/datastore";
-import { Users } from "@/models";
+import { Users, OnlinePurchase } from "@/models";
+import { useState, useEffect } from "react";
 import nodemailer from "nodemailer";
 import { v4 as uuidv4 } from "uuid";
 
@@ -76,17 +77,14 @@ const webhookHandler = async (req, res) => {
 
 export default webhookHandler;
 
-const generateDownloadLink = (productId) => {
-  const uuid = uuidv4();
-  const downloadLink = `https://example.com/download/${uuid}/${productId}`;
-  return downloadLink;
-};
-
 const CustomerHandler = async (email, name, products) => {
-  const downloadPageLink = generateDownloadLink()
+  const uuid = uuidv4(); // Generate a UUID
   const customerEmail = email;
   const customerName = name;
   const customerProducts = products;
+  const downloadLink = `https://localhost:3000/download?email=${encodeURIComponent(
+    customerEmail
+  )}&uuid=${uuid}`;
   // const testAccount = await nodemailer.createTestAccount();
 
   const transporter = nodemailer.createTransport({
@@ -103,15 +101,27 @@ const CustomerHandler = async (email, name, products) => {
     from: "ventas@kidstutor.co",
     to: customerEmail,
     subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para tí..`,
-    text: "Este es id de tu producto" + `${customerProducts}`,
+    // text: "Este es id de tu producto" + `${customerProducts}`,
+    text: downloadLink,
   };
 
   const info = await transporter.sendMail(mailOptions);
 
   console.log("Correo electrónico enviado:");
   console.log("ID del mensaje:", info.messageId);
-  console.log(
-    // "URL de visualización del mensaje:",
-    // nodemailer.getTestMessageUrl(info)
+  // "URL de visualización del mensaje:",
+  // nodemailer.getTestMessageUrl(info)
+
+  const purchase = await DataStore.save(
+    new OnlinePurchase({
+      customer_email: customerEmail,
+      customer_name: customerName,
+      uuid: uuid,
+      details: {
+        products: customerProducts,
+      },
+    })
   );
+
+  console.log("Compra almacenada:", purchase);
 };

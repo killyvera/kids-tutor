@@ -1,6 +1,9 @@
 type OnlinePurchase @model @auth(rules: [{allow: public}]) {
   id: ID!
+  customer_name: String
+  customer_email: String
   details: AWSJSON
+  uuid: String
 }
 
 type Contact @model @auth(rules: [{allow: public}]) {

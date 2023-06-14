@@ -10,10 +10,31 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "customer_name": {
+                    "name": "customer_name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "customer_email": {
+                    "name": "customer_email",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "details": {
                     "name": "details",
                     "isArray": false,
                     "type": "AWSJSON",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "uuid": {
+                    "name": "uuid",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1513,5 +1534,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.3",
-    "version": "0965945dbda310a812b86946c9fa0fb7"
+    "version": "babfe70d4d4a624b532b36c6c1712f70"
 };

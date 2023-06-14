@@ -12,7 +12,10 @@ type EagerOnlinePurchase = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly customer_name?: string | null;
+  readonly customer_email?: string | null;
   readonly details?: string | null;
+  readonly uuid?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -23,7 +26,10 @@ type LazyOnlinePurchase = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly customer_name?: string | null;
+  readonly customer_email?: string | null;
   readonly details?: string | null;
+  readonly uuid?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
