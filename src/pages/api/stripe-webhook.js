@@ -82,7 +82,7 @@ const CustomerHandler = async (email, name, products) => {
   const customerEmail = email;
   const customerName = name;
   const customerProducts = products.split(',');
-  const downloadLink = `https://localhost:3000/download?email=${encodeURIComponent(
+  const downloadLink = `https://kidstutor.co/download?email=${encodeURIComponent(
     customerEmail
   )}&uuid=${uuid}`;
   // const testAccount = await nodemailer.createTestAccount();
@@ -100,7 +100,7 @@ const CustomerHandler = async (email, name, products) => {
   const mailOptions = {
     from: "ventas@kidstutor.co",
     to: customerEmail,
-    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para tí..`,
+    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para tí.`,
     // text: "Este es id de tu producto" + `${customerProducts}`,
     text: downloadLink,
   };

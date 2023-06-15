@@ -5,7 +5,7 @@ import MyPostCard from "./MyPostCard";
 import Link from "next/link";
 import MyCardProduct from "./MyCardProducts";
 
-function MyDownloandList({ list, categories, postCategories }) {
+function MyDownloadList({ list, categories, postCategories }) {
   // const [firstPost, ...postList] = list;
 
   return (
@@ -73,9 +73,9 @@ function MyDownloandList({ list, categories, postCategories }) {
             <MyCardProduct
               key={element.id}
               element={element}
-              type={"downloand"}
-              // categories={categories}
-              // postCategories={postCategories}
+              type={"download"}
+              categories={categories}
+              postCategories={postCategories}
             />
           ))}
         </div>
@@ -84,4 +84,4 @@ function MyDownloandList({ list, categories, postCategories }) {
   );
 }
 
-export default MyDownloandList;
+export default MyDownloadList;
