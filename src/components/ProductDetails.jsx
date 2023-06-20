@@ -145,7 +145,7 @@ const ProductDetail = ({ element, categories }) => {
               <MyBadgeList resourceId={element?.id} categories={categories} />
             </div>
             <MyTagList tagList={element?.tags} />
-            <Marketplaces marketplaces={element?.marketplaces} />
+            <Marketplaces marketplaces={element?.marketplaces} product={element && element}/>
             <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">
                 {"MXN " + element?.price + ".00"}
