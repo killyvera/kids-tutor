@@ -59,7 +59,7 @@ const MyCart = () => {
       </div>
       {/* <CartItem2 /> */}
       <div className="flex flex-col items-center justify-between pt-3 m-3">
-        <div className="font-semibold flex flex-row justify-between">
+        <div className="font-semibold w-full justify-between">
           <p className="">TOTAL:</p>
           <p>{"MXN " + getTotalPrice()}</p>
         </div>
@@ -102,32 +102,31 @@ const CartItem2 = ({ item }) => {
   const { cartItems, addToCart, removeCartItem, getTotalPrice, isCartOpen } =
     useCartContext();
 
-    useEffect((item) => {
-      const fetchImage = async () => {
-        try {
-          const file = await Storage.get(item?.images.cover, {
-            level: "public",
-          });
-          setImage(file);
-        } catch (error) {
-          console.log("Error fetching image:", error);
-        }
-      };
-  
-      fetchImage();
-    }, []);
-    console.log(image && image);
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const file = await Storage.get(item?.images.cover, {
+          level: "public",
+        });
+        setImage(file);
+      } catch (error) {
+        console.log("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, [item]);
 
   return (
     <div className="flex flex-row">
-      <div class="flex py-6">
-        <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+      <div class="ml-1 flex py-6">
+        <div class="flex-shrink-0 overflow-hidden rounded-md border border-gray-200 scale-100 transition hover:scale-110 w-24 h-24">
           <Image
             src={image}
-            alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt."
-            class="h-full w-full object-cover object-center"
-            width={96}
-            height={96}
+            alt="image product in"
+            className="h-full w-full object-cover object-center"
+            width={130}
+            height={130}
           />
         </div>
 
@@ -148,7 +147,7 @@ const CartItem2 = ({ item }) => {
               <button
                 onClick={() => removeCartItem(item)}
                 type="button"
-                class="font-medium text-indigo-600 hover:text-indigo-500 text-xs"
+                class="font-medium text-indigo-600 hover:text-indigo-500 text-xs transition hover:scale-125 "
               >
                 Quitar
               </button>
