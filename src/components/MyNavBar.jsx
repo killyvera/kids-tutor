@@ -108,7 +108,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               Contactanos
             </Link>
           </div>
-          <div className="">
+          <div className="flex">
           <div className="relative transition hover:scale-125">
                     {cartItems?.length >= 1 && (
                       <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
@@ -146,7 +146,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                 </button>
               </div>
             ) : (
-              <p className="mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+              <p className="mx-1 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
                 <Link href={"/login"} className={styleButton}>
                   Acceder
                 </Link>

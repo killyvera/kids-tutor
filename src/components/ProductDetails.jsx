@@ -25,7 +25,7 @@ const ProductDetail = ({ element, categories }) => {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const file = await Storage.get("images/products/KT-NUM-20.cover.webp", {
+        const file = await Storage.get(`${element?.images.cover}`, {
           level: "public",
         });
         setImage(file);
@@ -35,7 +35,7 @@ const ProductDetail = ({ element, categories }) => {
     };
 
     fetchImage();
-  }, []);
+  }, [element]);
   console.log(image && image);
 
   return (
@@ -48,7 +48,7 @@ const ProductDetail = ({ element, categories }) => {
                 width={640}
                 height={640}
                 className="w-full h-full object-cover"
-                src={image}
+                src={image && image}
                 alt="alt product text"
               />
             </div>

@@ -4,7 +4,8 @@ const nextConfig = {
   images: {
     domains: [
       "i.ibb.co",
-      "my-store-ct-storage-aabd6fd7195834-staging.s3.us-east-1.amazonaws.com"
+      "my-store-ct-storage-aabd6fd7195834-staging.s3.us-east-1.amazonaws.com",
+      "localhost:3000"
     ],
   },
 };

@@ -1,6 +1,7 @@
 import { useCartContext } from "@/context/CartContext";
 import { useEffect, useState } from "react";
 import { Storage, Auth } from "aws-amplify";
+import Image from "next/image";
 
 const CheckoutButton = () => {
   const { cartItems, addToCart, removeCartItem, getTotalPrice } =
@@ -22,29 +23,36 @@ const CheckoutButton = () => {
   }, []);
 
   return (
-    <button
-      className="primary-button rounded p-1 text-white transition hover:scale-110 text-sm w-[95%]"
+    <div
       onClick={() => Checkout(cartItems, subCognito)}
+      className=""
+      style={{ margin: "-0px" }}
     >
-      Pagar
-    </button>
+      <Image
+        width={90}
+        height={90}
+        src={`/kidstutor.webp`}
+        alt={"some alt title"}
+        className="rounded transition scale-75 hover:scale-100"
+      />
+    </div>
   );
 };
 
 const Checkout = async (cartItems, subCognito) => {
+  // console.log(cartItems);
   const lineItems = await Promise.all(
     cartItems.map(async (item) => {
       const imageUrl = await Storage.get(item?.images.cover, {
         level: "public",
       });
-      const imageUrlString = imageUrl && imageUrl.toString();
       return {
         price_data: {
           currency: "mxn",
           product_data: {
             name: item?.name,
             description: item?.short,
-            images: [item?.cover],
+            // images: [imageUrl],
           },
           unit_amount: item?.price * 100,
         },
@@ -52,12 +60,9 @@ const Checkout = async (cartItems, subCognito) => {
       };
     })
   );
-
   const sub = subCognito;
-  const purchase = cartItems.map((item) => item?.id);
-
-  console.log(lineItems[0].price_data.product_data.images);
-
+  const purchase = await cartItems.map((item) => item?.id);
+  console.log(lineItems, sub, purchase);
   const response = await fetch("/api/checkout_sessions", {
     method: "POST",
     body: JSON.stringify({ lineItems, purchase, sub }),
@@ -65,7 +70,6 @@ const Checkout = async (cartItems, subCognito) => {
       "Content-Type": "application/json",
     },
   });
-
   const body = await response.json();
   window.location.href = body.url;
 };
