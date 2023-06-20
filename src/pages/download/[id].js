@@ -4,7 +4,7 @@ import Layout from "@/components/Layout";
 
 import { Product, ProductCategory, Category } from "@/models";
 import MyProductCard from "@/components/MyProductCard";
-import ProductDetails from "@/components/ProductDetails";
+import DownloadDetails from "@/components/MyDownloadDetails";
 
 export async function getStaticPaths({ req }) {
   const SSR = withSSRContext({ req });
@@ -41,5 +41,5 @@ export async function getStaticProps(context) {
 
 export default function product({ product, categories }) {
   // console.log(categories, product);
-  return <ProductDetails element={product} categories={categories} />;
+  return <DownloadDetails element={product} categories={categories} />;
 }
