@@ -66,7 +66,7 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
           <button className="bg-blue-500 py-2 px-3 rounded text-white transition hover:scale-110" >Adquierelo aquí</button>
           </Link>
         </div> */}
-        <Marketplaces marketplaces={element?.marketplaces} />
+        <Marketplaces marketplaces={element?.marketplaces} product={element && element} />
 
       </div>
       {/* <MyTagList tagList={element?.tags} /> */}

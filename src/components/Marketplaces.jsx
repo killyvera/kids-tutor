@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import KidsTutorMarketplace from "./KidsTutorMarketplace";
 
-const Marketplaces = ({ marketplaces }) => {
+const Marketplaces = ({ marketplaces, product }) => {
   console.log(marketplaces);
   const marketplaceIcons = {
     mercadolibre: "mercadolibre.png",
@@ -20,7 +20,7 @@ const Marketplaces = ({ marketplaces }) => {
           Object.entries(marketplaces).map(([key, value]) => (
             <div className="pt-2" style={{ margin: "-5px" }} key={key}>
               {key === "kidstutor" ? (
-                <KidsTutorMarketplace />
+                <KidsTutorMarketplace product={product} />
               ) : (
                 <a href={value} target="_blank" rel="noopener noreferrer">
                   <Image
