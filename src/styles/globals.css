@@ -1,9 +1,11 @@
-/* styles/globals.css */
-@import "~@aws-amplify/ui-react/styles.css";
-@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities;/* styles/globals.css */
+
+
+@import "~@aws-amplify/ui-react/styles.css";
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
+
 
 .slick-next:before,
 .slick-prev:before {
