@@ -1,3 +1,4 @@
+import MailTemplate from "@/components/MailTemplate";
 import { buffer } from "micro";
 import Stripe from "stripe";
 import { DataStore } from "@aws-amplify/datastore";
@@ -5,6 +6,7 @@ import { Users, OnlinePurchase } from "@/models";
 import { useState, useEffect } from "react";
 import nodemailer from "nodemailer";
 import { v4 as uuidv4 } from "uuid";
+import ReactDOMServer from 'react-dom/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -81,7 +83,7 @@ const CustomerHandler = async (email, name, products) => {
   const uuid = uuidv4(); // Generate a UUID
   const customerEmail = email;
   const customerName = name;
-  const customerProducts = products.split(',');
+  const customerProducts = products.split(",");
   const downloadLink = `https://kidstutor.co/download?email=${encodeURIComponent(
     customerEmail
   )}&uuid=${uuid}`;
@@ -102,7 +104,14 @@ const CustomerHandler = async (email, name, products) => {
     to: customerEmail,
     subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para tí.`,
     // text: "Este es id de tu producto" + `${customerProducts}`,
-    text: downloadLink,
+    // text: <MailTemplate username={customerName} link={downloadLink} email={customerEmail} />,
+    html: ReactDOMServer.renderToString(
+      <MailTemplate
+        username={customerName}
+        link={downloadLink}
+        email={customerEmail}
+      />
+    ),
   };
 
   const info = await transporter.sendMail(mailOptions);
