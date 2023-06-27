@@ -9,8 +9,9 @@ import { useRouter } from "next/router";
 import { Button } from "@aws-amplify/ui-react";
 import { Alert } from "@aws-amplify/ui-react";
 import { useCartContext } from "@/context/CartContext";
-
+import LanguageSelector from "@/components/LanguageSelector";
 import MyCart from "./MyCart";
+import { useTranslation } from "react-i18next";
 
 const MyNavBar = ({ allProducts, total, signOut }) => {
   const { isCartOpen, toggleCart, cartItems, asset } = useCartContext();
@@ -31,6 +32,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
   };
 
   const handleMenuClick = () => setShowMenu(!showMenu);
+  const { t, i18n } = useTranslation();
   // console.log(cartItems);
   // console.log(asset)
   return (
@@ -83,15 +85,16 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
           } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
         >
           <div className="text-sm lg:flex-grow text-center">
+            <LanguageSelector />
             <Link href="/" className={styleButton}>
-              Home
+              {t("home")}
             </Link>
 
             <Link href="/free-resources" className={styleButton}>
-              Recursos Gratuitos
+              {t("free resources")}
             </Link>
             <Link href="/products" className={styleButton}>
-              Productos
+              {t("products")}
             </Link>
             <Link
               href="https://www.youtube.com/@kidstutorstem"
@@ -99,7 +102,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               rel="noopener noreferrer"
               className={styleButton}
             >
-              Youtube
+              Yout
             </Link>
             <Link href="/blog" className={styleButton}>
               Blog
