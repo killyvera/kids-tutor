@@ -14,7 +14,7 @@ i18n
         translation: require("../locales/es.json"),
       },
     },
-    fallbackLng: "en",
+    fallbackLng: "es",
     detection: {
       order: ["querystring", "cookie", "localStorage", "navigator"],
       caches: ["localStorage"],

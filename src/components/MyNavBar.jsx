@@ -64,6 +64,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               className="transition hover:scale-110"
             />
           </Link>
+          <LanguageSelector />
         </div>
         <div className="block lg:hidden">
           <button
@@ -85,7 +86,6 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
           } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
         >
           <div className="text-sm lg:flex-grow text-center">
-            <LanguageSelector />
             <Link href="/" className={styleButton}>
               {t("home")}
             </Link>

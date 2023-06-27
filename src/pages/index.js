@@ -37,12 +37,12 @@ export default function Home({
   allProducts,
   total,
 }) {
-  const { t, i18n } = useTranslation();
+  // const { t, i18n } = useTranslation();
   return (
     <>
       <Head>
-        <title>{t("home title")}</title>
-        <meta name="description" content={t("description")} />
+        <title>KidsTutor, aprender es divertirse.</title>
+        <meta name="description" content="Con los juegos cartas y descargables de Kids Tutor tu hijo aprenderá de una manera divertida y con un estandar internacional certificado." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
