@@ -7,6 +7,8 @@ import { useState } from "react";
 import { ThemeProvider } from "@aws-amplify/ui-react";
 import Layout from "@/components/Layout";
 import { CartProvider } from "@/context/CartContext";
+import { I18nextProvider } from "react-i18next";
+import i18n from "../utils/i18n";
 
 Amplify.configure({ ...awsexports, ssr: true });
 
@@ -15,15 +17,20 @@ export default function App({ Component, pageProps }) {
   const [total, setTotal] = useState();
   const [countProducts, setCountProducts] = useState(0);
   return (
-    <Authenticator.Provider>
-      <ThemeProvider>
-        {" "}
-        <CartProvider>
-        <Layout>
-        <Component {...pageProps} allProducts={allProducts} total={total} />
-        </Layout>
-        </CartProvider>
-      </ThemeProvider>
-    </Authenticator.Provider>
+    <I18nextProvider i18n={i18n}>
+      <Authenticator.Provider>
+        <ThemeProvider>
+          <CartProvider>
+            <Layout>
+              <Component
+                {...pageProps}
+                allProducts={allProducts}
+                total={total}
+              />
+            </Layout>
+          </CartProvider>
+        </ThemeProvider>
+      </Authenticator.Provider>
+    </I18nextProvider>
   );
 }

@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 
 import { Resources, ResourcesCategory, Category } from "@/models";
 import ResourceDetail from "@/components/ResourceDetail";
+import MyAuth from "@/components/MyAuth";
 
 export async function getStaticPaths({ req }) {
   const SSR = withSSRContext({ req });
@@ -41,10 +42,12 @@ export async function getStaticProps(context) {
 export default function resource({ resource, categories }) {
   // console.log(categories, resource);
   return (
-    <ResourceDetail
-      element={resource}
-      type={"free-resources"}
-      categories={categories}
-    />
+    <MyAuth>
+      <ResourceDetail
+        element={resource}
+        type={"free-resources"}
+        categories={categories}
+      />
+    </MyAuth>
   );
 }
