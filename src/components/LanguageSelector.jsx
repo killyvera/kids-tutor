@@ -5,7 +5,7 @@ import { useState } from "react";
 const LanguageSelector = () => {
     const { i18n } = useTranslation();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState("es");
+    const [selectedLanguage, setSelectedLanguage] = useState("mx");
   
     const languageMap = {
       us: {lang: "en", flag: "us", label: "North America" },
