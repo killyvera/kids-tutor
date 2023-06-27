@@ -37,7 +37,7 @@ export default function Home({
   allProducts,
   total,
 }) {
-  const { t, i18n } = useTranslation();
+  // const { t, i18n } = useTranslation();
   return (
     <>
       <Head>
