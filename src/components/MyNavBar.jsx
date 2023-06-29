@@ -102,13 +102,13 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               rel="noopener noreferrer"
               className={styleButton}
             >
-              Yout
+              {t("youtube")}
             </Link>
             <Link href="/blog" className={styleButton}>
-              Blog
+              {t("blog")}
             </Link>
             <Link href="/contact" className={styleButton}>
-              Contactanos
+              {t("contact")}
             </Link>
           </div>
           <div className="flex">
@@ -144,16 +144,16 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                   className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110"
                   onClick={handleSignOut}
                 >
-                  Sign Out
+                  {t("sign out")}
                 </button>
               </div>
             ) : (
               <p className="mx-1 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
                 <Link href={"/login"} className={styleButton}>
-                  Acceder
+                {t("log in")}
                 </Link>
                 <Link href={"/login"} className={styleButton}>
-                  Regístrarse
+                {t("sig in")}
                 </Link>
               </p>
             )}

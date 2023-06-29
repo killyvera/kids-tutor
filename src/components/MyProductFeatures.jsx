@@ -1,6 +1,7 @@
 import { Storage } from "@aws-amplify/storage";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const features = [
   { name: "Origin", description: "Designed by Good Goods, Inc." },
@@ -32,7 +33,17 @@ const product = {
   categories: ["fisica", "juego de mesa"],
 };
 
-export default function MyProductFeatures() {
+export default function MyProductFeatures({
+  title,
+  content,
+  feature1,
+  feature2,
+}) {
+  const featureContent = feature2.content;
+  const schools = featureContent.split(",")
+
+  console.log(schools);
+
   const [image, setImage] = useState("");
   useEffect(() => {
     const fetchImage = async () => {
@@ -48,16 +59,16 @@ export default function MyProductFeatures() {
 
     fetchImage();
   }, []);
-  console.log(image && image);
+  console.log(image && image, feature1);
 
   return (
     <div className="bg-white">
       <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            {product.name}
+            {title && title}
           </h2>
-          <p className="mt-4 text-gray-500">{product.descriptionn}</p>
+          <p className="mt-4 text-gray-500">{content && content}</p>
 
           <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
             <div className="border-t border-gray-200 pt-4">
@@ -66,12 +77,9 @@ export default function MyProductFeatures() {
                 alt="Medalla de Certificado de Excelencia Academica"
                 className=""
               />
-              <dt className="font-medium text-gray-900">
-                Producto con normas educativas Internacionales.
-              </dt>
+              <dt className="font-medium text-gray-900">{feature1.title}</dt>
               <p className="mt-2 text-sm text-gray-500 flex flex-row">
-                Eelaborado considerando los principales programas educativos y
-                colaboraciones con profesorado de clase mundial.{" "}
+                {feature1.content}
               </p>
               <dd className="mt-2 text-sm text-gray-500 flex flex-row">
                 <img
@@ -111,9 +119,7 @@ export default function MyProductFeatures() {
                 alt="Medalla de Certificado de Excelencia Academica"
                 className="pb-4"
               />
-              <dt className="font-medium text-gray-900">
-                Los métodos en los que nos basamos son múltiples.
-              </dt>
+              <dt className="font-medium text-gray-900">{feature2.title}</dt>
               <div className=" flex flex-col bg-gray-100 rounded-md">
                 <a
                   href="https://es.wikipedia.org/wiki/M%C3%A9todo_Montessori"
@@ -126,7 +132,7 @@ export default function MyProductFeatures() {
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
                   />
-                  Método Montessori
+                  {schools[0]}
                 </a>
                 <a
                   href="https://es.wikipedia.org/wiki/Matem%C3%A1ticas_m%C3%A9todo_Singapur"
@@ -139,7 +145,7 @@ export default function MyProductFeatures() {
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
                   />
-                  Sistema educativo de Singapur
+                   {schools[1]}
                 </a>
                 <a
                   href="https://es.wikipedia.org/wiki/Common_Core"
@@ -152,7 +158,7 @@ export default function MyProductFeatures() {
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
                   />
-                  Núcleo común
+                   {schools[2]}
                 </a>
               </div>
             </div>
@@ -218,3 +224,16 @@ export default function MyProductFeatures() {
     </div>
   );
 }
+
+const TitleWrapper = ({ children }) => {
+  return (
+    <motion.div
+      initial={{ x: -1000 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 1 }}
+      className="text-4xl font-bold text-center"
+    >
+      {children}
+    </motion.div>
+  );
+};

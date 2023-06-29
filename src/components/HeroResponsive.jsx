@@ -145,7 +145,7 @@ export default function HeroResponsive(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Haz de la educación una diversión."
+          children={props?.title}
           {...getOverrideProps(overrides, "p1")}
         ></Text>
         <div className="bg-red-400 bg-opacity-10 backdrop-blur-[2px]" >
@@ -170,7 +170,7 @@ export default function HeroResponsive(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Logra que tus hijos aprendan ciencia y matemáticas jugando."
+          children={props?.subtitle}
           {...getOverrideProps(overrides, "p2")}
         ></Text>
         </div>
@@ -251,7 +251,7 @@ export default function HeroResponsive(props) {
             size="large"
             isDisabled={false}
             variation="primary"
-            children="¡Obtén los tuyos ahora!"
+            children={props?.button}
             {...getOverrideProps(overrides, "Button")}
             marginBottom="40px"
           ></Button>
