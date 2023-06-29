@@ -37,19 +37,32 @@ export default function Home({
   allProducts,
   total,
 }) {
-  // const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
+
   return (
     <>
       <Head>
         <title>KidsTutor, aprender es divertirse.</title>
-        <meta name="description" content="Con los juegos cartas y descargables de Kids Tutor tu hijo aprenderá de una manera divertida y con un estandar internacional certificado." />
+        <meta
+          name="description"
+          content="Con los juegos cartas y descargables de Kids Tutor tu hijo aprenderá de una manera divertida y con un estandar internacional certificado."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <HeroResponsive />
+        <HeroResponsive
+          title={t("home hero title")}
+          subtitle={t("home hero subtitle")}
+          button={t("home hero call to action")}
+        />
 
-        <H1>Colegios que usan nuestros métodos y productos de aprendizaje.</H1>
+        <H1
+          subtitle={t("colleges subtitle")
+          }
+        >
+          {t("colleges title")}
+        </H1>
         <MyColleges collegesList={collegesList} />
         {/* <MyCallToAction
               mainText={
@@ -57,11 +70,15 @@ export default function Home({
               }
             /> */}
 
-        <MyProductFeatures />
-        <H1>
-          ¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros
-          clientes satisfechos tienen historias que compartir.
-        </H1>
+        <MyProductFeatures
+          title={t("product features title")}
+          content={t("product features content")}
+          feature1={{title: t("product feature title 1"),content: t("product feature content 1")}}
+          feature2={{title: t("product feature title 2"),content: t("product feature content 2")}}
+          feature3={{title: t("product feature title 3"),content: t("product feature content 3")}}
+          feature4={{title: t("product feature title 4"),content: t("product feature content 4")}}
+        />
+        <H1>{t("testimonials title")}</H1>
         <MyTestimonials testimonialList={testimonialList} />
       </main>
     </>
