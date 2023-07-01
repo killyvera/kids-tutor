@@ -34,9 +34,9 @@ const LanguageSelector = () => {
   }, [selectedLanguage, languageMap]);
 
   return (
-    <div className="relative ml-[5px] mt-[5px]" ref={componentRef}>
+    <div className="pr-[20px] pt-[6px]" ref={componentRef}>
       <button
-        className="absolute top-[-12px] flex items-center transition-all hover:scale-125 hover:pl-[7px] outline-none"
+        className="top-[-12px] flex items-center transition-all hover:scale-125 outline-none"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <img
@@ -51,7 +51,7 @@ const LanguageSelector = () => {
       </button>
 
       {isDropdownOpen && (
-        <div className="absolute top-full left-0 mt-2 py-2 pr-4 bg-white rounded shadow-lg">
+        <div className="absolute top-10 right-7 mt-2 py-2 pr-4 bg-white rounded shadow-lg">
           <button
             className="flex items-center px-3 py-2 transition hover:scale-125"
             onClick={() => handleChangeLanguage("us")}

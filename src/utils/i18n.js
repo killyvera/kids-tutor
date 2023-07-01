@@ -23,7 +23,7 @@ i18n
         translation: require("../locales/es.json"),
       },
     },
-    fallbackLng: langStorage ? langStorage : "en",
+    fallbackLng: langStorage ? langStorage : "es",
     detection: {
       order: ["localStorage", "navigator", "querystring", "cookie"],
       caches: ["localStorage"],

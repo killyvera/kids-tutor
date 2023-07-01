@@ -64,7 +64,6 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               className="transition hover:scale-110"
             />
           </Link>
-          <LanguageSelector />
         </div>
         <div className="block lg:hidden">
           <button
@@ -148,13 +147,14 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                 </button>
               </div>
             ) : (
-              <p className="mx-1 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
+              <p className="mx-1 mt-4 lg:inline-block lg:mt-0 text-white hover:text-white" style={{display: "flex"}} >
                 <Link href={"/login"} className={styleButton}>
                 {t("log in")}
                 </Link>
-                <Link href={"/login"} className={styleButton}>
+                <LanguageSelector />
+                {/* <Link href={"/login"} className={styleButton}>
                 {t("sig in")}
-                </Link>
+                </Link> */}
               </p>
             )}
           </div>
