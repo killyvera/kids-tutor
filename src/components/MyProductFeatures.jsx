@@ -38,9 +38,11 @@ export default function MyProductFeatures({
   content,
   feature1,
   feature2,
+  feature3,
+  feature4,
 }) {
   const featureContent = feature2.content;
-  const schools = featureContent.split(",")
+  const schools = featureContent.split(",");
 
   console.log(schools);
 
@@ -145,7 +147,7 @@ export default function MyProductFeatures({
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
                   />
-                   {schools[1]}
+                  {schools[1]}
                 </a>
                 <a
                   href="https://es.wikipedia.org/wiki/Common_Core"
@@ -158,7 +160,7 @@ export default function MyProductFeatures({
                     alt="Medalla de Certificado de Excelencia Academica"
                     className="h-5 px-4"
                   />
-                   {schools[2]}
+                  {schools[2]}
                 </a>
               </div>
             </div>
@@ -170,7 +172,7 @@ export default function MyProductFeatures({
                 className=""
               />
               <dt className="font-medium text-gray-900">
-                Aprendizaje a través del juego: nuestra filosofía.
+                {feature3.title}
               </dt>
               <dd className="mt-2 text-sm text-gray-500">
                 Encontrar la forma más sencilla y entretenida para aprender es

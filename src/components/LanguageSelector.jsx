@@ -1,10 +1,18 @@
 import { useTranslation } from "react-i18next";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import useOutsideClick from "@/utils/useOutsideClick";
 
 const LanguageSelector = () => {
+  const componentRef = useRef(null);
   const { i18n } = useTranslation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("mx");
+
+  const onClose=()=>{
+    setIsDropdownOpen(false)
+  }
+
+  useOutsideClick(componentRef, onClose);
 
   const languageMap = useMemo(() => {
     return {
@@ -26,9 +34,9 @@ const LanguageSelector = () => {
   }, [selectedLanguage, languageMap]);
 
   return (
-    <div className="relative ml-[5px] mt-[5px]">
+    <div className="relative ml-[5px] mt-[5px]" ref={componentRef}>
       <button
-        className="absolute top-[-12px] flex items-center transition-all hover:scale-125 hover:pl-[7px] focus:outline-none"
+        className="absolute top-[-12px] flex items-center transition-all hover:scale-125 hover:pl-[7px] outline-none"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <img
