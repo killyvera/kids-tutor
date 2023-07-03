@@ -54,7 +54,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                         backdrop-blur-[2px]
                         "
       >
-        <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <div className="flex items-center flex-shrink-0 text-white">
           <Link href={"/"}>
             <Image
               width={"100"}
@@ -65,6 +65,43 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             />
           </Link>
         </div>
+        <div className="block sm:hidden">
+          <LanguageSelector />
+        </div>
+        <div className="relative transition scale-75 hover:scale-100 block sm:hidden">
+          {cartItems?.length >= 1 && (
+            <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
+              {cartItems?.length}
+            </div>
+          )}
+          <Image
+            className="cursor-pointer"
+            width={"32"}
+            height={"32"}
+            src="/cart.png"
+            alt="Cart"
+            // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
+            onClick={() => toggleCart()}
+          />
+        </div>
+        {authStatus === "authenticated" ? (
+          <div className="flex flex-row sm:hidden">
+            <div className="flex flex-row transition scale-75 hover:scale-100">
+              <Image
+                className="cursor-pointer"
+                width={"32"}
+                height={"32"}
+                // maxHeight={"24px"}
+                src="/user.png"
+                alt="User"
+                // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+              />
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="block lg:hidden">
           <button
             onClick={handleMenuClick}
@@ -110,8 +147,8 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               {t("contact")}
             </Link>
           </div>
-          <div className="flex">
-            <div className="relative transition hover:scale-125">
+          <div className="hidden lg:flex">
+            <div className="relative transition scale-75 hover:scale-100">
               {cartItems?.length >= 1 && (
                 <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
                   {cartItems?.length}
@@ -129,33 +166,48 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
             </div>
             {authStatus === "authenticated" ? (
               <div className="flex flex-row">
-                <div className="flex flex-row scale-75">
-                  <Image
-                    width={"32"}
-                    height={"32"}
-                    // maxHeight={"24px"}
-                    src="/user.png"
-                    alt="User"
-                    // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
-                  />
+                <div className="flex flex-row transition scale-75 hover:scale-100">
+                  <Link href={"/profile"}>
+                    <Image
+                      className="cursor-pointer"
+                      width={"32"}
+                      height={"32"}
+                      // maxHeight={"24px"}
+                      src="/user.png"
+                      alt="User"
+                      // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
+                    />
+                  </Link>
                 </div>
-                <button
+                {/* <button
                   className="mr-4 bg-blue-500 text-white p-1 rounded transition hover:scale-110"
                   onClick={handleSignOut}
                 >
                   {t("sign out")}
-                </button>
+                </button> */}
+                <div className="relative pl-[75px]">
+                  <div className="absolute right-4 top-1">
+                    <LanguageSelector />
+                  </div>
+                </div>
               </div>
             ) : (
-              <p className="mx-1 mt-4 lg:inline-block lg:mt-0 text-white hover:text-white" style={{display: "flex"}} >
+              <div
+                className="mx-1 mt-4 lg:inline-block lg:mt-0 text-white hover:text-white"
+                style={{ display: "flex" }}
+              >
                 <Link href={"/login"} className={styleButton}>
-                {t("log in")}
+                  {t("log in")}
                 </Link>
-                <LanguageSelector />
+                <div className="relative pl-[75px]">
+                  <div className="absolute right-4 top-1">
+                    <LanguageSelector />
+                  </div>
+                </div>
                 {/* <Link href={"/login"} className={styleButton}>
                 {t("sig in")}
                 </Link> */}
-              </p>
+              </div>
             )}
           </div>
         </div>

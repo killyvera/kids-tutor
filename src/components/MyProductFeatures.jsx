@@ -171,9 +171,7 @@ export default function MyProductFeatures({
                 alt="Medalla de Certificado de Excelencia Academica"
                 className=""
               />
-              <dt className="font-medium text-gray-900">
-                {feature3.title}
-              </dt>
+              <dt className="font-medium text-gray-900">{feature3.title}</dt>
               <dd className="mt-2 text-sm text-gray-500">
                 Encontrar la forma más sencilla y entretenida para aprender es
                 fundamental, Nosotros y tus pequeños sabemos que es jugando.
@@ -187,12 +185,10 @@ export default function MyProductFeatures({
                 className="w-11"
               />
               <dt className="font-medium text-gray-900">
-                Aprendizaje divertido para niños en edad escolar con Kids Tutor.
+                {feature4?.title}
               </dt>
               <dd className="mt-2 text-sm text-gray-500">
-                Refuerza el aprendizaje de matemáticas y otros conceptos
-                escolares mediante juegos y actividades divertidas con Kids
-                Tutor.
+                {feature4?.content}
               </dd>
             </div>
           </dl>

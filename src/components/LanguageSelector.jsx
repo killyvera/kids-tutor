@@ -33,8 +33,45 @@ const LanguageSelector = () => {
     document.title = languageMap[selectedLanguage].label;
   }, [selectedLanguage, languageMap]);
 
+  const [countryCode, setCountryCode] = useState('');
+
+  // useEffect(() => {
+  //   const fetchCountryCode = () => {
+  //     if (navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition((position) => {
+  //         const latitude = position.coords.latitude;
+  //         const longitude = position.coords.longitude;
+  //         console.log(latitude, longitude)
+
+  //         // Aquí puedes utilizar servicios de geocodificación inversa para obtener el país basado en las coordenadas (latitude y longitude)
+  //         // Por ejemplo, puedes utilizar la API de OpenCage Geocoder (https://opencagedata.com/) o la API de Nominatim (https://nominatim.org/)
+
+  //         // Ejemplo de uso de la API de OpenCage Geocoder:
+  //         // const apiKey = 'TU_CLAVE_DE_API';
+  //         // const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+  //         // fetch(apiUrl)
+  //         //   .then(response => response.json())
+  //         //   .then(data => {
+  //         //     const country = data.results[0].components.country_code;
+  //         //     setCountryCode(country);
+  //         //   })
+  //         //   .catch(error => console.error('Error al obtener el código del país:', error));
+
+  //         // En este ejemplo, se establece un valor predeterminado para countryCode (por ejemplo, 'MX' para México o 'ES' para España)
+  //         setCountryCode('MX');
+  //       }, (error) => {
+  //         console.error('Error al obtener las coordenadas geográficas:', error);
+  //       });
+  //     } else {
+  //       console.error('La geolocalización no está disponible en este navegador.');
+  //     }
+  //   };
+
+  //   fetchCountryCode();
+  // }, []);
+
   return (
-    <div className="pr-[20px] pt-[6px]" ref={componentRef}>
+    <div className="" ref={componentRef}>
       <button
         className="top-[-12px] flex items-center transition-all hover:scale-125 outline-none"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}

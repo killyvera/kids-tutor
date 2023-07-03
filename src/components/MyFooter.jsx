@@ -2,16 +2,18 @@ import React from "react";
 import SocialMediaIcons from "./SocialMediaIcons";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 export default function MyFooter() {
+  const { t, i18n } = useTranslation();
   return (
     <footer style={{ backgroundColor: "#de6868" }}>
       <div className="w-full container mx-auto p-4 md:px-6 md:py-8">
         <div className="sm:flex sm:items-center sm:justify-between">
           <Link href="/" className="flex items-center mb-4 sm:mb-0">
             <Image
-            width={50}
-            height={50}
+              width={50}
+              height={50}
               src="/logoFull.png"
               className=" mr-3 transition hover:scale-125"
               alt="Kids Tutor Logo"
@@ -25,19 +27,19 @@ export default function MyFooter() {
           </ul>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-100 sm:mb-0">
             <Link href="/" className="mr-4 hover:underline md:mr-6 ">
-              Home
+              {t("home")}
             </Link>
             <Link href="/products" className="mr-4 hover:underline md:mr-6 ">
-              Productos
+              {t("products")}
             </Link>
             <Link
               href="/free-resources"
               className="mr-4 hover:underline md:mr-6 "
             >
-              Recursos Gratuitos
+              {t("free resources")}
             </Link>
             <Link href="/contact" className="mr-4 hover:underline md:mr-6 ">
-              Contacto
+              {t("contact")}
             </Link>
           </ul>
           <ul>
@@ -45,13 +47,13 @@ export default function MyFooter() {
               href={"/privacy-policy"}
               className="text-white mr-4 hover:underline text-sm"
             >
-              Política de Privacidad
+              {t("privacy policy")}
             </Link>
             <Link
               href={"/terms-and-conditions"}
               className="text-white mr-4 hover:underline text-sm"
             >
-              Terminos y condiciones
+              {t("terms and conditions")}
             </Link>
           </ul>
         </div>
@@ -61,7 +63,7 @@ export default function MyFooter() {
           <a href="https://kidstutor.co/" className="hover:underline">
             Kids Tutor™
           </a>
-          . All Rights Reserved.
+          .{t("all rights")}.
         </span>
       </div>
     </footer>
