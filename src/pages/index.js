@@ -42,10 +42,10 @@ export default function Home({
   return (
     <>
       <Head>
-        <title>KidsTutor, aprender es divertirse.</title>
+        <title>{t("home title")}</title>
         <meta
           name="description"
-          content="Con los juegos cartas y descargables de Kids Tutor tu hijo aprenderá de una manera divertida y con un estandar internacional certificado."
+          content={t("home description")}
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

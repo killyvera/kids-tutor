@@ -2,6 +2,15 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
+var langStorage = ""
+
+if (typeof window !== "undefined") {
+  // Perform localStorage action
+  const lang = localStorage.getItem("i18nextLng");
+  langStorage = lang
+  console.log(langStorage)
+}
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -14,9 +23,9 @@ i18n
         translation: require("../locales/es.json"),
       },
     },
-    fallbackLng: "es",
+    fallbackLng: langStorage ? langStorage : "es",
     detection: {
-      order: ["querystring", "cookie", "localStorage", "navigator"],
+      order: ["localStorage", "navigator", "querystring", "cookie"],
       caches: ["localStorage"],
     },
     interpolation: {
