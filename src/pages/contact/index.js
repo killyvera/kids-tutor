@@ -21,26 +21,28 @@ import MyResources from "@/components/MyResources";
 import MyPostList from "@/ui-components/MyPostList";
 import ContactCreateForm from "@/components/ContactCreateForm";
 import MyContact from "@/components/MyContact";
+import { useTranslation } from "react-i18next";
 
 Amplify.configure(awsexports);
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { t, i18n } = useTranslation();
   return (
     <>
       <Head>
-        <title>Kids Tutor Blog</title>
+        <title>{t("contact title")}</title>
         <meta
           name="description"
-          content="Kids Tutor educational kits for children"
+          content={"contact description"}
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <H1>Quieres conocernos? Envíanos un mensaje.</H1>
-        <MyContact />
+        <H1>{t("contact header")}</H1>
+        <MyContact translation={{title:t("contact form title"), content:t("contact form content")}} />
       </main>
     </>
   );

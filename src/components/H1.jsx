@@ -32,10 +32,11 @@ const H1 = ({ children, subtitle }) => {
     <motion.h1
       whileInView={{ x: [-100, 0], opacity: [0, 1] }}
       transition={{ duration: 0.5 }}
-      className={`mx-9 text-center text-4xl md:text-${fontSize} font-bold text-gray-100 my-20`}
+      className={`mx-9 text-center text-4xl md:text-${fontSize} font-bold text-gray-100`}
+      style={{marginTop: "60px"}}
     >
       {children}
-      <p className="text-lg font-light pt-4">{subtitle}</p>
+      <p className="text-lg font-light pt-4 pb-4">{subtitle}</p>
     </motion.h1>
   );
 };

@@ -15,6 +15,8 @@ import {
 } from "@aws-amplify/ui-react";
 import Layout from "@/components/Layout";
 
+import { useTranslation } from "react-i18next";
+
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
   const postList = await DataStore.query(BlogPost);
@@ -47,19 +49,20 @@ export async function getServerSideProps() {
 
 function Blog({ allProducts, total, postList, categories, postCategories }) {
   console.log(postList, categories, postCategories);
+  const { t, i18n } = useTranslation();
   return (
     <>
       <Head>
-        <title>Kids Tutor Blog</title>
+        <title>{t("blog title")}</title>
         <meta
           name="description"
-          content="Kids Tutor educational kits for children"
+          content={t("blog description")}
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
-        <H1>Artículos de interés sobre educación y tu hijo.</H1>
+        <H1>{t("blog header")}</H1>
         <MyPosts
           postList={postList}
           categories={categories}

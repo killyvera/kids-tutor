@@ -3,7 +3,7 @@ import { useState } from "react";
 import MyBadgeList from "./MyBadgeList";
 import MyCardResource from "./MyCardResource";
 
-function MyResources({ resourceList, categories, resourceCategories }) {
+function MyResources({featureCard, resourceList, categories, resourceCategories }) {
 console.log(resourceList, categories, resourceCategories)
 
   const [resources, setResources] = useState(resourceList);
@@ -40,11 +40,11 @@ console.log(resourceList, categories, resourceCategories)
                   </svg>
                 </p>
                 <p className="inline text-xs font-medium">
-                  ¡Nuevo Contenido Gratis!
+                  {featureCard?.badge}
                 </p>
               </div>
               <a className="text-4xl font-bold leading-none lg:text-5xl xl:text-6xl">
-                Más Plantillas ✂. 🦖Más Juegos.
+                {featureCard?.title}
               </a>
             </div>
           </div>
