@@ -1,11 +1,9 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;/* styles/globals.css */
-
+@tailwind utilities; /* styles/globals.css */
 
 @import "~@aws-amplify/ui-react/styles.css";
 @import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap");
-
 
 .slick-next:before,
 .slick-prev:before {
@@ -28,13 +26,12 @@
   background-color: #63a2ff;
 }
 
-
 .amplify-button--primary:hover {
   background-color: #63a2ff;
   scale: 1.1;
 }
 .amplify-button--primary:focus {
-  background-color: #80B3FF;
+  background-color: #80b3ff;
   scale: 1.1;
 }
 .amplify-tabs-item[data-state="active"] {
@@ -54,3 +51,12 @@
 .amplify-tabs-item {
   border-color: pink;
 }
+
+.font-gloria {
+  font-family: "Gloria Hallelujah";
+  font-weight: bold;
+}
+/* .blur{
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+} */

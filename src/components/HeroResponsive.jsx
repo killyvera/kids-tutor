@@ -1,263 +1,56 @@
-/***************************************************************************
- * The contents of this file were generated with Amplify Studio.           *
- * Please refrain from making any modifications to this file.              *
- * Any changes to this file will be overwritten when running amplify pull. *
- **************************************************************************/
-
-/* eslint-disable */
-import * as React from "react";
-import {
-  getOverrideProps,
-  getOverridesFromVariants,
-  mergeVariantsAndOverrides,
-} from "@aws-amplify/ui-react/internal";
-import {
-  Button,
-  Flex,
-  Image,
-  Text,
-  useBreakpointValue, View
-} from "@aws-amplify/ui-react";
-import {motion} from 'framer-motion'
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function HeroResponsive(props) {
-  const { overrides: overridesProp, ...restProp } = props;
-  const router = useRouter()
-  const variants = [
-    {
-      overrides: {
-        logo: {},
-        p1: {},
-        p2: {},
-        acreditationImage1: {},
-        acreditationImage2: {},
-        acreditationImage3: {},
-        Button: {},
-        grid: {},
-        "Frame 420": {},
-        HeroResponsive: {},
-      },
-      variantValues: { breakpoint: "large" },
-    },
-    {
-      overrides: {
-        logo: {},
-        p1: { width: "unset", alignSelf: "stretch" },
-        p2: { width: "unset", height: "", alignSelf: "stretch" },
-        acreditationImage1: {},
-        acreditationImage2: {},
-        acreditationImage3: {},
-        Button: { size: "sm" },
-        grid: {
-          direction: "column",
-          width: "100%",
-          height: "412px",
-          justifyContent: "center",
-          padding: "0px 0px 0px 0px",
-        },
-        "Frame 420": { gap: "29px", width: "100%", height: "974px" },
-        HeroResponsive: { width: "100%", height: "1075px" },
-      },
-      variantValues: { breakpoint: "small" },
-    },
-  ];
-  const breakpointHook = useBreakpointValue({
-    base: "small",
-    small: "small",
-    large: "large",
-  });
-  const rest = { style: { transition: "" }, ...restProp };
-  const overrides = mergeVariantsAndOverrides(
-    getOverridesFromVariants(variants, {
-      breakpoint: breakpointHook,
-      ...props,
-    }),
-    overridesProp || {}
-  );
+const HeroResponsive = (props) => {
+  const router = useRouter();
+  const [isBlurred, setIsBlurred] = useState(false);
+
+  useEffect(() => {
+    const blurTimeout = setTimeout(() => {
+      setIsBlurred(true);
+    }, 1000);
+
+    return () => clearTimeout(blurTimeout);
+  }, []);
+
   return (
-    <Flex
-      className='pt-4'
-      gap="0"
-      direction="column"
-      width="100%"
-      height="702px"
-      justifyContent="center"
-      alignItems="center"
-      overflow="hidden"
-      position="relative"
-      padding="0px 0px 0px 0px"
-      display="flex"
-      {...getOverrideProps(overrides, "HeroResponsive")}
-      {...rest}
-    >
-      <Flex
-        className=""
-        style={{
-          backgroundImage: "url('/back.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}
-        gap="45px"
-        direction="column"
-        width="unset"
-        height="597px"
-        justifyContent="center"
-        alignItems="center"
-        shrink="0"
-        alignSelf="stretch"
-        position="relative"
-        padding="70px 0px 0px 0px"
-        display="flex"
-        {...getOverrideProps(overrides, "Frame 420")}
-      >
-        <Image
-          className="hover:scale-125 transition duration-300"
+    <div className="relative py-4">
+      <div
+        className={`absolute inset-0 bg-cover bg-center bg-no-repeat backdrop-filter ${
+          isBlurred ? "blur-[4px]" : "blur-none"
+        } transition-all duration-500`}
+        style={{ backgroundImage: "url('/background-kidstutor.png')", marginTop:"55px"}}
+      />
+      <div className="relative flex flex-col items-center justify-center">
+        <img
+          className="scale-75 mt-7 hover:scale-[0.82] transition duration-300"
           src="/logoFull.png"
-          width="195px"
-          height="182px"
-          display="block"
-          gap="unset"
-          alignItems="unset"
-          justifyContent="unset"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          objectFit="contain"
-          {...getOverrideProps(overrides, "logo")}
-        ></Image>
-        <Text
-          fontFamily="Gloria Hallelujah"
-          fontSize="40px"
-          fontWeight="600"
-          color="rgba(255,255,255,1)"
-          lineHeight="40.21173095703125px"
-          textAlign="center"
-          display="block"
-          direction="column"
-          justifyContent="unset"
-          width="783px"
-          height="unset"
-          gap="unset"
-          alignItems="unset"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          whiteSpace="pre-wrap"
-          children={props?.title}
-          {...getOverrideProps(overrides, "p1")}
-        ></Text>
-        <div className="bg-red-400 bg-opacity-10 backdrop-blur-[2px]" >
-        <Text
-        backgroundColor=""
-        borderRadius="3px"
-          fontFamily=""
-          fontSize="25px"
-          fontWeight="450"
-          color="white"
-          lineHeight="33.25407028198242px"
-          textAlign="center"
-          display="block"
-          direction="column"
-          justifyContent="unset"
-          letterSpacing="-0.75px"
-          width=""
-          height=""
-          gap="unset"
-          alignItems="unset"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          whiteSpace="pre-wrap"
-          children={props?.subtitle}
-          {...getOverrideProps(overrides, "p2")}
-        ></Text>
+          alt="Logo"
+          width="300px"
+          height="300px"
+        />
+        <h1 className="text-4xl text-white text-center font-gloria">
+          {props.title}
+        </h1>
+        <div className="mt-8 bg-red-400 bg-opacity-10 backdrop-filter backdrop-blur-[2px]">
+          <p className="bg-transparent text-2xl font-medium text-white text-center px-8">
+            {props.subtitle}
+          </p>
         </div>
-        <>
-        <Flex
-          className="hover:scale-x-110 hover:scale-y-110 transition duration-300"
-          gap="29px"
-          direction="row"
-          width="892px"
-          height="120px"
-          justifyContent="center"
-          alignItems="center"
-          overflow="hidden"
-          shrink="0"
-          position="relative"
-          padding="0px 0px 0px 0px"
-          display="flex"
-          {...getOverrideProps(overrides, "grid")}
+        <div className="flex justify-center mt-8">
+          {/* <img className="hover:scale-x-105 hover:scale-y-105 transition duration-300" src="/acreditationImage1.png" alt="Accreditation" width="90px" height="90px" />
+          <img className="hover:scale-x-105 hover:scale-y-105 transition duration-300" src="/acreditationImage2.png" alt="Accreditation" width="90px" height="90px" />
+          <img className="hover:scale-x-105 hover:scale-y-105 transition duration-300" src="/acreditationImage3.png" alt="Accreditation" width="139px" height="90px" /> */}
+        </div>
+        <button
+          className="scale-75 transition hover:scale-100 px-6 text-2xl lg:px-20 lg:text-3xl font-bold rounded p-3 text-gray-100 bg-blue-500 hover:bg-blue-400 mt-1"
+          onClick={() => router.push("/products")}
         >
-          {/* <Image
-            className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
-            src="/acreditationImage1.png"
-            width="90px"
-            height="90px"
-            display="block"
-            gap="unset"
-            alignItems="unset"
-            justifyContent="unset"
-            shrink="0"
-            position="relative"
-            boxShadow="1px 8px 10px rgba(0, 0, 0, 0.25)"
-            borderRadius="4px"
-            padding="0px 0px 0px 0px"
-            objectFit="cover"
-            {...getOverrideProps(overrides, "acreditationImage1")}
-          ></Image>
-          <Image
-            className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
-            src="/acreditationImage2.png"
-            width="90px"
-            height="90px"
-            display="block"
-            gap="unset"
-            alignItems="unset"
-            justifyContent="unset"
-            shrink="0"
-            position="relative"
-            boxShadow="1px 8px 10px rgba(0, 0, 0, 0.25)"
-            borderRadius="4px"
-            padding="0px 0px 0px 0px"
-            objectFit="cover"
-            {...getOverrideProps(overrides, "acreditationImage2")}
-          ></Image>
-          <Image
-            className="hover:scale-x-105 hover:scale-y-105 transition duration-300"
-            src="/acreditationImage3.png"
-            width="139px"
-            height="90px"
-            display="block"
-            gap="unset"
-            alignItems="unset"
-            justifyContent="unset"
-            shrink="0"
-            position="relative"
-            boxShadow="1px 8px 10px rgba(0, 0, 0, 0.25)"
-            borderRadius="4px"
-            padding="0px 0px 0px 0px"
-            objectFit="cover"
-            {...getOverrideProps(overrides, "acreditationImage3")}
-          ></Image> */}
-          <Button
-            // className="rounded p-3 text-gray-100"
-            onClick={()=>{router.push('/products')}}
-            width="300px"
-            height="unset"
-            shrink="0"
-            boxShadow="1px 8px 10px rgba(0.32083332538604736, 0.32083332538604736, 0.32083332538604736, 0.5699999928474426)"
-            size="large"
-            isDisabled={false}
-            variation="primary"
-            children={props?.button}
-            {...getOverrideProps(overrides, "Button")}
-            marginBottom="40px"
-          ></Button>
-        </Flex>
-        </>
-      </Flex>
-    </Flex>
+          {props.button}
+        </button>
+      </div>
+    </div>
   );
-}
+};
+
+export default HeroResponsive;

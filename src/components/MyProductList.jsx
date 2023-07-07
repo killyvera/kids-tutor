@@ -6,7 +6,7 @@ import Link from "next/link";
 import MyProductCard from "./MyProductCard";
 import MyProduct from "./MyProduct";
 
-function MyProductList({ list, categories, productCategories }) {
+function MyProductList({ filterTranslate,list, categories, productCategories }) {
   const [filter, setFilter]= useState('todos')
   const [firstPost, ...postList] = list;
   const [filteredProducts, setFilteredProducts] = useState(list);
@@ -26,7 +26,7 @@ function MyProductList({ list, categories, productCategories }) {
   // console.log(productCategories)
 
   return (
-    <div className="text-gray-900 pt-12 pr-0 pb-14 pl-0 bg-white">
+    <div className="text-gray-900 pr-0 pb-14 pl-0 bg-white">
       <div
         className="w-full pt-4 pr-5 pb-6 pl-5 mt-0 mr-auto mb-0 ml-auto space-y-5 sm:py-8 md:py-12 sm:space-y-8 md:space-y-16
       max-w-7xl"
@@ -90,20 +90,20 @@ function MyProductList({ list, categories, productCategories }) {
             Filtrar productos por:
           </div> */}
           <button
-            className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === 'todos' ? 'bg-blue-900 text-white' : ''} transition hover:scale-125`}
+            className={`px-1 rounded text-white ${filter === 'todos' ? 'bg-blue-500 text-white' : 'bg-gray-500 py-2'} transition hover:scale-125`}
             onClick={() => handleFilterClick("todos")}
           >
-            Todos
+            {filterTranslate?.all}
           </button>
-          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "physical" ? 'bg-blue-900 text-white' : ''} transition hover:scale-125`}
+          <button className={`py-2 px-1 rounded text-white ${filter === "physical" ? 'bg-blue-500 text-white' : 'bg-gray-500 py-2'} transition hover:scale-125`}
           onClick={() => handleFilterClick("physical")}
           >
-            Fisicos{" "}
+            {filterTranslate?.physical}
           </button>
-          <button className={`bg-blue-500 py-2 px-1 rounded text-white ${filter === "downloadable" ? 'bg-blue-900 text-white' : ''} transition hover:scale-125`}
+          <button className={`py-2 px-1 rounded text-white ${filter === "downloadable" ? 'bg-blue-500 text-white' : 'bg-gray-500 py-2'} transition hover:scale-125`}
           onClick={() => handleFilterClick("downloadable")}
           >
-            Descargables
+            {filterTranslate?.downloadable}
           </button>
         </div>
         <div className="grid grid-cols-12 sm:px-5 sm:gap-x-8 gap-y-16">

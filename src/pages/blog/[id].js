@@ -21,7 +21,7 @@ export async function getStaticProps(context) {
   const postCategories = await SSR.DataStore.query(BlogPostCategory, (c) =>
     c.blogPostId.eq(context.params.id)
   );
-  const categoryIds = postCategories.map((pc)=> pc.categoryId);
+  const categoryIds = postCategories.map((pc) => pc.categoryId);
 
   const categories = await Promise.all(
     categoryIds.map(async (categoryId) => {
@@ -38,9 +38,5 @@ export async function getStaticProps(context) {
 }
 
 export default function post({ post, categories }) {
-  return (
-    <Layout>
-      <PostDetail element={post} categories={categories} type={"post"} />
-    </Layout>
-  );
+  return <PostDetail element={post} categories={categories} type={"post"} />;
 }

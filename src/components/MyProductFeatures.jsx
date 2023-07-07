@@ -64,14 +64,15 @@ export default function MyProductFeatures({
   console.log(image && image, feature1);
 
   return (
-    <div className="bg-white">
-      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 py-24 px-4 sm:px-6 sm:py-32 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
+    <div className="bg-white py-24">
+      <div className="w-[80%]">
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          {title && title}
+        </h2>
+        <p className="text-gray-500">{content && content}</p>
+      </div>
+      <div className="mx-auto grid max-w-2xl grid-cols-1 items-center gap-y-16 gap-x-8 px-4 sm:px-6 pt-8 lg:max-w-7xl lg:grid-cols-2 lg:px-8">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            {title && title}
-          </h2>
-          <p className="mt-4 text-gray-500">{content && content}</p>
-
           <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
             <div className="border-t border-gray-200 pt-4">
               <img
@@ -173,8 +174,7 @@ export default function MyProductFeatures({
               />
               <dt className="font-medium text-gray-900">{feature3.title}</dt>
               <dd className="mt-2 text-sm text-gray-500">
-                Encontrar la forma más sencilla y entretenida para aprender es
-                fundamental, Nosotros y tus pequeños sabemos que es jugando.
+                {feature3?.content}
               </dd>
             </div>
 
@@ -184,9 +184,7 @@ export default function MyProductFeatures({
                 alt="Medalla de Certificado de Excelencia Academica"
                 className="w-11"
               />
-              <dt className="font-medium text-gray-900">
-                {feature4?.title}
-              </dt>
+              <dt className="font-medium text-gray-900">{feature4?.title}</dt>
               <dd className="mt-2 text-sm text-gray-500">
                 {feature4?.content}
               </dd>

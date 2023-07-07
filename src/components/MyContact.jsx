@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Contact } from "../models"; // Importa el modelo Contact de DataStore
 import { DataStore } from "aws-amplify";
 
-export default function MyContact() {
+export default function MyContact({ translation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -32,17 +32,12 @@ export default function MyContact() {
   };
 
   return (
-    <div className="text-gray-900 py-10 pr-0 pl-0 bg-white m-5 rounded">
+    <div className="text-gray-900 py-24 pr-0 pl-0 bg-white m-5 rounded">
       <section className="text-gray-800">
         <div className="flex flex-wrap">
           <div className="grow-0 shrink-0 basis-auto mb-6 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
-            <h2 className="text-3xl font-bold mb-6">Contact us</h2>
-            <p className="text-gray-500 mb-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laudantium, modi accusantium ipsum corporis quia asperiores
-              dolorem nisi corrupti eveniet dolores ad maiores repellendus enim
-              autem omnis fugiat perspiciatis? Ad, veritatis.
-            </p>
+            <h2 className="text-3xl font-bold mb-6">{translation?.title}</h2>
+            <p className="text-gray-500 mb-6">{translation?.content}</p>
             <p className="text-gray-500 mb-2">New York, 94126, United States</p>
             <p className="text-gray-500 mb-2">+ 01 234 567 89</p>
             <p className="text-gray-500 mb-2">info@gmail.com</p>
@@ -82,7 +77,7 @@ export default function MyContact() {
                   required
                 ></textarea>
               </div>
-              
+
               <button
                 type="submit"
                 className="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"

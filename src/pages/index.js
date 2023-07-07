@@ -64,6 +64,7 @@ export default function Home({
           {t("colleges title")}
         </H1>
         <MyColleges collegesList={collegesList} />
+        <H1 subtitle={t("colleges subtitle 2")} style={{padding: "0px"}} />
         {/* <MyCallToAction
               mainText={
                 "Alto Nivel Academico, gracias a la labor conjunta basada en resultados con nuestro equipo de expertos."
