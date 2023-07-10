@@ -156,26 +156,27 @@ const UserProfile = () => {
         if (attributes["identities"]) {
           const identities = JSON.parse(attributes["identities"]);
           const provider = identities[0].providerName;
+          const accessToken = JSON.parse(signInUserSession.accessToken.jwtToken)
 
           if (provider === "Facebook") {
             // Obtener datos del usuario de Facebook
             const response = await fetch(
-              `https://graph.facebook.com/v13.0/${identities[0].userId}?fields=name,email&access_token=${identities[0].accessToken}`
+              `https://graph.facebook.com/v13.0/${identities[0].userId}?fields=name,email&access_token=${accessToken}`
             );
             const data = await response.json();
-            userData.name = data.name;
             userData.email = data.email;
             console.log(data)
           } else if (provider === "Google") {
             // Obtener datos del usuario de Google
             const response = await fetch(
-              `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${identities[0].accessToken}`
+              `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`
             );
             const data = await response.json();
 
-            userData.name = data.name;
             userData.email = data.email;
             console.log(data)
+          }else{
+            userData.email=data.email
           }
         }
 
