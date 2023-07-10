@@ -15,42 +15,82 @@ const ProductFeatures = (props) => {
 
   return (
     <div className="">
-      <div
-        className={` inset-0 bg-cover bg-center bg-no-repeat`}
-        style={{
-          backgroundImage: "url('/productfeaturesbkg.png')",
-          marginTop: "55px",
-          height:"500px"
-        }}
+    <div className="h-[100%] relative py-60">
+         <div
+        className={`-z-10 absolute inset-0 bg-cover bg-center bg-no-repeat backdrop-filter${
+          isBlurred ? " duration-1000 transition blur-sm" : "blur-none"
+        }`}
+        style={{ backgroundImage: "url('/back00.png')", margin:"0px"}}
       />
-      <div className="relative flex flex-row items-center justify-center">
+      <img
+        className="absolute sm:left-[29%] bottom-[0px] -z-[10] left-0"
+        src="/girl2.png"
+        alt="Featured Product"
+        width="500px"
+        height="500px"
+      />
+      
+        <div className="flex flex-col items-center justify-center space-y-24">
+          {/* 
+           */}
+          <div className="relative w-[50%]" >
         <img
-          className="scale-75 mt-7 hover:scale-[0.82] transition duration-300"
-          src="/logoFull.png"
-          alt="Logo"
-          width="300px"
-          height="300px"
+          className="absolute top-[-330px] left-[370px] scale-[0.50] mt-7 hover:scale-[0.65] transition duration-300 z-10"
+          src="/box.png"
+          alt="Featured Product"
+          width="100%"
+          height="500px"
         />
-        <h1 className="text-4xl text-white text-center font-gloria">
-          {props.title}
-        </h1>
-        <div className="mt-8 bg-red-400 bg-opacity-10 backdrop-filter backdrop-blur-[2px]">
-          <p className="bg-transparent text-2xl font-medium text-white text-center px-8">
-            {props.subtitle}
+        <h1 className="absolute w-[80%] top-[-290px] left-[400px] text-3xl font-gloria text-left text-gray-800 bg-white p-4 rounded-xl shadow-xl transition hover:scale-105">
+            {props.title}
+          </h1>
+          <p className="absolute top-[-100px]  left-[-345px] w-[50%] text-2xl font-medium text-gray-800 bg-white p-4 rounded-xl shadow-xl transition hover:scale-105">
+            {props.content}
           </p>
         </div>
-        <div className="flex justify-center mt-8">
+          {/* <div className="flex justify-center mt-8"> */}
           {/* <img className="hover:scale-x-105 hover:scale-y-105 transition duration-300" src="/acreditationImage1.png" alt="Accreditation" width="90px" height="90px" />
           <img className="hover:scale-x-105 hover:scale-y-105 transition duration-300" src="/acreditationImage2.png" alt="Accreditation" width="90px" height="90px" />
           <img className="hover:scale-x-105 hover:scale-y-105 transition duration-300" src="/acreditationImage3.png" alt="Accreditation" width="139px" height="90px" /> */}
+          {/* </div> */}
         </div>
-        <button
-          className="scale-75 transition hover:scale-100 px-6 text-2xl lg:px-20 lg:text-3xl font-bold rounded p-3 text-gray-100 bg-blue-500 hover:bg-blue-400 mt-1"
-          onClick={() => router.push("/products")}
-        >
-          {props.button}
-        </button>
       </div>
+      <div className="pt-40 bg-white" >
+      <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          {props?.feature1?.title}
+        </h2>
+        <p className="text-gray-500">{props?.feature1?.content}</p>
+        <dd className="mt-2 text-sm text-gray-500 flex flex-row py-8 w-[85%]">
+                <img
+                  src="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/us.svg"
+                  alt="Bandera de Estados Unidos"
+                  className="h-[120px] w-[120px] object-contain mx-auto transition hover:scale-125"
+                  loading="lazy"
+                  title="USA"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/jp.svg"
+                  alt="Bandera de Japon"
+                  className="h-[120px] w-[120px] object-contain mx-auto transition hover:scale-125"
+                  loading="lazy"
+                  title="Japan"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/es.svg"
+                  alt="Bandera de España"
+                  className="h-[120px] w-[120px] object-contain mx-auto transition hover:scale-125"
+                  loading="lazy"
+                  title="Spain"
+                />
+                <img
+                  src="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/flags/4x3/mx.svg"
+                  alt="Bandera de México"
+                  className="h-[120px] w-[120px] object-contain mx-auto transition hover:scale-125"
+                  loading="lazy"
+                  title="Mexico"
+                />
+              </dd>
+        </div>
     </div>
   );
 };

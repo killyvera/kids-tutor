@@ -1,6 +1,6 @@
   {
-    "home title": "Kids Tutor, aprendender es divertido.",
-    "description": "Con los juegos cartas y descargables de Kids Tutor tu hijo aprenderá de una manera divertida y con un estandar internacional certificado.",
+    "home title": "Kids Tutor™, aprendender es divertido.",
+    "description": "Con los juegos cartas y descargables de Kids Tutor™ tu hijo aprenderá de una manera divertida y con un estandar internacional certificado.",
     "home": "Inicio",
     "free resources": "Recursos Gratuitos",
     "products": "Productos",
@@ -17,8 +17,8 @@
     "colleges subtitle": "Descuentos para alumnos. Pide tu código de promoción aquí, o escríbenos un correo a info@kidstutor.co",
     "colleges subtitle 2": "Si eres un colegio y quieres formar una alianza con nosotros, por favor completa el siguiente formulario.",
     "testimonials title": "¿Quieres saber cómo mejorar la educación de tus pequeños? Nuestros clientes satisfechos tienen historias que compartir.",
-    "product features title": "Kids Tutor la manera mas divertida de aprender.",
-    "product features content": "Nuestros kits educativos ofrecen una forma interactiva y entretenida de mejorar las habilidades de inglés y matemáticas de tus hijos. Con actividades lúdicas, desafíos divertidos y materiales de alta calidad, Kids Tutor es la opción ideal para fortalecer el aprendizaje de tus hijos. ¡Descubre nuestros juegos didácticos hoy y bríndales a tus hijos una forma divertida de aprender mientras juegan!",
+    "product features title": "Transformamos la forma en que se perciben las matemáticas y ciencias.",
+    "product features content": "Con Kids Tutor™ aprender es divertido. Descubre cómo estamos cambiando la forma en que los niños aprenden hoy.",
     "product feature title 1": "Producto con normas educativas Internacionales.",
     "product feature content 1": "Elaborado considerando los principales programas educativos y colaboraciones con profesorado de clase mundial.",
     "product feature title 2": "Los métodos en los que nos basamos son múltiples.",
@@ -50,10 +50,9 @@
     "contact title": "Kids Tutor Contactanos",
     "contact description": "Kids Tutor Contactanos y danos feedback.",
     "contact header": "Quieres conocernos? Envíanos un mensaje.",
-    "contact form title":"Contactanos",
-    "contact form content":"Por favor ponte en contacto con nosotros si tienes cualquier duda sobre nuestros productos y empresa, o simplemente quieres dejar un comentario.",
-    "contact direction":"CDMX",
-    "contact phone":"+52 55 7511 9903",
-    "email":"info@kidstutor.co"
-
+    "contact form title": "Contactanos",
+    "contact form content": "Por favor ponte en contacto con nosotros si tienes cualquier duda sobre nuestros productos y empresa, o simplemente quieres dejar un comentario.",
+    "contact direction": "CDMX",
+    "contact phone": "+52 55 7511 9903",
+    "email": "info@kidstutor.co"
   }

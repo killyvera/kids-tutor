@@ -17,8 +17,8 @@ const HeroResponsive = (props) => {
     <div className="relative py-4">
       <div
         className={`absolute inset-0 bg-cover bg-center bg-no-repeat backdrop-filter ${
-          isBlurred ? "blur-[4px]" : "blur-none"
-        } transition-all duration-500`}
+          isBlurred ? " duration-1000 transition blur-sm" : "blur-none"
+        }`}
         style={{ backgroundImage: "url('/background-kidstutor.png')", marginTop:"55px"}}
       />
       <div className="relative flex flex-col items-center justify-center">
