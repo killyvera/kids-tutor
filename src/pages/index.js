@@ -85,7 +85,8 @@ export default function Home({
           }}
           feature2={{
             title: t("product feature title 2"),
-            content: t("product feature content 2"),
+            schools: t("product feature schools 2"),
+            content:t("product feature content 2")
           }}
           feature3={{
             title: t("product feature title 3"),

@@ -126,7 +126,7 @@ const UserProfile = () => {
 
   const renderUserProfile = () => {
     return (
-      <div className="flex flex-col items-center" >
+      <div className="flex flex-col items-center bg-white mt-[24px] py-14" >
         <h1 className="text-xl font-bold mb-4">Perfil de Usuario</h1>
         {avatar && (
           <img
