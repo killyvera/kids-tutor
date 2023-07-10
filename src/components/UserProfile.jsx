@@ -129,6 +129,7 @@ const UserProfile = () => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
       const { username, attributes } = currentUser;
+      console.log(currentUser, '---current---user--')
 
       // Verificar si ya existe un usuario con el mismo sub_cognito
       const existingUser = await DataStore.query(Users, (u) =>
@@ -164,6 +165,7 @@ const UserProfile = () => {
             const data = await response.json();
             userData.name = data.name;
             userData.email = data.email;
+            console.log(data)
           } else if (provider === "Google") {
             // Obtener datos del usuario de Google
             const response = await fetch(
@@ -173,6 +175,7 @@ const UserProfile = () => {
 
             userData.name = data.name;
             userData.email = data.email;
+            console.log(data)
           }
         }
 
