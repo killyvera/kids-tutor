@@ -164,6 +164,7 @@ const UserProfile = () => {
             const data = await response.json();
             userData.name = data.name;
             userData.email = data.email;
+            console.log(data)
           } else if (provider === "Google") {
             // Obtener datos del usuario de Google
             const response = await fetch(
@@ -173,6 +174,7 @@ const UserProfile = () => {
 
             userData.name = data.name;
             userData.email = data.email;
+            console.log(data)
           }
         }
 
