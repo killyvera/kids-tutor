@@ -64,7 +64,7 @@ export default function MyProductFeatures({
   console.log(image && image, feature1);
 
   return (
-    <div className="bg-white py-24">
+    <div className="bg-white py-20">
       <div className="w-[80%]">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
           {title && title}

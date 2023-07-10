@@ -5,6 +5,7 @@ import { Auth } from "aws-amplify";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useRouter } from "next/router";
 import MyAuth from "@/components/MyAuth";
+import UserProfile from "@/components/UserProfile";
 
 const Profile = ({ user, email, avatar }) => {
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
@@ -21,36 +22,37 @@ const Profile = ({ user, email, avatar }) => {
   };
 
   return (
-    <MyAuth>
-      <div className="">
-        <H1>Welcome, Jhon Doe.</H1>
-        <div className="bg-white text-center py-12" style={{ padding: "40px" }}>
-          <div className="mt-3 overflow-hidden flex flex-col justify-center items-center py-4">
-            <Image
-              className="inline-block rounded-full ring-2 bg-red-400 ring-white"
-              src={"/liverpool.png"}
-              alt={"user avatar"}
-              width={80}
-              height={80}
-            />
-            <h2 className="font-semibold text-3xl space-x-4">
-              Jhon Doe
-            </h2>
-            <div
-              className="flex flex-row space-x-1"
-              style={{ paddingTop: "10px", paddingBottom: "10px" }}
-            >
-              <button className={styleButton}>
-                Mis Compras
-              </button>
-              <button onClick={handleSignOut} className={styleButton}>
-                Cerrar Sesión
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </MyAuth>
+    // <MyAuth>
+    //   <div className="">
+    //     <H1>Welcome, Jhon Doe.</H1>
+    //     <div className="bg-white text-center py-12" style={{ padding: "40px" }}>
+    //       <div className="mt-3 overflow-hidden flex flex-col justify-center items-center py-4">
+    //         <Image
+    //           className="inline-block rounded-full ring-2 bg-red-400 ring-white"
+    //           src={"/liverpool.png"}
+    //           alt={"user avatar"}
+    //           width={80}
+    //           height={80}
+    //         />
+    //         <h2 className="font-semibold text-3xl space-x-4">
+    //           Jhon Doe
+    //         </h2>
+    //         <div
+    //           className="flex flex-row space-x-1"
+    //           style={{ paddingTop: "10px", paddingBottom: "10px" }}
+    //         >
+    //           <button className={styleButton}>
+    //             Mis Compras
+    //           </button>
+    //           <button onClick={handleSignOut} className={styleButton}>
+    //             Cerrar Sesión
+    //           </button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </MyAuth>
+    <UserProfile />
   );
 };
 
