@@ -107,12 +107,12 @@ const ProductFeatures = (props) => {
               href="https://es.wikipedia.org/wiki/M%C3%A9todo_Montessori"
               target="_blank"
               rel="noopener noreferrer"
-              className="items-center text-gray-700 hover:scale-110 font-medium justify-center transition duration-200 text-sm hover:bg-red-400 hover:text-gray-100 rounded-sm my-2 py-2 flex flex-row"
+              className="items-center text-gray-700 hover:scale-110 font-medium justify-center transition duration-200 text-sm hover:bg-red-400 hover:text-gray-100 rounded-xl my-2 px-4 flex flex-row"
             >
               <img
                 src="/montesori.png"
                 alt="Medalla de Certificado de Excelencia Academica"
-                className="h-[100px] px-4"
+                className="h-[90px] px-4"
               />
               {schools[0]}
             </a>
@@ -120,7 +120,7 @@ const ProductFeatures = (props) => {
               href="https://es.wikipedia.org/wiki/Matem%C3%A1ticas_m%C3%A9todo_Singapur"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-700 items-center hover:scale-110 font-medium transition duration-200 text-sm hover:bg-red-400 hover:text-gray-100 rounded-sm my-2 py-2 flex flex-row"
+              className="text-gray-700 items-center hover:scale-110 font-medium transition duration-200 text-sm hover:bg-red-400 hover:text-gray-100 my-2 py-2 px-4 rounded-xl flex flex-row"
             >
               <img
                 src="/singapur.png"
@@ -133,7 +133,7 @@ const ProductFeatures = (props) => {
               href="https://es.wikipedia.org/wiki/Common_Core"
               target="_blank"
               rel="noopener noreferrer"
-              className="items-center text-gray-700 hover:scale-110 font-medium transition duration-200 text-sm hover:bg-red-400 hover:text-gray-100 rounded-sm my-2 py-2 flex flex-row"
+              className="items-center text-gray-700 hover:scale-110 font-medium transition duration-200 text-sm hover:bg-red-400 hover:text-gray-100 px-4 my-2 py-2 flex flex-row rounded-xl"
             >
               <img
                 src="/commoncore.png"

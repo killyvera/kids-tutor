@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Auth, Storage } from "aws-amplify";
 import { DataStore } from "@aws-amplify/datastore";
 import { Users } from "@/models";
+import LogoutButton from "./LogoutButton";
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -43,7 +44,7 @@ const UserProfile = () => {
   const handleBlur = async () => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
-      const { username } = currentUser;
+      const { username, attributes } = currentUser;
 
       // Verificar si ya existe un usuario con el mismo sub_cognito
       const existingUser = await DataStore.query(Users, (u) =>
@@ -124,9 +125,69 @@ const UserProfile = () => {
     }
   };
 
+  const fetchUserData = async () => {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      const { username, attributes } = currentUser;
+
+      // Verificar si ya existe un usuario con el mismo sub_cognito
+      const existingUser = await DataStore.query(Users, (u) =>
+        u.sub_cognito.eq(username)
+      );
+
+      if (existingUser.length > 0) {
+        setUser(existingUser[0]);
+      } else {
+        // Obtener datos del usuario del proveedor de autenticación
+        let userData = {
+          sub_cognito: username,
+          name: "",
+          firstname: "",
+          direction: "",
+          city: "",
+          state: "",
+          country: "",
+          postal_code: "",
+          email: "",
+        };
+
+        // Verificar si el usuario es de Cognito, Facebook o Google
+        if (attributes["identities"]) {
+          const identities = JSON.parse(attributes["identities"]);
+          const provider = identities[0].providerName;
+
+          if (provider === "Facebook") {
+            // Obtener datos del usuario de Facebook
+            const response = await fetch(
+              `https://graph.facebook.com/v13.0/${identities[0].userId}?fields=name,email&access_token=${identities[0].accessToken}`
+            );
+            const data = await response.json();
+            userData.name = data.name;
+            userData.email = data.email;
+          } else if (provider === "Google") {
+            // Obtener datos del usuario de Google
+            const response = await fetch(
+              `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${identities[0].accessToken}`
+            );
+            const data = await response.json();
+
+            userData.name = data.name;
+            userData.email = data.email;
+          }
+        }
+
+        // Crear un nuevo usuario en DataStore con los datos obtenidos
+        const newUser = await DataStore.save(new Users(userData));
+        setUser(newUser);
+      }
+    } catch (error) {
+      console.log("Error al obtener el perfil del usuario:", error);
+    }
+  };
+
   const renderUserProfile = () => {
     return (
-      <div className="flex flex-col items-center bg-white mt-[24px] py-14" >
+      <div className="flex flex-col items-center bg-white mt-[24px] py-14">
         <h1 className="text-xl font-bold mb-4">Perfil de Usuario</h1>
         {avatar && (
           <img
@@ -156,46 +217,12 @@ const UserProfile = () => {
             Guardar
           </button>
         )}
+                  <LogoutButton />
       </div>
     );
   };
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const currentUser = await Auth.currentAuthenticatedUser();
-        const { username } = currentUser;
-
-        // Verificar si ya existe un usuario con el mismo sub_cognito
-        const existingUser = await DataStore.query(Users, (u) =>
-          u.sub_cognito.eq(username)
-        );
-
-        if (existingUser.length > 0) {
-          setUser(existingUser[0]);
-        } else {
-          // Si no existe un perfil, crear uno nuevo en DataStore
-          const newUser = await DataStore.save(
-            new Users({
-              sub_cognito: username,
-              // Asignar valores iniciales para los campos del perfil
-              name: "",
-              firstname: "",
-              direction: "",
-              city: "",
-              state: "",
-              country: "",
-              postal_code: "",
-              email: "",
-            })
-          );
-          setUser(newUser);
-        }
-      } catch (error) {
-        console.log("Error al obtener el perfil del usuario:", error);
-      }
-    };
-
     fetchUserData();
     loadAvatar();
   }, []);
