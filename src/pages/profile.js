@@ -52,7 +52,9 @@ const Profile = ({ user, email, avatar }) => {
     //     </div>
     //   </div>
     // </MyAuth>
-    <UserProfile />
+    <MyAuth>
+      <UserProfile />
+    </MyAuth>
   );
 };
 
