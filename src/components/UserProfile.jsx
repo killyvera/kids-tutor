@@ -17,7 +17,7 @@ const UserProfile = () => {
       const avatarURL = await Storage.get(`avatars/${username}`);
       setAvatar(avatarURL);
     } catch (error) {
-      console.log("Error al cargar el avatar:", error);
+      console.log("El Usuario no tiene avatar:", error);
     }
   };
 
@@ -51,7 +51,7 @@ const UserProfile = () => {
         u.sub_cognito.eq(username)
       );
 
-      if (existingUser.length > 0) {
+      if (existingUser) {
         // Actualizar el perfil del usuario en DataStore
         const updatedUser = await DataStore.save(
           Users.copyOf(existingUser[0], (updated) => {
@@ -135,50 +135,22 @@ const UserProfile = () => {
       const existingUser = await DataStore.query(Users, (u) =>
         u.sub_cognito.eq(username)
       );
-
+      
       if (existingUser.length > 0) {
         setUser(existingUser[0]);
       } else {
         // Obtener datos del usuario del proveedor de autenticación
         let userData = {
           sub_cognito: username,
-          name: "",
+          name: attributes.name,
           firstname: "",
           direction: "",
           city: "",
           state: "",
           country: "",
           postal_code: "",
-          email: "",
+          email:attributes.email
         };
-
-        // Verificar si el usuario es de Cognito, Facebook o Google
-        if (attributes["identities"]) {
-          const identities = JSON.parse(attributes["identities"]);
-          const provider = identities[0].providerName;
-          const accessToken = JSON.parse(signInUserSession.accessToken.jwtToken)
-
-          if (provider === "Facebook") {
-            // Obtener datos del usuario de Facebook
-            const response = await fetch(
-              `https://graph.facebook.com/v13.0/${identities[0].userId}?fields=name,email&access_token=${accessToken}`
-            );
-            const data = await response.json();
-            userData.email = data.email;
-            console.log(data)
-          } else if (provider === "Google") {
-            // Obtener datos del usuario de Google
-            const response = await fetch(
-              `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`
-            );
-            const data = await response.json();
-
-            userData.email = data.email;
-            console.log(data)
-          }else{
-            userData.email=data.email
-          }
-        }
 
         // Crear un nuevo usuario en DataStore con los datos obtenidos
         const newUser = await DataStore.save(new Users(userData));
