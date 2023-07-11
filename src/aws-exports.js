@@ -7,10 +7,10 @@ const awsmobile = {
     "aws_appsync_region": "us-east-1",
     "aws_appsync_authenticationType": "API_KEY",
     "aws_appsync_apiKey": "da2-gg4yocag3jhv3buswewuyzrkja",
-    "aws_cognito_identity_pool_id": "us-east-1:05fa1c5c-fcb2-450d-ab45-c3fa5ef8d825",
+    "aws_cognito_identity_pool_id": "us-east-1:c849c147-b6fa-4be7-b98b-3b85b845494b",
     "aws_cognito_region": "us-east-1",
-    "aws_user_pools_id": "us-east-1_vxnWMWEcG",
-    "aws_user_pools_web_client_id": "6m9sjkjbrpqoq2arv2r0bss5ja",
+    "aws_user_pools_id": "us-east-1_mgN4NoNyf",
+    "aws_user_pools_web_client_id": "39ek03vh89ni6jsp3jdc3kchh",
     "oauth": {
         "domain": "ptslaimxuxy5-staging.auth.us-east-1.amazoncognito.com",
         "scope": [
@@ -20,8 +20,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "https://www.kidstutor.co/",
-        "redirectSignOut": "https://www.kidstutor.co/",
+        "redirectSignIn": "http://localhost:3000/",
+        "redirectSignOut": "http://localhost:3000/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -32,7 +32,10 @@ const awsmobile = {
         "FACEBOOK",
         "GOOGLE"
     ],
-    "aws_cognito_signup_attributes": [],
+    "aws_cognito_signup_attributes": [
+        "EMAIL",
+        "NAME"
+    ],
     "aws_cognito_mfa_configuration": "OFF",
     "aws_cognito_mfa_types": [
         "SMS"
