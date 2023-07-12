@@ -35,8 +35,8 @@ const TestPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-row content-center justify-center items-center h-screen bg-white">
-      <div className=" w-[300px] flex flex-row max-w-lg rounded-lg overflow-hidden shadow-lg items-center content-center self-center">
+    <div className="flex flex-row content-center justify-center items-center h-screen">
+      <div className="flex flex-row max-w-lg w-full rounded-lg overflow-hidden shadow-lg items-center content-center self-center">
         <div className="w-[70%] items-center justify-self-center">
           <img
             src="/logoFull.png"
