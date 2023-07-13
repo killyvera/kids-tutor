@@ -3,31 +3,23 @@ import { Auth, Storage } from "aws-amplify";
 import { DataStore } from "@aws-amplify/datastore";
 import { Users } from "@/models";
 import LogoutButton from "./LogoutButton";
-
+import { StorageManager } from '@aws-amplify/ui-react-storage';
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState(null);
   const [isFieldEdited, setIsFieldEdited] = useState(false);
   const [editableField, setEditableField] = useState(null);
-  const [isUserCreated, setIsUserCreated] = useState(false);
 
-  const loadAvatar = async () => {
-    try {
-      const currentUser = await Auth.currentAuthenticatedUser();
-      const { username } = currentUser;
-      const avatarURL = await Storage.get(`avatars/${username}`);
-      setAvatar(avatarURL);
-    } catch (error) {
-      console.log("El Usuario no tiene avatar:", error);
-    }
-  };
+  
 
   const saveAvatar = async (file) => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
       const { username } = currentUser;
-      await Storage.put(`avatars/${username}`, file);
-      loadAvatar();
+      const filename = `avatars/${username}`;
+      await Storage.put(filename, file);
+      const avatarURL = await Storage.get(filename);
+      setAvatar(avatarURL);
     } catch (error) {
       console.log("Error al guardar el avatar:", error);
     }
@@ -52,27 +44,28 @@ const UserProfile = () => {
         u.sub_cognito.eq(username)
       );
 
-      if (existingUser) {
-        // Actualizar el perfil del usuario en DataStore
-        // const updatedUser = await DataStore.save(
-        //   Users.copyOf(existingUser[0], (updated) => {
-        //     updated.name = user.name;
-        //     updated.firstname = user.firstname;
-        //     updated.direction = user.direction;
-        //     updated.city = user.city;
-        //     updated.state = user.state;
-        //     updated.country = user.country;
-        //     updated.postal_code = user.postal_code;
-        //     updated.email = user.email;
-        //   })
-        // );
+      if (existingUser.length > 0) {
+        const updatedUser = await DataStore.save(
+          Users.copyOf(existingUser[0], (updated) => {
+            updated.name = user.name;
+            updated.firstname = user.firstname;
+            updated.direction = user.direction;
+            updated.city = user.city;
+            updated.state = user.state;
+            updated.country = user.country;
+            updated.postal_code = user.postal_code;
+            updated.email = user.email;
+          })
+        );
         console.log("Perfil actualizado con éxito:", updatedUser);
         setIsFieldEdited(false);
         setEditableField(null);
       } else {
-        console.log(
-          "No se encontró un usuario existente con el mismo sub_cognito"
-        );
+        // Crear un nuevo usuario en DataStore con los datos obtenidos
+        const newUser = await DataStore.save(new Users(user));
+        console.log("Usuario creado con éxito:", newUser);
+        setIsFieldEdited(false);
+        setEditableField(null);
       }
     } catch (error) {
       console.log("Error al actualizar el perfil:", error);
@@ -126,21 +119,50 @@ const UserProfile = () => {
     }
   };
 
-  const fetchUserData = async () => {
+  useEffect(() => {
+    const loadAvatar = async () => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
       const { username, attributes } = currentUser;
-      console.log(currentUser, "---current---user--");
+      let avatarURL = attributes.picture;
+      console.log(avatarURL);
 
-      // Verificar si ya existe un usuario con el mismo sub_cognito
-      const existingUser = await DataStore.query(Users, (u) =>
-        u.sub_cognito.eq(username)
-      );
+      // Paso 1: Revisar si hay un avatar en el storage
 
-      if (existingUser.length > 0) {
-        setUser(existingUser[0]);
+      const avatarList = await Storage.list(`avatars/${username}`);
+      console.log(avatarList);
+      if (avatarList.results.length > 0) {
+        avatarURL = await Storage.get(`avatars/${username}`);
+        setAvatar(avatarURL);
       } else {
-        if (isUserCreated === false) {
+        console.log("El usuario no tiene avatar.");
+        setAvatar(attributes.picture);
+      }
+    } catch (error) {
+      if (error.code === "NoSuchKey" && error.statusCode === 404) {
+        console.log("Error al cargar el avatar: Avatar no encontrado.");
+        // Conservar el picture de cognito como avatar
+        setAvatar(attributes.picture);
+        console.log(avatar);
+      } else {
+        console.log("Error al cargar el avatar:", error);
+      }
+    }
+  };
+    const fetchUserData = async () => {
+      try {
+        const currentUser = await Auth.currentAuthenticatedUser();
+        const { username, attributes } = currentUser;
+        console.log(currentUser, "---current---user--");
+
+        // Verificar si ya existe un usuario con el mismo sub_cognito
+        const existingUser = await DataStore.query(Users, (u) =>
+          u.sub_cognito.eq(username)
+        );
+
+        if (existingUser.length > 0) {
+          setUser(existingUser[0]);
+        } else {
           // Obtener datos del usuario del proveedor de autenticación
           let userData = {
             sub_cognito: username,
@@ -154,18 +176,16 @@ const UserProfile = () => {
             email: attributes.email,
           };
 
-          // Crear un nuevo usuario en DataStore con los datos obtenidos
-          const newUser = await DataStore.save(new Users(userData));
-          setUser(newUser);
-          console.log(isUserCreated)
-          setIsUserCreated(!isUserCreated);
-          console.log(isUserCreated)
+          setUser(userData);
         }
+      } catch (error) {
+        console.log("Error al obtener el perfil del usuario:", error);
       }
-    } catch (error) {
-      console.log("Error al obtener el perfil del usuario:", error);
-    }
-  };
+    };
+
+    fetchUserData();
+    loadAvatar();
+  }, [avatar]);
 
   const renderUserProfile = () => {
     return (
@@ -182,15 +202,17 @@ const UserProfile = () => {
           type="file"
           onChange={(event) => saveAvatar(event.target.files[0])}
           className="mb-4"
-        />
+        /> 
+        
         {renderProfileField("name", "Nombre")}
-        {renderProfileField("firstname", "Apellido")}
+        {renderProfileField("email", "Correo Electrónico")}
+        {/* {renderProfileField("firstname", "Apellido")} */}
         {renderProfileField("direction", "Dirección")}
         {renderProfileField("city", "Ciudad")}
         {renderProfileField("state", "Estado")}
         {renderProfileField("country", "País")}
         {renderProfileField("postal_code", "Código Postal")}
-        {renderProfileField("email", "Correo Electrónico")}
+
         {isFieldEdited && (
           <button
             className="px-4 py-2 mt-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600"
@@ -203,11 +225,6 @@ const UserProfile = () => {
       </div>
     );
   };
-
-  useEffect(() => {
-    fetchUserData();
-    loadAvatar();
-  }, []);
 
   return (
     <div className="container mx-auto py-8">

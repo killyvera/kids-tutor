@@ -14,7 +14,7 @@ export default function MyAuth({ children }) {
       initialAuthState="signUp"
       formFields={formFields}
       components={components}
-      socialProviders={["facebook", "google"]}
+      socialProviders={["google"]} //add facebook later
     >
       {({ signOut, user }) => (
         <>
@@ -33,7 +33,6 @@ const components = {
     return (
       <View
         textAlign="center"
-        
         className="flex flex-row items-center text-center justify-evenly pt-14 pb-4"
       >
         <Link href={"/"}>

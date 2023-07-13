@@ -1,4 +1,4 @@
-import { use, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Auth } from "aws-amplify";
@@ -12,14 +12,21 @@ import { useCartContext } from "@/context/CartContext";
 import LanguageSelector from "@/components/LanguageSelector";
 import MyCart from "./MyCart";
 import { useTranslation } from "react-i18next";
+import { Storage } from "aws-amplify";
+import { DataStore } from "@aws-amplify/datastore";
+import { Users } from "@/models";
 
 const MyNavBar = ({ allProducts, total, signOut }) => {
-  const { isCartOpen, toggleCart, cartItems, asset } = useCartContext();
+  const { toggleCart, cartItems, getGlobalUser } = useCartContext();
 
   const [showMenu, setShowMenu] = useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
   const [active, setActive] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [avatar, setAvatar] = useState(null);
+  const [isFieldEdited, setIsFieldEdited] = useState(false);
+  const [editableField, setEditableField] = useState(null);
+  const [globalUser, setGlobalUser] = useState({});
 
   const handleSignOut = async () => {
     try {
@@ -35,6 +42,17 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
   const { t, i18n } = useTranslation();
   // console.log(cartItems);
   // console.log(asset)
+  useEffect(() => {
+    getGlobalUser()
+      .then((user) => {
+        console.log(user);
+        setGlobalUser(user);
+      })
+      .catch((error) => {
+        console.log("Error al obtener el perfil del usuario:", error);
+      });
+  }, [getGlobalUser]);
+
   return (
     <>
       <MyCart visible={visible} />
@@ -88,11 +106,11 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
           <div className="flex flex-row sm:hidden">
             <div className="flex flex-row transition scale-75 hover:scale-100">
               <Image
-                className="cursor-pointer"
+                className="cursor-pointer rounded-full h-[32px] w-[32px]"
                 width={"32"}
                 height={"32"}
                 // maxHeight={"24px"}
-                src="/user.png"
+                src={globalUser?.picture ? globalUser.picture : "/user.png"}
                 alt="User"
                 // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               />
@@ -147,7 +165,13 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
               {t("contact")}
             </Link>
           </div>
-          <div className="hidden lg:flex">
+          <div className="hidden lg:flex items-center ">
+            {authStatus === "authenticated" && globalUser?.name && (
+              <p className="text-gray-800 scale-75 font-semibold">
+                ¡Hola, {globalUser?.name?.split(" ")[0]}!
+              </p>
+            )}
+
             <div className="relative transition scale-75 hover:scale-100">
               {cartItems?.length >= 1 && (
                 <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
@@ -169,11 +193,13 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                 <div className="flex flex-row transition scale-75 hover:scale-100">
                   <Link href={"/profile"}>
                     <Image
-                      className="cursor-pointer"
+                      className="cursor-pointer rounded-full shadow-xl h-[32px] w-[32px]"
                       width={"32"}
                       height={"32"}
                       // maxHeight={"24px"}
-                      src="/user.png"
+                      src={
+                        globalUser?.picture ? globalUser.picture : "/user.png"
+                      }
                       alt="User"
                       // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
                     />
@@ -220,3 +246,17 @@ export default MyNavBar;
 
 const styleButton =
   "block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-[#5197ff] hover:px-2 rounded font-semibold hover:shadow-sm px-2 py-1 text-base";
+
+export const avatarIcon = (src) => {
+  return (
+    <Link href={"/"}>
+      <Image
+        width={"100"}
+        height={"21"}
+        src={src ? src : "/logo.png"}
+        alt="Logo"
+        className="transition hover:scale-110"
+      />
+    </Link>
+  );
+};
