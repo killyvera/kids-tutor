@@ -8,6 +8,7 @@ const nextConfig = {
       "localhost:3000",
       "www.kidstutor.co",
       "kidstutor.co",
+      "lh3.googleusercontent.com"
     ],
   },
 };

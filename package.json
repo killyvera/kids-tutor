@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.6.2",
-    "@aws-amplify/ui-react-storage": "^1.2.1",
+    "@aws-amplify/ui-react-storage": "^1.2.4",
     "@stripe/stripe-js": "^1.52.1",
     "app-deep-link": "^1.0.1",
     "autoprefixer": "^10.4.14",
-    "aws-amplify": "^5.0.22",
+    "aws-amplify": "^5.3.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "framer-motion": "^10.12.10",
