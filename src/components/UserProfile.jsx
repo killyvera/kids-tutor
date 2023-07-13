@@ -9,6 +9,7 @@ const UserProfile = () => {
   const [avatar, setAvatar] = useState(null);
   const [isFieldEdited, setIsFieldEdited] = useState(false);
   const [editableField, setEditableField] = useState(null);
+  const [isUserCreated, setIsUserCreated] = useState(false);
 
   const loadAvatar = async () => {
     try {
@@ -53,18 +54,18 @@ const UserProfile = () => {
 
       if (existingUser) {
         // Actualizar el perfil del usuario en DataStore
-        const updatedUser = await DataStore.save(
-          Users.copyOf(existingUser[0], (updated) => {
-            updated.name = user.name;
-            updated.firstname = user.firstname;
-            updated.direction = user.direction;
-            updated.city = user.city;
-            updated.state = user.state;
-            updated.country = user.country;
-            updated.postal_code = user.postal_code;
-            updated.email = user.email;
-          })
-        );
+        // const updatedUser = await DataStore.save(
+        //   Users.copyOf(existingUser[0], (updated) => {
+        //     updated.name = user.name;
+        //     updated.firstname = user.firstname;
+        //     updated.direction = user.direction;
+        //     updated.city = user.city;
+        //     updated.state = user.state;
+        //     updated.country = user.country;
+        //     updated.postal_code = user.postal_code;
+        //     updated.email = user.email;
+        //   })
+        // );
         console.log("Perfil actualizado con éxito:", updatedUser);
         setIsFieldEdited(false);
         setEditableField(null);
@@ -129,32 +130,37 @@ const UserProfile = () => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
       const { username, attributes } = currentUser;
-      console.log(currentUser, '---current---user--')
+      console.log(currentUser, "---current---user--");
 
       // Verificar si ya existe un usuario con el mismo sub_cognito
       const existingUser = await DataStore.query(Users, (u) =>
         u.sub_cognito.eq(username)
       );
-      
+
       if (existingUser.length > 0) {
         setUser(existingUser[0]);
       } else {
-        // Obtener datos del usuario del proveedor de autenticación
-        let userData = {
-          sub_cognito: username,
-          name: attributes.name,
-          firstname: "",
-          direction: "",
-          city: "",
-          state: "",
-          country: "",
-          postal_code: "",
-          email:attributes.email
-        };
+        if (isUserCreated === false) {
+          // Obtener datos del usuario del proveedor de autenticación
+          let userData = {
+            sub_cognito: username,
+            name: attributes.name,
+            firstname: "",
+            direction: "",
+            city: "",
+            state: "",
+            country: "",
+            postal_code: "",
+            email: attributes.email,
+          };
 
-        // Crear un nuevo usuario en DataStore con los datos obtenidos
-        const newUser = await DataStore.save(new Users(userData));
-        setUser(newUser);
+          // Crear un nuevo usuario en DataStore con los datos obtenidos
+          const newUser = await DataStore.save(new Users(userData));
+          setUser(newUser);
+          console.log(isUserCreated)
+          setIsUserCreated(!isUserCreated);
+          console.log(isUserCreated)
+        }
       }
     } catch (error) {
       console.log("Error al obtener el perfil del usuario:", error);
@@ -193,7 +199,7 @@ const UserProfile = () => {
             Guardar
           </button>
         )}
-                  <LogoutButton />
+        <LogoutButton />
       </div>
     );
   };

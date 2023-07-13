@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "mystorc9715737",
+    "resourceNameTruncated": "mystor7641069d",
     "userPoolName": "mystorect",
     "autoVerifiedAttributes": [
       "email"
@@ -25,16 +25,17 @@
       "Requires Uppercase"
     ],
     "requiredAttributes": [
-      "name"
+      "name",
+      "email"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "mystorc9715737_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "mystor7641069d_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "c9715737",
+    "sharedId": "7641069d",
     "resourceName": "mystorect",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
@@ -50,10 +51,9 @@
     "hostedUI": true,
     "hostedUIDomainName": "ptslaimxuxy5",
     "authProvidersUserPool": [
-      "Facebook",
       "Google"
     ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"public_profile\",\"AttributeMapping\":{\"name\":\"name\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"name\":\"name\",\"username\":\"sub\"}}]",
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile email\",\"AttributeMapping\":{\"name\":\"name\",\"email\":\"email\",\"username\":\"sub\"}}]",
     "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
