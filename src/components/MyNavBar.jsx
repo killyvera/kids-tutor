@@ -45,7 +45,6 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
   useEffect(() => {
     getGlobalUser()
       .then((user) => {
-        console.log(user);
         setGlobalUser(user);
       })
       .catch((error) => {

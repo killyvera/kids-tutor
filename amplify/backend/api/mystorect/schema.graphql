@@ -1,3 +1,9 @@
+type Video @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  video_id: String
+  details: AWSJSON
+}
+
 type OnlinePurchase @model @auth(rules: [{allow: public}]) {
   id: ID!
   customer_name: String
