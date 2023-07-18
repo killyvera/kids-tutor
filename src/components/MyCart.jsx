@@ -16,7 +16,6 @@ const MyCart = () => {
     toggleCart,
   } = useCartContext();
 
-  console.log(getTotalPrice());
   return (
     <motion.div
       className={`fixed z-50 top-12 right-0 flex flex-col bg-white p-2 rounded shadow`}

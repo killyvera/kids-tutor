@@ -13,17 +13,17 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type VideoCreateFormInputValues = {
-    title?: string;
+    video_id?: string;
     details?: string;
 };
 export declare type VideoCreateFormValidationValues = {
-    title?: ValidationFunction<string>;
+    video_id?: ValidationFunction<string>;
     details?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type VideoCreateFormOverridesProps = {
     VideoCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    title?: PrimitiveOverrideProps<TextFieldProps>;
+    video_id?: PrimitiveOverrideProps<TextFieldProps>;
     details?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type VideoCreateFormProps = React.PropsWithChildren<{

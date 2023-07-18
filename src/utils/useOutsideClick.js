@@ -4,7 +4,6 @@ const useOutsideClick = (ref, onClose) => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
-        console.log("clicked")
         onClose();
       }
     };

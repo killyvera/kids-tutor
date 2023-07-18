@@ -1,6 +1,6 @@
 type Video @model @auth(rules: [{allow: public}]) {
   id: ID!
-  title: String
+  video_id: String
   details: AWSJSON
 }
 

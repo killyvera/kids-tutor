@@ -30,17 +30,17 @@ export default function VideoUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    title: "",
+    video_id: "",
     details: "",
   };
-  const [title, setTitle] = React.useState(initialValues.title);
+  const [video_id, setVideo_id] = React.useState(initialValues.video_id);
   const [details, setDetails] = React.useState(initialValues.details);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = videoRecord
       ? { ...initialValues, ...videoRecord }
       : initialValues;
-    setTitle(cleanValues.title);
+    setVideo_id(cleanValues.video_id);
     setDetails(
       typeof cleanValues.details === "string"
         ? cleanValues.details
@@ -60,7 +60,7 @@ export default function VideoUpdateForm(props) {
   }, [idProp, videoModelProp]);
   React.useEffect(resetStateValues, [videoRecord]);
   const validations = {
-    title: [],
+    video_id: [],
     details: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
@@ -89,7 +89,7 @@ export default function VideoUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          title,
+          video_id,
           details,
         };
         const validationResponses = await Promise.all(
@@ -138,29 +138,29 @@ export default function VideoUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Title"
+        label="Video id"
         isRequired={false}
         isReadOnly={false}
-        value={title}
+        value={video_id}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title: value,
+              video_id: value,
               details,
             };
             const result = onChange(modelFields);
-            value = result?.title ?? value;
+            value = result?.video_id ?? value;
           }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
+          if (errors.video_id?.hasError) {
+            runValidationTasks("video_id", value);
           }
-          setTitle(value);
+          setVideo_id(value);
         }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
+        onBlur={() => runValidationTasks("video_id", video_id)}
+        errorMessage={errors.video_id?.errorMessage}
+        hasError={errors.video_id?.hasError}
+        {...getOverrideProps(overrides, "video_id")}
       ></TextField>
       <TextAreaField
         label="Details"
@@ -171,7 +171,7 @@ export default function VideoUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
+              video_id,
               details: value,
             };
             const result = onChange(modelFields);

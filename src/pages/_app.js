@@ -9,7 +9,6 @@ import Layout from "@/components/Layout";
 import { CartProvider } from "@/context/CartContext";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../utils/i18n";
-
 Amplify.configure({ ...awsexports, ssr: true });
 
 export default function App({ Component, pageProps }) {
