@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import TestPage from "./Test";
+import VideoCardYoutube from "@/components/VideoCardYoutube";
 
 export async function getStaticPaths({ req }) {
   const SSR = withSSRContext({ req });
@@ -31,5 +31,5 @@ export async function getStaticProps(context) {
 }
 
 export default function VideoQR({ video }) {
-  return <TestPage video={video} />;
+  return <VideoCardYoutube video={video} />;
 }
