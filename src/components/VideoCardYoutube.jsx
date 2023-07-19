@@ -1,10 +1,16 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 const VideoCardYoutube = ({ video }) => {
   const router = useRouter();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleOpenYouTubeApp = () => {
+    if (!video || video.length === 0) {
+      return; // No hacer nada si no hay video
+    }
+
     if (typeof window !== "undefined") {
       const isMobile =
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -15,10 +21,10 @@ const VideoCardYoutube = ({ video }) => {
         const AppDeepLink = require("app-deep-link");
         AppDeepLink.wakeUpOrInstall({
           ios: {
-            scheme: "youtube://" + youtubeUrl,
+            scheme: "youtube://" + video[0]?.details?.youtube_id,
           },
           android: {
-            scheme: "vnd.youtube:" + youtubeUrl,
+            scheme: "vnd.youtube:" + video[0]?.details?.youtube_id,
           },
         });
       } else {
@@ -27,16 +33,30 @@ const VideoCardYoutube = ({ video }) => {
     }
   };
 
-  if (!video || video.length === 0) {
-    // Manejar el caso de ruta incorrecta o video no encontrado
-    return <NotFoundCard />;
-  }
+  useEffect(() => {
+    if (!video || video.length === 0) {
+      // Manejar el caso de ruta incorrecta o video no encontrado
+      setIsLoaded(true); // Marcar como cargado para evitar bucle infinito
+    } else {
+      setIsLoaded(true);
+      handleOpenYouTubeApp();
+    }
+  }, [video]);
 
-  const details = video[0]?.details;
-  const youtubeUrl = video[0]?.details?.youtube_id;
+  const details = video?.[0]?.details;
+  const youtubeUrl = video?.[0]?.details?.youtube_id;
   const videoLink = youtubeUrl
     ? "https://www.youtube.com/watch?v=" + youtubeUrl
     : null;
+
+  if (!isLoaded) {
+    return null; // Mostrar una pantalla de carga mientras se verifica la disponibilidad del video
+  }
+
+  if (!video || video.length === 0) {
+    // Mostrar el componente NotFoundCard si el video no existe
+    return <NotFoundCard />;
+  }
 
   return (
     <div className="flex flex-col content-center justify-center items-center h-screen">
