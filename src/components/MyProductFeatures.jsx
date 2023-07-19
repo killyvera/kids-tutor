@@ -172,7 +172,7 @@ export default function MyProductFeatures({
                 alt="Medalla de Certificado de Excelencia Academica"
                 className=""
               />
-              <dt className="font-medium text-gray-900">{feature3.title}</dt>
+              <dt className="font-medium text-gray-900">{feature3?.title}</dt>
               <dd className="mt-2 text-sm text-gray-500">
                 {feature3?.content}
               </dd>
