@@ -17,7 +17,7 @@ const LogoutButton = () => {
   return (
     <button
       onClick={() => handleLogout()}
-      className="inline-block px-4 py-2 text-sm font-medium text-white bg-red-500 rounded hover:bg-red-600"
+      className={styleButton}
     >
       Cerrar sesión
     </button>
@@ -25,3 +25,6 @@ const LogoutButton = () => {
 };
 
 export default LogoutButton;
+
+const styleButton =
+  "bg-red-500 block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-red-600 hover:px-2 rounded font-semibold hover:shadow-sm px-2 py-1 text-base";

@@ -3,14 +3,13 @@ import { Auth, Storage } from "aws-amplify";
 import { DataStore } from "@aws-amplify/datastore";
 import { Users } from "@/models";
 import LogoutButton from "./LogoutButton";
-import { StorageManager } from '@aws-amplify/ui-react-storage';
+import { StorageManager } from "@aws-amplify/ui-react-storage";
+import Link from "next/link";
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState(null);
   const [isFieldEdited, setIsFieldEdited] = useState(false);
   const [editableField, setEditableField] = useState(null);
-
-  
 
   const saveAvatar = async (file) => {
     try {
@@ -100,7 +99,7 @@ const UserProfile = () => {
           <label className="block text-sm font-medium text-gray-700">
             {label}
           </label>
-          <div className="flex items-center">
+          <div className="flex flex-row">
             <span
               className="text-sm text-gray-700 cursor-pointer"
               onClick={() => handleFieldClick(fieldName)}
@@ -108,10 +107,16 @@ const UserProfile = () => {
               {user[fieldName]}
             </span>{" "}
             <button
-              className="ml-2 text-sm text-blue-500 hover:text-blue-700"
+              className="ml-2 text-sm text-blue-500 hover:text-blue-700 flex flex-row space-x-1 hover:scale-105"
               onClick={() => handleFieldClick(fieldName)}
             >
-              Editar
+              <p>Edit</p>
+              <img
+                src="/pencil.png"
+                alt="edit"
+                width={"16px"}
+                className="opacity-50 hover:opacity-75"
+              />
             </button>
           </div>
         </div>
@@ -121,34 +126,34 @@ const UserProfile = () => {
 
   useEffect(() => {
     const loadAvatar = async () => {
-    try {
-      const currentUser = await Auth.currentAuthenticatedUser();
-      const { username, attributes } = currentUser;
-      let avatarURL = attributes.picture;
-      console.log(avatarURL);
+      try {
+        const currentUser = await Auth.currentAuthenticatedUser();
+        const { username, attributes } = currentUser;
+        let avatarURL = attributes.picture;
+        console.log(avatarURL);
 
-      // Paso 1: Revisar si hay un avatar en el storage
+        // Paso 1: Revisar si hay un avatar en el storage
 
-      const avatarList = await Storage.list(`avatars/${username}`);
-      console.log(avatarList);
-      if (avatarList.results.length > 0) {
-        avatarURL = await Storage.get(`avatars/${username}`);
-        setAvatar(avatarURL);
-      } else {
-        console.log("El usuario no tiene avatar.");
-        setAvatar(attributes.picture);
+        const avatarList = await Storage.list(`avatars/${username}`);
+        console.log(avatarList);
+        if (avatarList.results.length > 0) {
+          avatarURL = await Storage.get(`avatars/${username}`);
+          setAvatar(avatarURL);
+        } else {
+          console.log("El usuario no tiene avatar.");
+          setAvatar(attributes.picture);
+        }
+      } catch (error) {
+        if (error.code === "NoSuchKey" && error.statusCode === 404) {
+          console.log("Error al cargar el avatar: Avatar no encontrado.");
+          // Conservar el picture de cognito como avatar
+          setAvatar(attributes.picture);
+          console.log(avatar);
+        } else {
+          console.log("Error al cargar el avatar:", error);
+        }
       }
-    } catch (error) {
-      if (error.code === "NoSuchKey" && error.statusCode === 404) {
-        console.log("Error al cargar el avatar: Avatar no encontrado.");
-        // Conservar el picture de cognito como avatar
-        setAvatar(attributes.picture);
-        console.log(avatar);
-      } else {
-        console.log("Error al cargar el avatar:", error);
-      }
-    }
-  };
+    };
     const fetchUserData = async () => {
       try {
         const currentUser = await Auth.currentAuthenticatedUser();
@@ -202,8 +207,8 @@ const UserProfile = () => {
           type="file"
           onChange={(event) => saveAvatar(event.target.files[0])}
           className="mb-4"
-        /> 
-        
+        />
+
         {renderProfileField("name", "Nombre")}
         {renderProfileField("email", "Correo Electrónico")}
         {/* {renderProfileField("firstname", "Apellido")} */}
@@ -215,12 +220,15 @@ const UserProfile = () => {
 
         {isFieldEdited && (
           <button
-            className="px-4 py-2 mt-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="px-8 mb-4 py-2 mt-4 text-sm font-medium text-white bg-blue-500 rounded hover:bg-blue-600"
             onClick={handleBlur}
           >
             Guardar
           </button>
         )}
+        <Link href={`/download?email=${encodeURIComponent(user.email)}`}>
+          <button className={styleButton + " mb-4"}>Mis Compras</button>
+        </Link>
         <LogoutButton />
       </div>
     );
@@ -234,3 +242,6 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+const styleButton =
+  "bg-blue-500 block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-blue-400 hover:px-2 rounded font-semibold hover:shadow-sm px-2 py-1 text-base";
