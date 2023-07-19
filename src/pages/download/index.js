@@ -9,26 +9,30 @@ import { useRouter } from "next/router";
 const DownloadPage = () => {
   const [products, setProducts] = useState([]);
   const router = useRouter();
-  const { email, uuid } = router.query;
+  const { email } = router.query;
+  console.log(router.query)
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!email || !uuid) {
-        // Redirect logic
+      if (!email) {
+        // Redireccionar lógica
         return;
       }
 
-      const onlinePurchases = await DataStore.query(OnlinePurchase, (op) =>
-        op.and((op) => [op.customer_email.eq(email), op.uuid.eq(uuid)])
+      const onlinePurchases = await DataStore.query(
+        OnlinePurchase,
+        (op) => op.customer_email.eq(email)
       );
 
       if (onlinePurchases.length === 0) {
-        // Redirect logic
+        // Redireccionar lógica
+        router.push("/")
         return;
       }
 
-      const onlinePurchase = onlinePurchases[0];
-      const productIds = onlinePurchase.details.products;
+      const productIds = onlinePurchases.flatMap(
+        (purchase) => purchase.details.products
+      );
       const products = await Promise.all(
         productIds.map((id) => DataStore.query(Product, id))
       );
@@ -37,12 +41,12 @@ const DownloadPage = () => {
     };
 
     fetchData();
-  }, [email, uuid]);
+  }, [email, router]);
 
   return (
     <>
       <Head>
-        <title>Kids Tutor Blog</title>
+        <title>Kids Tutor. Descarga tus productos.</title>
         <meta name="description" content="Kids Tutor Download Products Page" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

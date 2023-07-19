@@ -37,8 +37,6 @@ const webhookHandler = async (req, res) => {
     if (event.type === "checkout.session.completed") {
       // Handle successful payment
       const session = event.data.object;
-      // const { customer_email, metadata, display_items } = event.data.object;
-      // console.log(session.metadata, session.email, session.name);
       console.log(
         session,
         session.metadata,
@@ -51,24 +49,17 @@ const webhookHandler = async (req, res) => {
         session.metadata.purchased_products
       );
       return res.status(200).json({ received: true });
-      //   res.status(200).end();
     } else if (event.type === "charge.succeeded") {
       // Handle charge.succeeded event
       // ...
-
-      // Return a 200 status code
       return res.status(200).end();
     } else if (event.type === "payment_intent.succeeded") {
       // Handle payment_intent.succeeded event
       // ...
-
-      // Return a 200 status code
       return res.status(200).end();
     } else if (event.type === "payment_intent.created") {
       // Handle payment_intent.created event
       // ...
-
-      // Return a 200 status code
       return res.status(200).end();
     }
   } else {
@@ -80,14 +71,13 @@ const webhookHandler = async (req, res) => {
 export default webhookHandler;
 
 const CustomerHandler = async (email, name, products) => {
-  const uuid = uuidv4(); // Generate a UUID
+  const uuid = uuidv4(); // Generar un UUID
   const customerEmail = email;
   const customerName = name;
   const customerProducts = products.split(",");
   const downloadLink = `https://kidstutor.co/download?email=${encodeURIComponent(
     customerEmail
   )}&uuid=${uuid}`;
-  // const testAccount = await nodemailer.createTestAccount();
 
   const transporter = nodemailer.createTransport({
     host: "smtp.titan.email",
@@ -102,9 +92,7 @@ const CustomerHandler = async (email, name, products) => {
   const mailOptions = {
     from: "ventas@kidstutor.co",
     to: customerEmail,
-    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para tí.`,
-    // text: "Este es id de tu producto" + `${customerProducts}`,
-    // text: <MailTemplate username={customerName} link={downloadLink} email={customerEmail} />,
+    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para ti.`,
     html: ReactDOMServer.renderToString(
       <MailTemplate
         username={customerName}
@@ -118,8 +106,6 @@ const CustomerHandler = async (email, name, products) => {
 
   console.log("Correo electrónico enviado:");
   console.log("ID del mensaje:", info.messageId);
-  // "URL de visualización del mensaje:",
-  // nodemailer.getTestMessageUrl(info)
 
   const purchase = await DataStore.save(
     new OnlinePurchase({
@@ -133,4 +119,18 @@ const CustomerHandler = async (email, name, products) => {
   );
 
   console.log("Compra almacenada:", purchase);
+
+  // Actualizar el modelo User con los productos comprados y la uid
+  const user = await DataStore.query(Users, (u) => u.email.eq(customerEmail));
+  if (user.length > 0) {
+    const updatedUser = await DataStore.save(
+      Users.copyOf(user[0], (updated) => {
+        updated.purchase_products = {
+          products: customerProducts,
+          uid: uuid,
+        };
+      })
+    );
+    console.log("Usuario actualizado:", updatedUser);
+  }
 };
