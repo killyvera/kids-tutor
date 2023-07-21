@@ -102,7 +102,7 @@ const ProductFeatures = (props) => {
           <p className="text-gray-500 text-2xl border-t border-gray-200 w-[80%] pt-2">
             {props?.feature2?.content}
           </p>
-          <div className=" flex flex-row rounded-md w-[auto] space-x-10 items-center justify-center py-20">
+          <div className=" flex-row rounded-md w-[auto] space-x-10 items-center justify-center py-20 hidden">
             <a
               href="https://es.wikipedia.org/wiki/M%C3%A9todo_Montessori"
               target="_blank"

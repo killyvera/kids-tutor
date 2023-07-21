@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const MailTemplate = ({ username, link, email }) => {
+const MailTemplate = ({ username, link, email, purchaseID }) => {
   return (
     <div
       style={{
@@ -90,7 +90,7 @@ const MailTemplate = ({ username, link, email }) => {
         </h1>
         <p style={{ fontSize: "lg", color: "#4B5563", marginBottom: "20px" }}>
           Tu Compra ha sido confirmada. <br /> No. de orden:
-          23-545645-56df-6dgfg-778
+          {purchaseID}
         </p>
 
         <p style={{ fontSize: "lg", color: "#4B5563", marginBottom: "20px" }}>

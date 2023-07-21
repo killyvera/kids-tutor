@@ -1,12 +1,17 @@
+import { Return } from "@/components/ReturnButton";
 import React from "react";
 
 const PrivacyPolicy = () => {
   return (
     <div className="bg-white py-8 px-4 md:px-8 pt-20">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">
-          Política de Privacidad de KidsTutor.co
-        </h1>
+        <div className="flex flex-row">
+          <Return />
+          <h1 className="text-2xl font-bold mb-4">
+            Política de Privacidad de KidsTutor.co
+          </h1>
+          <KidsTutorBadge />
+        </div>
         <p className="mb-4">Fecha de última actualización: [Fecha]</p>
 
         <div className="bg-white rounded-lg shadow-md p-6 mb-4">
@@ -99,7 +104,7 @@ const PrivacyPolicy = () => {
           </p>
         </div>
 
-        <p className="mt-4">
+        <p className="" style={{ paddingBottom: "80px" }}>
           Si tienes alguna pregunta o inquietud sobre nuestra política de
           privacidad, no dudes en contactarnos a través de [dirección de correo
           electrónico o formulario de contacto].
@@ -110,3 +115,14 @@ const PrivacyPolicy = () => {
 };
 
 export default PrivacyPolicy;
+
+const KidsTutorBadge = () => {
+  return (
+    <figure>
+      <img
+        src="/medal_kidstutor.png"
+        style={{ width: "32px", height: "32px" }}
+      />
+    </figure>
+  );
+};

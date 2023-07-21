@@ -7,6 +7,7 @@ import {
 import Link from "next/link";
 
 import React from "react";
+import { Return } from "./ReturnButton";
 
 export default function MyAuth({ children }) {
   return (
@@ -36,9 +37,7 @@ const components = {
         className="flex flex-row items-center text-center justify-evenly pt-14 pb-4"
       >
         <Link href={"/"}>
-          <p className="text-red-400 bg-white rounded-full py-2 px-3">
-            {"< Volver"}
-          </p>
+          <Return />
         </Link>
         <Link href="/">
           <Image
