@@ -6,7 +6,7 @@ import { Users, OnlinePurchase } from "@/models";
 import { useState, useEffect } from "react";
 import nodemailer from "nodemailer";
 import { v4 as uuidv4 } from "uuid";
-import ReactDOMServer from 'react-dom/server';
+import ReactDOMServer from "react-dom/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -89,24 +89,6 @@ const CustomerHandler = async (email, name, products) => {
     },
   });
 
-  const mailOptions = {
-    from: "ventas@kidstutor.co",
-    to: customerEmail,
-    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para ti.`,
-    html: ReactDOMServer.renderToString(
-      <MailTemplate
-        username={customerName}
-        link={downloadLink}
-        email={customerEmail}
-      />
-    ),
-  };
-
-  const info = await transporter.sendMail(mailOptions);
-
-  console.log("Correo electrónico enviado:");
-  console.log("ID del mensaje:", info.messageId);
-
   const purchase = await DataStore.save(
     new OnlinePurchase({
       customer_email: customerEmail,
@@ -133,4 +115,21 @@ const CustomerHandler = async (email, name, products) => {
     );
     console.log("Usuario actualizado:", updatedUser);
   }
+
+  const mailOptions = {
+    from: "ventas@kidstutor.co",
+    to: customerEmail,
+    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para ti.`,
+    html: ReactDOMServer.renderToString(
+      <MailTemplate
+        username={customerName}
+        link={downloadLink}
+        email={customerEmail}
+        purchaseID={purchase?.id}
+      />
+    ),
+  };
+  const info = await transporter.sendMail(mailOptions);
+  console.log("Correo electrónico enviado:");
+  console.log("ID del mensaje:", info.messageId);
 };

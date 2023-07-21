@@ -5,6 +5,7 @@ import Head from "next/head";
 import H1 from "@/components/H1";
 import MyDownloadsList from "@/components/MyDownloadsList";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const DownloadPage = () => {
   const [products, setProducts] = useState([]);

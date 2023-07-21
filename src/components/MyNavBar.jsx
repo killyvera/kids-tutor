@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Auth } from "aws-amplify";
@@ -6,42 +6,36 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import MyAuth from "./MyAuth";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import { Button } from "@aws-amplify/ui-react";
-import { Alert } from "@aws-amplify/ui-react";
 import { useCartContext } from "@/context/CartContext";
 import LanguageSelector from "@/components/LanguageSelector";
 import MyCart from "./MyCart";
 import { useTranslation } from "react-i18next";
-import { Storage } from "aws-amplify";
-import { DataStore } from "@aws-amplify/datastore";
-import { Users } from "@/models";
+import useOutsideClick from "@/utils/useOutsideClick";
 
-const MyNavBar = ({ allProducts, total, signOut }) => {
+const MyNavBar = () => {
   const { toggleCart, cartItems, getGlobalUser } = useCartContext();
-
   const [showMenu, setShowMenu] = useState(false);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
-  const [active, setActive] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [avatar, setAvatar] = useState(null);
-  const [isFieldEdited, setIsFieldEdited] = useState(false);
-  const [editableField, setEditableField] = useState(null);
   const [globalUser, setGlobalUser] = useState({});
+  const componentRef = useRef(null);
+  const menuRef = useRef(null);
+  const refs = [componentRef, menuRef];
+  const [visible, setVisible] = useState(false)
 
-  const handleSignOut = async () => {
-    try {
-      await Auth.signOut();
-      // Redirigir al usuario a la página principal
-      useRouter.push("/");
-    } catch (error) {
-      console.log("Error al cerrar sesión:", error);
-    }
+
+  const handleMenuClick = () => {
+    console.log("click menu00", showMenu);
+    setShowMenu(!showMenu);
+    console.log("click menu01", showMenu);
   };
 
-  const handleMenuClick = () => setShowMenu(!showMenu);
+  const handleLinkClick = () => {
+    setShowMenu(false);
+    console.log("LINK CLICK");
+  };
+
   const { t, i18n } = useTranslation();
-  // console.log(cartItems);
-  // console.log(asset)
+
   useEffect(() => {
     getGlobalUser()
       .then((user) => {
@@ -51,6 +45,17 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
         console.log("Error al obtener el perfil del usuario:", error);
       });
   }, [getGlobalUser]);
+
+  const onClose = (event) => {
+    // Verificar si el clic proviene del icono del menú hamburguesa
+    if (event && componentRef.current && componentRef.current.contains(event.target)) {
+      return;
+    }
+    setShowMenu(false);
+    console.log("CLOSE MENU");
+  };
+
+  useOutsideClick(refs, onClose);
 
   return (
     <>
@@ -73,37 +78,27 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
       >
         <div className="flex items-center flex-shrink-0 text-white">
           <Link href={"/"}>
-            <Image
-              width={"100"}
-              height={"21"}
-              src="/logo.png"
-              alt="Logo"
-              className="transition hover:scale-110"
-            />
+            <Image width={"100"} height={"21"} src="/logo.png" alt="Logo" className="transition hover:scale-110" />
           </Link>
         </div>
-        <div className="block sm:hidden">
-          <LanguageSelector />
-        </div>
-        <div className="relative transition scale-75 hover:scale-100 block sm:hidden">
-          {cartItems?.length >= 1 && (
-            <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
-              {cartItems?.length}
-            </div>
-          )}
-          <Image
-            className="cursor-pointer"
-            width={"32"}
-            height={"32"}
-            src="/cart.png"
-            alt="Cart"
-            // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
-            onClick={() => toggleCart()}
-          />
-        </div>
-        {authStatus === "authenticated" ? (
-          <div className="flex flex-row sm:hidden">
-            <div className="flex flex-row transition scale-75 hover:scale-100">
+        <div className="flex flex-row lg:hidden items-center">
+          {/* <LanguageSelector /> */}
+          <div className="relative transition scale-75 hover:scale-100 flex flex-row items-center">
+            {cartItems?.length >= 1 && (
+              <div className="bg-red-500 absolute h-4 w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
+                {cartItems?.length}
+              </div>
+            )}
+            <Image
+              className="cursor-pointer"
+              width={"32"}
+              height={"32"}
+              src="/cart.png"
+              alt="Cart"
+              // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white transition hover:scale-125 mr-4"
+              onClick={() => toggleCart()}
+            />
+            <Link href={"/profile"}>
               <Image
                 className="cursor-pointer rounded-full h-[32px] w-[32px]"
                 width={"32"}
@@ -113,56 +108,46 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                 alt="User"
                 // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
               />
-            </div>
+            </Link>
           </div>
-        ) : (
-          ""
-        )}
-
-        <div className="block lg:hidden">
+        </div>
+        <div className="block lg:hidden items-center">
           <button
+            ref={componentRef}
             onClick={handleMenuClick}
-            className="flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white"
+            className="flex items-center px-[2px] py-[3px] border rounded text-white border-white hover:text-white hover:border-white"
           >
-            <Image
-              width={"24"}
-              height={"24"}
-              src="/hamburger.png"
-              alt="Menu"
-              className="w-6"
-            />
+            <Image width={"24"} height={"24"} src="/hamburger.png" alt="Menu" className="w-6" />
           </button>
         </div>
         <div
-          className={`${
-            showMenu ? "block" : "hidden"
-          } w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
+          ref={menuRef}
+          className={`${showMenu ? "block" : "hidden"} w-full block flex-grow lg:flex lg:items-center lg:w-auto`}
         >
           <div className="text-sm lg:flex-grow text-center">
-            <Link href="/" className={styleButton}>
+            <NavLink href={"/"} onClick={handleLinkClick}>
               {t("home")}
-            </Link>
-
-            <Link href="/free-resources" className={styleButton}>
+            </NavLink>
+            <NavLink href={"/free-resources"} onClick={handleLinkClick}>
               {t("free resources")}
-            </Link>
-            <Link href="/products" className={styleButton}>
+            </NavLink>
+
+            <NavLink href={"/products"} onClick={handleLinkClick}>
               {t("products")}
-            </Link>
-            <Link
-              href="https://www.youtube.com/@kidstutorstem"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styleButton}
+            </NavLink>
+            <NavLink
+              blank={true}
+              href={"https://www.youtube.com/@kidstutorstem"}
+              onClick={handleLinkClick}
             >
               {t("youtube")}
-            </Link>
-            <Link href="/blog" className={styleButton}>
+            </NavLink>
+            <NavLink href={"/blog"} onClick={handleLinkClick}>
               {t("blog")}
-            </Link>
-            <Link href="/contact" className={styleButton}>
+            </NavLink>
+            <NavLink href={"/contact"} onClick={handleLinkClick}>
               {t("contact")}
-            </Link>
+            </NavLink>
           </div>
           <div className="hidden lg:flex items-center ">
             {authStatus === "authenticated" && globalUser?.name && (
@@ -173,7 +158,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
 
             <div className="relative transition scale-75 hover:scale-100">
               {cartItems?.length >= 1 && (
-                <div className="bg-red-500 absolute h-4  w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
+                <div className="bg-red-500 absolute h-4 w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
                   {cartItems?.length}
                 </div>
               )}
@@ -196,9 +181,7 @@ const MyNavBar = ({ allProducts, total, signOut }) => {
                       width={"32"}
                       height={"32"}
                       // maxHeight={"24px"}
-                      src={
-                        globalUser?.picture ? globalUser.picture : "/user.png"
-                      }
+                      src={globalUser?.picture ? globalUser.picture : "/user.png"}
                       alt="User"
                       // className=" w-6 mx-4 block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4"
                     />
@@ -259,3 +242,23 @@ export const avatarIcon = (src) => {
     </Link>
   );
 };
+
+const NavLink = ({ href, onClick, children, blank }) => {
+  const router = useRouter(); // Obtener el objeto router
+  const isActive = router.pathname === href; // Comprobar si la ruta actual coincide con la del link
+
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`block mt-4 lg:inline-block lg:mt-0 text-white transition duration-50 hover:scale-125 mr-4 hover:bg-[#5197ff] hover:px-2 rounded font-semibold hover:shadow-sm px-2 py-1 text-base ${
+        isActive ? "underline" : "" // Aplicar la clase 'underline' si isActive es verdadero
+      }`}
+      target={blank ? "_blank" : ""}
+      rel={blank ? "noopener noreferrer" : ""}
+    >
+      {children}
+    </Link>
+  );
+};
+
