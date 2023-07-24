@@ -62,7 +62,7 @@ const MyNavBar = () => {
       <MyCart visible={visible} />
       <nav
         className="
-                     bg-red-400
+                     bg-kids-tutor
                         w-screen
                         z-40
                         p-3

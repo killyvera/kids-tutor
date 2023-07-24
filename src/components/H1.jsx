@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import TextWithLinks from "@/utils/TextWithLinks";
 
 const scaleVariants = {
   whileInView: {

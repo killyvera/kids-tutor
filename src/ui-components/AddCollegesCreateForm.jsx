@@ -14,13 +14,12 @@ import {
   TextField,
 } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Colleges } from "../models";
+import { AddColleges } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function CollegesUpdateForm(props) {
+export default function AddCollegesCreateForm(props) {
   const {
-    id: idProp,
-    colleges: collegesModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -30,45 +29,19 @@ export default function CollegesUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
-    image: "",
-    link: "",
+    college: "",
     details: "",
   };
-  const [name, setName] = React.useState(initialValues.name);
-  const [image, setImage] = React.useState(initialValues.image);
-  const [link, setLink] = React.useState(initialValues.link);
+  const [college, setCollege] = React.useState(initialValues.college);
   const [details, setDetails] = React.useState(initialValues.details);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = collegesRecord
-      ? { ...initialValues, ...collegesRecord }
-      : initialValues;
-    setName(cleanValues.name);
-    setImage(cleanValues.image);
-    setLink(cleanValues.link);
-    setDetails(
-      typeof cleanValues.details === "string"
-        ? cleanValues.details
-        : JSON.stringify(cleanValues.details)
-    );
+    setCollege(initialValues.college);
+    setDetails(initialValues.details);
     setErrors({});
   };
-  const [collegesRecord, setCollegesRecord] = React.useState(collegesModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? await DataStore.query(Colleges, idProp)
-        : collegesModelProp;
-      setCollegesRecord(record);
-    };
-    queryData();
-  }, [idProp, collegesModelProp]);
-  React.useEffect(resetStateValues, [collegesRecord]);
   const validations = {
-    name: [],
-    image: [],
-    link: [],
+    college: [],
     details: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
@@ -97,9 +70,7 @@ export default function CollegesUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
-          image,
-          link,
+          college,
           details,
         };
         const validationResponses = await Promise.all(
@@ -130,13 +101,12 @@ export default function CollegesUpdateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(
-            Colleges.copyOf(collegesRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await DataStore.save(new AddColleges(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -144,102 +114,43 @@ export default function CollegesUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "CollegesUpdateForm")}
+      {...getOverrideProps(overrides, "AddCollegesCreateForm")}
       {...rest}
     >
       <TextField
-        label="Name"
+        label="College"
         isRequired={false}
         isReadOnly={false}
-        value={name}
+        value={college}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name: value,
-              image,
-              link,
+              college: value,
               details,
             };
             const result = onChange(modelFields);
-            value = result?.name ?? value;
+            value = result?.college ?? value;
           }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
+          if (errors.college?.hasError) {
+            runValidationTasks("college", value);
           }
-          setName(value);
+          setCollege(value);
         }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
-      <TextField
-        label="Image"
-        isRequired={false}
-        isReadOnly={false}
-        value={image}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              image: value,
-              link,
-              details,
-            };
-            const result = onChange(modelFields);
-            value = result?.image ?? value;
-          }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
-          }
-          setImage(value);
-        }}
-        onBlur={() => runValidationTasks("image", image)}
-        errorMessage={errors.image?.errorMessage}
-        hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
-      ></TextField>
-      <TextField
-        label="Link"
-        isRequired={false}
-        isReadOnly={false}
-        value={link}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name,
-              image,
-              link: value,
-              details,
-            };
-            const result = onChange(modelFields);
-            value = result?.link ?? value;
-          }
-          if (errors.link?.hasError) {
-            runValidationTasks("link", value);
-          }
-          setLink(value);
-        }}
-        onBlur={() => runValidationTasks("link", link)}
-        errorMessage={errors.link?.errorMessage}
-        hasError={errors.link?.hasError}
-        {...getOverrideProps(overrides, "link")}
+        onBlur={() => runValidationTasks("college", college)}
+        errorMessage={errors.college?.errorMessage}
+        hasError={errors.college?.hasError}
+        {...getOverrideProps(overrides, "college")}
       ></TextField>
       <TextAreaField
         label="Details"
         isRequired={false}
         isReadOnly={false}
-        value={details}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
-              image,
-              link,
+              college,
               details: value,
             };
             const result = onChange(modelFields);
@@ -260,14 +171,13 @@ export default function CollegesUpdateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || collegesModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -277,10 +187,7 @@ export default function CollegesUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || collegesModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
