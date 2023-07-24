@@ -6,6 +6,36 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
+type EagerAddColleges = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<AddColleges, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly college?: string | null;
+  readonly details?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyAddColleges = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<AddColleges, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly college?: string | null;
+  readonly details?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type AddColleges = LazyLoading extends LazyLoadingDisabled ? EagerAddColleges : LazyAddColleges
+
+export declare const AddColleges: (new (init: ModelInit<AddColleges>) => AddColleges) & {
+  copyOf(source: AddColleges, mutator: (draft: MutableModel<AddColleges>) => MutableModel<AddColleges> | void): AddColleges;
+}
+
 type EagerVideo = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Video, 'id'>;
@@ -193,6 +223,7 @@ type EagerColleges = {
   readonly name?: string | null;
   readonly image?: string | null;
   readonly link?: string | null;
+  readonly details?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -206,6 +237,7 @@ type LazyColleges = {
   readonly name?: string | null;
   readonly image?: string | null;
   readonly link?: string | null;
+  readonly details?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

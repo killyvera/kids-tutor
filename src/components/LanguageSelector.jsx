@@ -4,15 +4,16 @@ import useOutsideClick from "@/utils/useOutsideClick";
 
 const LanguageSelector = () => {
   const componentRef = useRef(null);
+  const menuRef = useRef(null);
   const { i18n } = useTranslation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("mx");
+  const refs = [componentRef, menuRef];
 
   const onClose=()=>{
     setIsDropdownOpen(false)
   }
-
-  useOutsideClick(componentRef, onClose);
+  useOutsideClick(refs, onClose);
 
   const languageMap = useMemo(() => {
     return {

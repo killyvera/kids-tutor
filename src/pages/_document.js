@@ -12,7 +12,7 @@ export default function Document() {
         href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap"
         rel="stylesheet"
       ></link>
-      <body className="bg-red-400 font-lato">
+      <body className="bg-kids-tutor font-lato">
         <Main />
         <NextScript />
       </body>

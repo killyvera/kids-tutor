@@ -17,6 +17,7 @@ import Layout from "@/components/Layout";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import ProductFeatures from "@/components/ProductFeatures";
+import TextWithLinks from "@/utils/TextWithLinks";
 
 export async function getServerSideProps() {
   const { DataStore } = withSSRContext();
@@ -30,8 +31,6 @@ export async function getServerSideProps() {
   };
 }
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home({
   collegesList,
   testimonialList,
@@ -39,6 +38,11 @@ export default function Home({
   total,
 }) {
   const { t, i18n } = useTranslation();
+  const textData = {
+    text: t("colleges subtitle"),
+    searchWord: "aquí",
+    linkTo: "/add-college",
+  };
 
   return (
     <>
@@ -55,10 +59,12 @@ export default function Home({
           button={t("home hero call to action")}
         />
 
-        <H1 subtitle={t("colleges subtitle")}>{t("colleges title")}</H1>
+        <H1 subtitle={<TextWithLinks textData={textData} />}>
+          {t("colleges title")}
+        </H1>
         <MyColleges collegesList={collegesList} />
         <H1 subtitle={t("colleges subtitle 2")} style={{ paddingTop: "0px" }} />
-        <div style={{paddingBottom:"100px"}} >
+        <div style={{ paddingBottom: "100px" }}>
           <br />
         </div>
 
@@ -86,7 +92,7 @@ export default function Home({
           feature2={{
             title: t("product feature title 2"),
             schools: t("product feature schools 2"),
-            content:t("product feature content 2")
+            content: t("product feature content 2"),
           }}
           feature3={{
             title: t("product feature title 3"),
@@ -97,7 +103,7 @@ export default function Home({
             content: t("product feature content 4"),
           }}
         />
-                <div style={{paddingBottom:"100px"}} >
+        <div style={{ paddingBottom: "100px" }}>
           <br />
         </div>
         <H1>{t("testimonials title")}</H1>

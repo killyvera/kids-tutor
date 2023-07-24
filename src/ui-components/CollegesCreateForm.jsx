@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  TextAreaField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Colleges } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -26,21 +32,25 @@ export default function CollegesCreateForm(props) {
     name: "",
     image: "",
     link: "",
+    details: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [image, setImage] = React.useState(initialValues.image);
   const [link, setLink] = React.useState(initialValues.link);
+  const [details, setDetails] = React.useState(initialValues.details);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
     setImage(initialValues.image);
     setLink(initialValues.link);
+    setDetails(initialValues.details);
     setErrors({});
   };
   const validations = {
     name: [],
     image: [],
     link: [],
+    details: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -71,6 +81,7 @@ export default function CollegesCreateForm(props) {
           name,
           image,
           link,
+          details,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -128,6 +139,7 @@ export default function CollegesCreateForm(props) {
               name: value,
               image,
               link,
+              details,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -154,6 +166,7 @@ export default function CollegesCreateForm(props) {
               name,
               image: value,
               link,
+              details,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -180,6 +193,7 @@ export default function CollegesCreateForm(props) {
               name,
               image,
               link: value,
+              details,
             };
             const result = onChange(modelFields);
             value = result?.link ?? value;
@@ -194,6 +208,32 @@ export default function CollegesCreateForm(props) {
         hasError={errors.link?.hasError}
         {...getOverrideProps(overrides, "link")}
       ></TextField>
+      <TextAreaField
+        label="Details"
+        isRequired={false}
+        isReadOnly={false}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              image,
+              link,
+              details: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.details ?? value;
+          }
+          if (errors.details?.hasError) {
+            runValidationTasks("details", value);
+          }
+          setDetails(value);
+        }}
+        onBlur={() => runValidationTasks("details", details)}
+        errorMessage={errors.details?.errorMessage}
+        hasError={errors.details?.hasError}
+        {...getOverrideProps(overrides, "details")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

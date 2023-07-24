@@ -2,14 +2,14 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-var langStorage = ""
-
-if (typeof window !== "undefined") {
-  // Perform localStorage action
-  const lang = localStorage.getItem("i18nextLng");
-  langStorage = lang
-  console.log(langStorage)
-}
+// Función para obtener el idioma del almacenamiento local o un idioma predeterminado
+const getInitialLanguage = () => {
+  if (typeof window !== "undefined") {
+    const lang = localStorage.getItem("i18nextLng");
+    return lang || "en";
+  }
+  return "en";
+};
 
 i18n
   .use(LanguageDetector)
@@ -23,7 +23,7 @@ i18n
         translation: require("../locales/es.json"),
       },
     },
-    fallbackLng: langStorage ? langStorage : "es",
+    fallbackLng: "en", // Establecer un idioma predeterminado
     detection: {
       order: ["localStorage", "navigator", "querystring", "cookie"],
       caches: ["localStorage"],
@@ -31,6 +31,7 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    lng: getInitialLanguage(), // Establecer el idioma inicial
   });
 
 export default i18n;
