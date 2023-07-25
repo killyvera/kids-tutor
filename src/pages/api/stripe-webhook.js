@@ -72,7 +72,6 @@ const webhookHandler = async (req, res) => {
 export default webhookHandler;
 
 const CustomerHandler = async (email, name, products) => {
-  const [emailSent, setEmailSent] = useState(false);
   const uuid = uuidv4(); // Generar un UUID
   const customerEmail = email;
   const customerName = name;
@@ -123,10 +122,9 @@ const CustomerHandler = async (email, name, products) => {
   };
   const result = await sendEmail(mailOptions);
   if (result.success) {
-    setEmailSent(true);
+    console.log("Correo electrónico enviado:");
+    console.log("ID del mensaje:", result);
   } else {
-    console.error(result.error);
+    console.error(result);
   }
-  console.log("Correo electrónico enviado:");
-  console.log("ID del mensaje:", info.messageId);
 };
