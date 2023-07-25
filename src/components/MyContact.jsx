@@ -5,7 +5,11 @@ import { DataStore } from "@aws-amplify/datastore";
 import { Users, OnlinePurchase } from "@/models";
 import { v4 as uuidv4 } from "uuid";
 import ReactDOMServer from "react-dom/server";
-import nodemailer from "nodemailer";
+import dynamic from "next/dynamic";
+// Importa nodemailer de forma dinámica solo en el entorno del servidor
+const nodemailer = dynamic(() => import("nodemailer"), {
+  ssr: false,
+});
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
