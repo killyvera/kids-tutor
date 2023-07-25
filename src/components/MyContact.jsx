@@ -1,125 +1,144 @@
-import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { DataStore } from "aws-amplify";
-import { Contact } from "../models";
-import { useRouter } from "next/router";
+import MailTemplate from "@/components/MailTemplate";
+import { buffer } from "micro";
+import Stripe from "stripe";
+import { DataStore } from "@aws-amplify/datastore";
+import { Users, OnlinePurchase } from "@/models";
+import { v4 as uuidv4 } from "uuid";
+import ReactDOMServer from "react-dom/server";
+import nodemailer from "nodemailer";
 
-const MyContact = ({ translation }) => {
-  const router = useRouter();
-  const initialValues = {
-    name: "",
-    email: "",
-    message: "",
-  };
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-  const handleSubmit = async (values, { resetForm }) => {
-    try {
-      // Crea una nueva instancia de Contact con los datos del formulario
-      const newContact = await DataStore.save(
-        new Contact({
-          name: values.name,
-          email: values.email,
-          message: values.message,
-        })
-      );
-
-      console.log("New contact:", newContact);
-
-      // Resetea los campos del formulario
-      resetForm();
-
-      // Mostrar un mensaje de éxito o redirigir a otra página
-      // Por ejemplo:
-      alert(
-        "¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto."
-      );
-      router.push("/");
-    } catch (error) {
-      console.error("Error creating contact:", error);
-    }
-  };
-
-  // Esquema de validación de Yup para el formulario
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Este campo es obligatorio"),
-    email: Yup.string()
-      .email("Formato de correo inválido")
-      .required("Este campo es obligatorio"),
-    message: Yup.string().required("Este campo es obligatorio"),
-  });
-
-  return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      <Form className="text-gray-900 py-24 pr-0 pl-0 bg-white m-5 rounded">
-        <section className="text-gray-800">
-          <div className="flex flex-wrap">
-            <div className="grow-0 shrink-0 basis-auto mb-6 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
-              <h2 className="text-3xl font-bold mb-6">{translation?.title}</h2>
-              <p className="text-gray-500 mb-6">{translation?.content}</p>
-              <p className="text-gray-500 mb-2">
-                New York, 94126, United States
-              </p>
-              <p className="text-gray-500 mb-2">+ 01 234 567 89</p>
-              <p className="text-gray-500 mb-2">info@gmail.com</p>
-            </div>
-            <div className="grow-0 shrink-0 basis-auto mb-12 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
-              <Field
-                type="text"
-                name="name"
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Name"
-                required
-              />
-              <ErrorMessage
-                name="name"
-                component="p"
-                className="text-red-600"
-              />
-
-              <Field
-                type="email"
-                name="email"
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                placeholder="Email address"
-                required
-              />
-              <ErrorMessage
-                name="email"
-                component="p"
-                className="text-red-600"
-              />
-
-              <Field
-                as="textarea"
-                name="message"
-                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                rows="3"
-                placeholder="Message"
-                required
-              />
-              <ErrorMessage
-                name="message"
-                component="p"
-                className="text-red-600"
-              />
-
-              <button
-                type="submit"
-                className="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        </section>
-      </Form>
-    </Formik>
-  );
+export const config = {
+  api: {
+    bodyParser: false,
+  },
 };
 
-export default MyContact;
+const webhookHandler = async (req, res) => {
+  if (req.method === "POST") {
+    const buf = await buffer(req);
+    const sig = req.headers["stripe-signature"];
+
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        buf,
+        sig,
+        process.env.STRIPE_WEBHOOK_SECRET
+      );
+    } catch (err) {
+      console.error("Error during webhook event construction:", err);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === "checkout.session.completed") {
+      // Handle successful payment
+      const session = event.data.object;
+      console.log("Checkout session completed:", session);
+      try {
+        await CustomerHandler(
+          session.customer_details.email,
+          session.customer_details.name,
+          session.metadata.purchased_products
+        ).then(res.status(200).json({ received: true }));
+        console.log("CustomerHandler executed successfully.");
+      } catch (err) {
+        console.error("Error in CustomerHandler:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+
+      return res.status(200).json({ received: true }); // Enviar una respuesta 200 OK
+    } else if (event.type === "charge.succeeded") {
+      // Handle charge.succeeded event
+      // ...
+      return res.status(200).end();
+    } else if (event.type === "payment_intent.succeeded") {
+      // Handle payment_intent.succeeded event
+      // ...
+      return res.status(200).end();
+    } else if (event.type === "payment_intent.created") {
+      // Handle payment_intent.created event
+      // ...
+      return res.status(200).end();
+    }
+  } else {
+    res.setHeader("Allow", "POST");
+    res.status(405).end("Method Not Allowed");
+  }
+};
+
+export default webhookHandler;
+
+const CustomerHandler = async (email, name, products) => {
+  const uuid = uuidv4(); // Generar un UUID
+  const customerEmail = email;
+  const customerName = name;
+  const customerProducts = products.split(",");
+  const downloadLink = `https://kidstutor.co/download?email=${encodeURIComponent(
+    customerEmail
+  )}&uuid=${uuid}`;
+
+  const transporter = nodemailer.createTransport({
+    host: "smtp.titan.email",
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_PASS,
+    },
+  });
+
+  const purchase = await DataStore.save(
+    new OnlinePurchase({
+      customer_email: customerEmail,
+      customer_name: customerName,
+      uuid: uuid,
+      details: {
+        products: customerProducts,
+      },
+    })
+  );
+
+  console.log("Compra almacenada:", purchase);
+
+  // Actualizar el modelo User con los productos comprados y la uid
+  const user = await DataStore.query(Users, (u) => u.email.eq(customerEmail));
+  if (user.length > 0) {
+    try {
+      const updatedUser = await DataStore.update(
+        Users.copyOf(user[0], (updated) => {
+          updated.purchase_products = {
+            products: customerProducts,
+            uid: uuid,
+          };
+        })
+      );
+      console.log("Usuario actualizado:", updatedUser);
+    } catch (err) {
+      console.error("Error updating user:", err);
+    }
+  }
+
+  const mailOptions = {
+    from: "ventas@kidstutor.co",
+    to: customerEmail,
+    subject: `Hola ${customerName}, Kids Tutor tiene buenas noticias para ti.`,
+    html: ReactDOMServer.renderToString(
+      <MailTemplate
+        username={customerName}
+        link={downloadLink}
+        email={customerEmail}
+        purchaseID={purchase?.id}
+      />
+    ),
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Correo electrónico enviado:", info.messageId);
+  } catch (err) {
+    console.error("Error sending email:", err);
+  }
+};
