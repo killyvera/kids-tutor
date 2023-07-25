@@ -33,10 +33,10 @@ const webhookHandler = async (req, res) => {
       console.error(err), "error:E";
       return res.status(400).send(`Webhook Error E: ${err.message}`);
     }
-
     if (event.type === "checkout.session.completed") {
       // Handle successful payment
       const session = event.data.object;
+      console.log(res, "-----------res---------------")
       console.log(
         session,
         session.metadata,
@@ -48,7 +48,7 @@ const webhookHandler = async (req, res) => {
         session.customer_details.name,
         session.metadata.purchased_products
       );
-      return res.status(200).json({ received: true });
+      return res.status(200).json({ received: true }); // Enviar una respuesta 200 OK
     } else if (event.type === "charge.succeeded") {
       // Handle charge.succeeded event
       // ...
@@ -105,7 +105,7 @@ const CustomerHandler = async (email, name, products) => {
   // Actualizar el modelo User con los productos comprados y la uid
   const user = await DataStore.query(Users, (u) => u.email.eq(customerEmail));
   if (user.length > 0) {
-    const updatedUser = await DataStore.save(
+    const updatedUser = await DataStore.update(
       Users.copyOf(user[0], (updated) => {
         updated.purchase_products = {
           products: customerProducts,
@@ -129,7 +129,24 @@ const CustomerHandler = async (email, name, products) => {
       />
     ),
   };
-  const info = await transporter.sendMail(mailOptions);
+  try {
+    // Enviar el correo electrónico usando una promesa para manejar errores
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        } else {
+          resolve(info);
+        }
+      });
+    });
+
+    console.log("Correo electrónico enviado");
+  } catch (error) {
+    console.error("Error al enviar el correo electrónico:", error);
+    throw error;
+  }
   console.log("Correo electrónico enviado:");
   console.log("ID del mensaje:", info.messageId);
 };
