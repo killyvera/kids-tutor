@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import nodemailer from "nodemailer";
 import { v4 as uuidv4 } from "uuid";
 import ReactDOMServer from "react-dom/server";
+import { sendEmail } from "@/helpers/sendEmail";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -36,7 +37,7 @@ const webhookHandler = async (req, res) => {
     if (event.type === "checkout.session.completed") {
       // Handle successful payment
       const session = event.data.object;
-      console.log(res, "-----------res---------------")
+      console.log(res, "-----------res---------------");
       console.log(
         session,
         session.metadata,
@@ -71,6 +72,7 @@ const webhookHandler = async (req, res) => {
 export default webhookHandler;
 
 const CustomerHandler = async (email, name, products) => {
+  const [emailSent, setEmailSent] = useState(false);
   const uuid = uuidv4(); // Generar un UUID
   const customerEmail = email;
   const customerName = name;
@@ -78,16 +80,6 @@ const CustomerHandler = async (email, name, products) => {
   const downloadLink = `https://kidstutor.co/download?email=${encodeURIComponent(
     customerEmail
   )}&uuid=${uuid}`;
-
-  const transporter = nodemailer.createTransport({
-    host: "smtp.titan.email",
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.NODEMAILER_USER,
-      pass: process.env.NODEMAILER_PASS,
-    },
-  });
 
   const purchase = await DataStore.save(
     new OnlinePurchase({
@@ -129,23 +121,11 @@ const CustomerHandler = async (email, name, products) => {
       />
     ),
   };
-  try {
-    // Enviar el correo electrónico usando una promesa para manejar errores
-    await new Promise((resolve, reject) => {
-      transporter.sendMail(mailOptions, (err, info) => {
-        if (err) {
-          console.error(err);
-          reject(err);
-        } else {
-          resolve(info);
-        }
-      });
-    });
-
-    console.log("Correo electrónico enviado");
-  } catch (error) {
-    console.error("Error al enviar el correo electrónico:", error);
-    throw error;
+  const result = await sendEmail(mailOptions);
+  if (result.success) {
+    setEmailSent(true);
+  } else {
+    console.error(result.error);
   }
   console.log("Correo electrónico enviado:");
   console.log("ID del mensaje:", info.messageId);
