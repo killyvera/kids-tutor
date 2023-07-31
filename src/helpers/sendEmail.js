@@ -1,26 +1,39 @@
-import nodemailer from 'nodemailer';
-import { promisify } from 'util';
+// imports
+import { SES } from 'aws-sdk';
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.titan.email",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.NODEMAILER_USER,
-    pass: process.env.NODEMAILER_PASS,
-  },
+// configurar SES 
+const ses = new SES({
+  region: 'us-east-1',
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
-const sendMailAsync = promisify(transporter.sendMail).bind(transporter);
-
+// función para enviar email
 export async function sendEmail(mailOptions) {
+
+  // mapear parámetros a formato SES
+  const params = { 
+    Source: mailOptions.from,
+    Destination: {
+      ToAddresses: [mailOptions.to]
+    },
+    Message: {
+      Subject: {
+        Data: mailOptions.subject
+      },
+      Body: {
+        Html: {
+          Data: mailOptions.html
+        }
+      }
+    }
+  };
+  
   try {
-    const info = await sendMailAsync(mailOptions);
-    console.log("Correo electrónico enviado:");
-    console.log("ID del mensaje:", info.messageId);
-    return { success: true };
+    const result = await ses.sendEmail(params).promise();
+    return {success: true};
   } catch (err) {
-    console.error("Error al enviar el correo electrónico:", err);
-    return { success: false, error: err.message };
+    return {success: false, error: err};
   }
+
 }

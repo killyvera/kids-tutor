@@ -16,6 +16,7 @@
     "app-deep-link": "^1.0.1",
     "autoprefixer": "^10.4.14",
     "aws-amplify": "^5.3.3",
+    "aws-sdk": "^2.1425.0",
     "date-fns": "^2.30.0",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
