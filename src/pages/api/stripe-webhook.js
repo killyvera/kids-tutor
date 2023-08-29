@@ -71,7 +71,7 @@ const webhookHandler = async (req, res) => {
 
 export default webhookHandler;
 
-const CustomerHandler = async (email, name, products) => {
+const CustomerHandler = async (email, name, address, phoneNumber, products) => {
   const uuid = uuidv4(); // Generar un UUID
   const customerEmail = email;
   const customerName = name;
@@ -87,6 +87,9 @@ const CustomerHandler = async (email, name, products) => {
       uuid: uuid,
       details: {
         products: customerProducts,
+      },
+      status: {
+        sent: "pending",
       },
     })
   );
@@ -127,4 +130,15 @@ const CustomerHandler = async (email, name, products) => {
   } else {
     console.error(result);
   }
+
+  await DataStore.save(
+    OnlinePurchase.copyOf(purchase, (updated) => {
+      updated.status = {
+        sent: result?.success ? "ok" : "error",
+        messageId: result?.messageId,
+        error: result?.error,
+      };
+    })
+  );
+  console.log(purchase)
 };

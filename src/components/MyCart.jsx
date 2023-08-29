@@ -140,7 +140,7 @@ const CartItem2 = ({ item }) => {
             <p class="mt-1 text-sm text-gray-500">{item?.short}</p>
           </div>
           <div class="flex flex-1 items-end justify-between text-sm">
-            <p class="text-gray-500">Qty 1</p>
+            <p class="text-gray-500">{item?.quantity} Unidades</p>
 
             <div class="flex">
               <button

@@ -42,11 +42,11 @@ const MyContact = ({ translation }) => {
 
   // Esquema de validación de Yup para el formulario
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Este campo es obligatorio"),
+    name: Yup.string().required(translation?.formikVerification),
     email: Yup.string()
       .email("Formato de correo inválido")
-      .required("Este campo es obligatorio"),
-    message: Yup.string().required("Este campo es obligatorio"),
+      .required(translation?.formikVerification),
+    message: Yup.string().required(translation?.formikVerification),
   });
 
   return (
@@ -62,10 +62,10 @@ const MyContact = ({ translation }) => {
               <h2 className="text-3xl font-bold mb-6">{translation?.title}</h2>
               <p className="text-gray-500 mb-6">{translation?.content}</p>
               <p className="text-gray-500 mb-2">
-                New York, 94126, United States
+                {translation?.contactDirection}
               </p>
-              <p className="text-gray-500 mb-2">+ 01 234 567 89</p>
-              <p className="text-gray-500 mb-2">info@gmail.com</p>
+              <p className="text-gray-500 mb-2">{translation?.contactPhone}</p>
+              <p className="text-gray-500 mb-2">{translation?.email}</p>
             </div>
             <div className="grow-0 shrink-0 basis-auto mb-12 md:mb-0 w-full md:w-6/12 px-3 lg:px-6">
               <Field

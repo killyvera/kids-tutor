@@ -76,6 +76,7 @@ type EagerOnlinePurchase = {
   readonly customer_email?: string | null;
   readonly details?: string | null;
   readonly uuid?: string | null;
+  readonly status?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -90,6 +91,7 @@ type LazyOnlinePurchase = {
   readonly customer_email?: string | null;
   readonly details?: string | null;
   readonly uuid?: string | null;
+  readonly status?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

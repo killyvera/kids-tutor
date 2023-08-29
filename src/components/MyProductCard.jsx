@@ -4,17 +4,17 @@ import MyBadgeList from "./MyBadgeList";
 import titleToLink from "@/helpers/titleToLink";
 import Marketplaces from "./Marketplaces";
 import MyTagList from "./MyTagList";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Storage } from "aws-amplify";
 
 const MyProductCard = ({ element, type, categories, productCategories }) => {
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState("");
   // console.log(element, type, categories, productCategories);
 
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const file = await Storage.get("images/products/KT-NUM-20.cover.webp", {
+        const file = await Storage.get(element?.images.cover, {
           level: "public",
         });
         setImage(file);
@@ -24,10 +24,10 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
     };
 
     fetchImage();
-  }, []);
+  }, [element]);
   console.log(image && image);
 
-  console.log(element)
+  console.log(element);
   return (
     <div className="flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4 bg-white ">
       <Link href={"/" + type + "/" + element?.id} className="w-full">
@@ -54,11 +54,9 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
       >
         {element?.name}
       </Link>
-      <p className="text-sm text-black">
-        {element?.short}
-      </p>
-      <div className="self-center w-full" >
-      {/* <div className="flex flex-row py-10 justify-between items-center">
+      <p className="text-sm text-black">{element?.short}</p>
+      <div className="self-center w-full">
+        {/* <div className="flex flex-row py-10 justify-between items-center">
           <p className="text-red-500 mr-9" >{'MXN $' + element?.price + '.00'}</p>
           <Link
           href={"/" + type + "/" + element?.id}
@@ -66,8 +64,10 @@ const MyProductCard = ({ element, type, categories, productCategories }) => {
           <button className="bg-blue-500 py-2 px-3 rounded text-white transition hover:scale-110" >Adquierelo aquí</button>
           </Link>
         </div> */}
-        <Marketplaces marketplaces={element?.marketplaces} product={element && element} />
-
+        <Marketplaces
+          marketplaces={element?.marketplaces}
+          product={element && element}
+        />
       </div>
       {/* <MyTagList tagList={element?.tags} /> */}
     </div>

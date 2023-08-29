@@ -33,16 +33,23 @@ export default function Home() {
     <>
       <Head>
         <title>{t("contact title")}</title>
-        <meta
-          name="description"
-          content={"contact description"}
-        />
+        <meta name="description" content={"contact description"} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main style={{ textAlign: "-webkit-center" }} className="">
         <H1>{t("contact header")}</H1>
-        <MyContact translation={{title:t("contact form title"), content:t("contact form content")}} />
+        <MyContact
+          translation={{
+            title: t("contact form title"),
+            content: t("contact form content"),
+            contactDirection: t("contact direction"),
+            contactPhone: t("contact Phone"),
+            email: t("email"),
+            formikVerification: t("formik verification"),
+            formikEmailCheck: t("formik email check")
+          }}
+        />
       </main>
     </>
   );

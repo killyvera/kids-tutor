@@ -1,39 +1,43 @@
 // imports
-import { SES } from 'aws-sdk';
+import { SES } from "aws-sdk";
 
-// configurar SES 
+// configurar SES
 const ses = new SES({
-  region: 'us-east-1',
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  region: "us-east-1",
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
 });
 
 // función para enviar email
 export async function sendEmail(mailOptions) {
-
   // mapear parámetros a formato SES
-  const params = { 
+  const params = {
     Source: mailOptions.from,
     Destination: {
-      ToAddresses: [mailOptions.to]
+      ToAddresses: [mailOptions.to],
     },
     Message: {
       Subject: {
-        Data: mailOptions.subject
+        Data: mailOptions.subject,
       },
       Body: {
         Html: {
-          Data: mailOptions.html
-        }
-      }
-    }
+          Data: mailOptions.html,
+        },
+      },
+    },
   };
-  
+
   try {
     const result = await ses.sendEmail(params).promise();
-    return {success: true};
+    return {
+      success: true,
+      messageId: result.MessageId,
+    };
   } catch (err) {
-    return {success: false, error: err};
+    return {
+      success: false,
+      error: err.message,
+    };
   }
-
 }

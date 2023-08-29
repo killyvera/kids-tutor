@@ -6,9 +6,9 @@ import LanguageDetector from "i18next-browser-languagedetector";
 const getInitialLanguage = () => {
   if (typeof window !== "undefined") {
     const lang = localStorage.getItem("i18nextLng");
-    return lang || "en";
+    return lang || "es";
   }
-  return "en";
+  return "es";
 };
 
 i18n
