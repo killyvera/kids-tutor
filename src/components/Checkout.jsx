@@ -22,7 +22,7 @@ const CheckoutButton = () => {
   }, []);
 
   console.log(cartItems, "items from checkout");
-  console.log("------------------------------------------")
+  console.log("------------------------------------------");
 
   const handleCheckoutClick = async () => {
     try {
@@ -47,9 +47,9 @@ const Checkout = async (cartItems, subCognito) => {
   try {
     const lineItems = await Promise.all(
       cartItems.map(async (item) => {
-        // const imageUrl = await Storage.get(item?.images.cover, {
-        //   level: "public",
-        // });
+        const imageUrl = await Storage.get(item?.images.cover, {
+          level: "public",
+        });
         console.log(item, "cart items from checkout");
         return {
           price_data: {
@@ -57,7 +57,9 @@ const Checkout = async (cartItems, subCognito) => {
             product_data: {
               name: item?.name,
               description: item?.short,
-              images: [item?.cover],
+              images: [
+                "https://www.freepik.es/psd-gratis/caja-carton-aislada_16188018.htm#query=caja&position=0&from_view=keyword&track=sph",
+              ],
             },
             unit_amount: item?.price,
           },
