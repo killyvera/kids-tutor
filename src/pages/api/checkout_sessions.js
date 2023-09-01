@@ -8,6 +8,12 @@ export default async function handler(req, res) {
       // Create Checkout Sessions from body params.
       const session = await stripe.checkout.sessions.create({
         line_items: req.body.lineItems,
+        phone_number_collection: {
+          enabled: true,
+        },
+        shipping_address_collection: {
+          allowed_countries: ["MX"], // Puedes ajustar los países permitidos
+        },
         mode: "payment",
         success_url: `${req.headers.origin}/?success=true`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
@@ -19,7 +25,7 @@ export default async function handler(req, res) {
       res.json({ url: session.url });
     } catch (err) {
       res.status(err.statusCode || 500).json(err.message);
-      console.log("ERROR chckout", err.message)
+      console.log("ERROR chckout", err.message);
     }
   } else {
     res.setHeader("Allow", "POST");
