@@ -15,6 +15,7 @@ export default async function handler(req, res) {
           allowed_countries: ["MX"], // Puedes ajustar los países permitidos
         },
         mode: "payment",
+        allow_promotion_codes: true,
         success_url: `${req.headers.origin}/?success=true`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
         metadata: {
