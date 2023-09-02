@@ -8,9 +8,10 @@ const nextConfig = {
       "localhost:3000",
       "www.kidstutor.co",
       "kidstutor.co",
-      "lh3.googleusercontent.com"
+      "lh3.googleusercontent.com",
     ],
   },
+  staticPageGenerationTimeout: 100,
 };
 
 module.exports = nextConfig;
