@@ -16,6 +16,7 @@ type OnlinePurchase @model @auth(rules: [{allow: public}]) {
   customer_email: String
   details: AWSJSON
   uuid: String
+  status: AWSJSON
 }
 
 type Contact @model @auth(rules: [{allow: public}]) {

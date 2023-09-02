@@ -44,15 +44,17 @@ const ProductDetail = ({ element, categories }) => {
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <Slider {...settings} className="lg:w-1/2 rounded w-full">
             <div>
-              <Image
-                width={640}
-                height={640}
-                className="w-full h-full object-cover"
-                src={image && image}
-                alt="alt product text"
-              />
+              {image && (
+                <Image
+                  width={640}
+                  height={640}
+                  className="w-full h-full object-cover"
+                  src={image && image}
+                  alt="alt product text"
+                />
+              )}
             </div>
-            <div>
+            {/* <div>
               <Image
                 width={640}
                 height={640}
@@ -69,7 +71,7 @@ const ProductDetail = ({ element, categories }) => {
                 src={element?.bottom}
                 alt=""
               />
-            </div>
+            </div> */}
           </Slider>
           {/* <img
             alt="ecommerce"
@@ -145,14 +147,17 @@ const ProductDetail = ({ element, categories }) => {
               <MyBadgeList resourceId={element?.id} categories={categories} />
             </div>
             <MyTagList tagList={element?.tags} />
-            <Marketplaces marketplaces={element?.marketplaces} product={element && element}/>
+            <Marketplaces
+              marketplaces={element?.marketplaces}
+              product={element && element}
+            />
             <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">
                 {"MXN " + element?.price + ".00"}
               </span>
               <span className="flex flex-row">
                 {/* <StripeTest /> */}
-                <AddToCart element={element} />
+                <AddToCart element={element && element} />
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                   <svg
                     fill="currentColor"

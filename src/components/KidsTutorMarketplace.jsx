@@ -29,7 +29,7 @@ const CheckoutButton = ({ product }) => {
             description: product?.short,
             images: [product?.cover]
           },
-          unit_amount: product?.price * 100,
+          unit_amount: product?.price,
         },
         quantity: 1,
       },
@@ -45,7 +45,8 @@ const CheckoutButton = ({ product }) => {
         "Content-Type": "application/json",
       },
     });
-
+console.log(lineItems, purchase, sub)
+console.log("-----------------------------------------------")
     const body = await response.json();
     window.location.href = body.url;
   };

@@ -34,6 +34,7 @@ export default function OnlinePurchaseUpdateForm(props) {
     customer_email: "",
     details: "",
     uuid: "",
+    status: "",
   };
   const [customer_name, setCustomer_name] = React.useState(
     initialValues.customer_name
@@ -43,6 +44,7 @@ export default function OnlinePurchaseUpdateForm(props) {
   );
   const [details, setDetails] = React.useState(initialValues.details);
   const [uuid, setUuid] = React.useState(initialValues.uuid);
+  const [status, setStatus] = React.useState(initialValues.status);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = onlinePurchaseRecord
@@ -56,6 +58,11 @@ export default function OnlinePurchaseUpdateForm(props) {
         : JSON.stringify(cleanValues.details)
     );
     setUuid(cleanValues.uuid);
+    setStatus(
+      typeof cleanValues.status === "string"
+        ? cleanValues.status
+        : JSON.stringify(cleanValues.status)
+    );
     setErrors({});
   };
   const [onlinePurchaseRecord, setOnlinePurchaseRecord] = React.useState(
@@ -76,6 +83,7 @@ export default function OnlinePurchaseUpdateForm(props) {
     customer_email: [],
     details: [{ type: "JSON" }],
     uuid: [],
+    status: [{ type: "JSON" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -107,6 +115,7 @@ export default function OnlinePurchaseUpdateForm(props) {
           customer_email,
           details,
           uuid,
+          status,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -166,6 +175,7 @@ export default function OnlinePurchaseUpdateForm(props) {
               customer_email,
               details,
               uuid,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.customer_name ?? value;
@@ -193,6 +203,7 @@ export default function OnlinePurchaseUpdateForm(props) {
               customer_email: value,
               details,
               uuid,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.customer_email ?? value;
@@ -220,6 +231,7 @@ export default function OnlinePurchaseUpdateForm(props) {
               customer_email,
               details: value,
               uuid,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.details ?? value;
@@ -247,6 +259,7 @@ export default function OnlinePurchaseUpdateForm(props) {
               customer_email,
               details,
               uuid: value,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.uuid ?? value;
@@ -261,6 +274,34 @@ export default function OnlinePurchaseUpdateForm(props) {
         hasError={errors.uuid?.hasError}
         {...getOverrideProps(overrides, "uuid")}
       ></TextField>
+      <TextAreaField
+        label="Status"
+        isRequired={false}
+        isReadOnly={false}
+        value={status}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              customer_name,
+              customer_email,
+              details,
+              uuid,
+              status: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.status ?? value;
+          }
+          if (errors.status?.hasError) {
+            runValidationTasks("status", value);
+          }
+          setStatus(value);
+        }}
+        onBlur={() => runValidationTasks("status", status)}
+        errorMessage={errors.status?.errorMessage}
+        hasError={errors.status?.hasError}
+        {...getOverrideProps(overrides, "status")}
+      ></TextAreaField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

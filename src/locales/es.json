@@ -55,5 +55,8 @@
     "contact form content": "Por favor ponte en contacto con nosotros si tienes cualquier duda sobre nuestros productos y empresa, o simplemente quieres dejar un comentario.",
     "contact direction": "CDMX",
     "contact phone": "+52 55 7511 9903",
-    "email": "info@kidstutor.co"
+    "email": "info@kidstutor.co",
+    "formik verification": "Este campo es bligatorio",
+    "formik email check": "Correo incorrecto",
+    "message sended": "Tu mensaje se envió exitosamente, nos pondremos en contacto contigo pronto."
   }

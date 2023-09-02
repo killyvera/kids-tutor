@@ -17,12 +17,14 @@ export declare type OnlinePurchaseCreateFormInputValues = {
     customer_email?: string;
     details?: string;
     uuid?: string;
+    status?: string;
 };
 export declare type OnlinePurchaseCreateFormValidationValues = {
     customer_name?: ValidationFunction<string>;
     customer_email?: ValidationFunction<string>;
     details?: ValidationFunction<string>;
     uuid?: ValidationFunction<string>;
+    status?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type OnlinePurchaseCreateFormOverridesProps = {
@@ -31,6 +33,7 @@ export declare type OnlinePurchaseCreateFormOverridesProps = {
     customer_email?: PrimitiveOverrideProps<TextFieldProps>;
     details?: PrimitiveOverrideProps<TextAreaFieldProps>;
     uuid?: PrimitiveOverrideProps<TextFieldProps>;
+    status?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type OnlinePurchaseCreateFormProps = React.PropsWithChildren<{
     overrides?: OnlinePurchaseCreateFormOverridesProps | undefined | null;
