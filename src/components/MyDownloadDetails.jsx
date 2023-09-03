@@ -53,7 +53,7 @@ const DownloadDetail = ({ element, categories }) => {
                 alt="alt product text"
               />
             </div>
-            <div>
+            {/* <div>
               <Image
                 width={640}
                 height={640}
@@ -70,7 +70,7 @@ const DownloadDetail = ({ element, categories }) => {
                 src={element?.bottom}
                 alt=""
               />
-            </div>
+            </div> */}
           </Slider>
           {/* <img
             alt="ecommerce"
