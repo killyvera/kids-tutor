@@ -53,7 +53,7 @@ console.log("-----------------------------------------------")
 
   return (
     <div onClick={handleCheckout} className=" cursor-pointer relative rounded transition scale-75 hover:scale-100" style={{ margin: "-0px" }}>
-      <DiscountBadge />
+      {/* <DiscountBadge /> */}
       <Image
         width={90}
         height={90}

@@ -37,7 +37,7 @@ const DownloadDetail = ({ element, categories }) => {
 
     fetchImage();
   }, [element]);
-  console.log(image && image);
+  // console.log(image && image);
 
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
@@ -49,7 +49,7 @@ const DownloadDetail = ({ element, categories }) => {
                 width={640}
                 height={640}
                 className="w-full h-full object-cover"
-                src={image && image}
+                src={element?.cover}
                 alt="alt product text"
               />
             </div>

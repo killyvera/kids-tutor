@@ -11,6 +11,8 @@ import MyTagList from "./MyTagList";
 import AddToCart from "./AddToCart";
 import { Storage } from "@aws-amplify/storage";
 import { useEffect, useState } from "react";
+import { formatPrice } from "@/utils/formatPrice";
+import RenderHTML from "./RenderHTML";
 
 // https://tailwindcomponents.com/component/product-detail
 
@@ -142,7 +144,8 @@ const ProductDetail = ({ element, categories }) => {
                 </a>
               </span>
             </div>
-            <p className="leading-relaxed">{element?.description}</p>
+            {/* <p className="leading-relaxed">{element?.description}</p> */}
+            <RenderHTML htmlContent={element?.description} />
             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
               <MyBadgeList resourceId={element?.id} categories={categories} />
             </div>
@@ -153,7 +156,7 @@ const ProductDetail = ({ element, categories }) => {
             />
             <div className="flex place-content-between">
               <span className="title-font font-medium text-2xl text-gray-900">
-                {"MXN " + element?.price + ".00"}
+                {formatPrice(element?.price)}
               </span>
               <span className="flex flex-row">
                 {/* <StripeTest /> */}
