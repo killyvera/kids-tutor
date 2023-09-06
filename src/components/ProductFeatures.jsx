@@ -56,8 +56,8 @@ const ProductFeatures = (props) => {
           {/* </div> */}
         </div>
       </div>
-      <div className="pt-20 bg-white ">
-        <img src="/medal2.png" className="w-[100px]" />
+      <div className="pt-[132px] bg-white ">
+        {/* <img src="/medal2.png" className="w-[100px]" /> */}
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl pt-10 pb-2">
           {props?.feature1?.title}
         </h2>
@@ -102,7 +102,7 @@ const ProductFeatures = (props) => {
           <p className="text-gray-500 text-2xl border-t border-gray-200 w-[80%] pt-2">
             {props?.feature2?.content}
           </p>
-          <div className=" flex-row rounded-md w-[auto] space-x-10 items-center justify-center py-20 hidden">
+          <div className="flex flex-row rounded-md w-[auto] space-x-10 items-center justify-center py-20">
             <a
               href="https://es.wikipedia.org/wiki/M%C3%A9todo_Montessori"
               target="_blank"
