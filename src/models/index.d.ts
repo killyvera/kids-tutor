@@ -485,6 +485,7 @@ type EagerProduct = {
   readonly type?: string | null;
   readonly tags?: string | null;
   readonly short?: string | null;
+  readonly discount?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -514,6 +515,7 @@ type LazyProduct = {
   readonly type?: string | null;
   readonly tags?: string | null;
   readonly short?: string | null;
+  readonly discount?: number | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

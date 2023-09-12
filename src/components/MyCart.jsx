@@ -5,6 +5,7 @@ import CounterItems from "./CounterItems";
 import Checkout from "./Checkout";
 import { Storage } from "@aws-amplify/storage";
 import { useEffect, useState, useRef } from "react";
+import { formatPrice } from "@/utils/formatPrice";
 
 const MyCart = () => {
   const {
@@ -60,7 +61,7 @@ const MyCart = () => {
       <div className="flex flex-col items-center justify-between pt-3 m-3">
         <div className="font-semibold w-full justify-between">
           <p className="">TOTAL:</p>
-          <p>{"MXN " + getTotalPrice()}</p>
+          <p>{formatPrice(getTotalPrice())}</p>
         </div>
         <Checkout />
       </div>
@@ -135,7 +136,7 @@ const CartItem2 = ({ item }) => {
               <h3>
                 <a href="#">{item?.name}</a>
               </h3>
-              <p class="ml-4">MXN {item?.price}</p>
+              <p class="ml-4">{formatPrice(item?.price)}</p>
             </div>
             <p class="mt-1 text-sm text-gray-500">{item?.short}</p>
           </div>
