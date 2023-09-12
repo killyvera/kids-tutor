@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Storage, Auth } from "aws-amplify";
 import Image from "next/image";
-
+import { useCartContext } from "@/context/CartContext";
 const CheckoutButton = ({ product }) => {
   const [subCognito, setSubCognito] = useState(null);
+  const { addToCart, removeCartItem } = useCartContext();
 
   useEffect(() => {
+    
     const getUserSub = async () => {
       try {
         const user = await Auth.currentAuthenticatedUser();
@@ -52,7 +54,7 @@ console.log("-----------------------------------------------")
   };
 
   return (
-    <div onClick={handleCheckout} className=" cursor-pointer relative rounded transition scale-75 hover:scale-100" style={{ margin: "-0px" }}>
+    <div onClick={() => addToCart(product)} className=" cursor-pointer relative rounded transition scale-75 hover:scale-100" style={{ margin: "-0px" }}>
       {/* <DiscountBadge /> */}
       <Image
         width={90}

@@ -217,6 +217,7 @@ export default function ProductUpdateForm(props) {
     type: "",
     tags: "",
     short: "",
+    discount: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
@@ -241,6 +242,7 @@ export default function ProductUpdateForm(props) {
   const [type, setType] = React.useState(initialValues.type);
   const [tags, setTags] = React.useState(initialValues.tags);
   const [short, setShort] = React.useState(initialValues.short);
+  const [discount, setDiscount] = React.useState(initialValues.discount);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = productRecord
@@ -279,6 +281,7 @@ export default function ProductUpdateForm(props) {
     );
     setTags(cleanValues.tags);
     setShort(cleanValues.short);
+    setDiscount(cleanValues.discount);
     setErrors({});
   };
   const [productRecord, setProductRecord] = React.useState(productModelProp);
@@ -344,6 +347,7 @@ export default function ProductUpdateForm(props) {
     type: [{ type: "JSON" }],
     tags: [],
     short: [],
+    discount: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -390,6 +394,7 @@ export default function ProductUpdateForm(props) {
           type,
           tags,
           short,
+          discount,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -515,6 +520,7 @@ export default function ProductUpdateForm(props) {
             type: modelFields.type,
             tags: modelFields.tags,
             short: modelFields.short,
+            discount: modelFields.discount,
           };
           promises.push(
             DataStore.save(
@@ -564,6 +570,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -606,6 +613,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -648,6 +656,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.sku ?? value;
@@ -694,6 +703,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -740,6 +750,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.stock ?? value;
@@ -782,6 +793,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.dimensions ?? value;
@@ -828,6 +840,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.weight ?? value;
@@ -874,6 +887,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.rating ?? value;
@@ -916,6 +930,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.cover ?? value;
@@ -954,6 +969,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             values = result?.categories ?? values;
@@ -1049,6 +1065,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.top ?? value;
@@ -1091,6 +1108,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.bottom ?? value;
@@ -1133,6 +1151,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.front ?? value;
@@ -1175,6 +1194,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.back ?? value;
@@ -1217,6 +1237,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.marketplaces ?? value;
@@ -1259,6 +1280,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.images ?? value;
@@ -1301,6 +1323,7 @@ export default function ProductUpdateForm(props) {
               type: value,
               tags,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -1343,6 +1366,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags: value,
               short,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.tags ?? value;
@@ -1385,6 +1409,7 @@ export default function ProductUpdateForm(props) {
               type,
               tags,
               short: value,
+              discount,
             };
             const result = onChange(modelFields);
             value = result?.short ?? value;
@@ -1398,6 +1423,53 @@ export default function ProductUpdateForm(props) {
         errorMessage={errors.short?.errorMessage}
         hasError={errors.short?.hasError}
         {...getOverrideProps(overrides, "short")}
+      ></TextField>
+      <TextField
+        label="Discount"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={discount}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              name,
+              description,
+              sku,
+              price,
+              stock,
+              dimensions,
+              weight,
+              rating,
+              cover,
+              categories,
+              top,
+              bottom,
+              front,
+              back,
+              marketplaces,
+              images,
+              type,
+              tags,
+              short,
+              discount: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.discount ?? value;
+          }
+          if (errors.discount?.hasError) {
+            runValidationTasks("discount", value);
+          }
+          setDiscount(value);
+        }}
+        onBlur={() => runValidationTasks("discount", discount)}
+        errorMessage={errors.discount?.errorMessage}
+        hasError={errors.discount?.hasError}
+        {...getOverrideProps(overrides, "discount")}
       ></TextField>
       <Flex
         justifyContent="space-between"

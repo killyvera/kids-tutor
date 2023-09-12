@@ -85,7 +85,7 @@ const MyNavBar = () => {
           {/* <LanguageSelector /> */}
           <div className="relative transition scale-75 hover:scale-100 flex flex-row items-center">
             {cartItems?.length >= 1 && (
-              <div className="bg-red-500 absolute h-4 w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
+              <div className="bg-yellow-500 absolute h-4 w-4 rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
                 {cartItems?.length}
               </div>
             )}
@@ -158,7 +158,7 @@ const MyNavBar = () => {
 
             <div className="relative transition scale-75 hover:scale-100">
               {cartItems?.length >= 1 && (
-                <div className="bg-red-500 absolute h-4 w-4 text-white rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
+                <div className="bg-yellow-400 absolute h-4 w-4 rounded-full shadow transition hover:scale-110 right-0 text-xs text-center justify-center">
                   {cartItems?.length}
                 </div>
               )}
